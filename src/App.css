@@ -17,6 +17,10 @@ h1.centerTitle {
   color: rgba(150, 248, 252, 1);
 }
 
+p.centerParagraph {
+  text-align: center;
+}
+
 h4 {
   color: black;
 }

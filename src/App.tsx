@@ -47,6 +47,15 @@ const txTimeout = 30000; // milliseconds (confirm this works for your project)
 const theme = createTheme({
     palette: {
         type: 'dark',
+        primary: {
+          main: "#96F8FC"
+        },
+        secondary: {
+          main: "#800000"
+        }
+    },
+    typography: {
+      "fontFamily": "Helvetica",
     },
     overrides: {
         MuiButtonBase: {

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Countdown from "react-countdown";
 import { Button, CircularProgress, Snackbar } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
-import ReactAudioPlayer from 'react-audio-player';
+
 
 import * as anchor from "@project-serum/anchor";
 
@@ -29,15 +29,15 @@ import {
   PhishingBanner
 } from "./components/PhishingBanner";
 
+import {
+  AudioButton
+} from "./components/AudioButton";
+
 const ConnectButton = styled(WalletDialogButton)`
   font-family: 'Changa', sans-serif;
 `;
 
-const MuteButton = styled(Button)`
-  position: absolute;
-  top: 0;
-  left: 0;
-`; // add your styles here
+
 
 const CounterText = styled.span``; // add your styles here
 
@@ -60,8 +60,6 @@ export interface HomeProps {
 }
 
 const Home = (props: HomeProps) => {
-
-  const [soundMuted, setSoundMuted] = useState<boolean>(false);
 
   const [balance, setBalance] = useState<number>();
   const [isActive, setIsActive] = useState(false); // true when countdown completes
@@ -196,21 +194,11 @@ const Home = (props: HomeProps) => {
       
       <PhishingBanner/>
 
-      <ReactAudioPlayer
-          src="Loop.mp3"
-          autoPlay
-          muted={soundMuted}
-      />
-
-      <MuteButton onClick={() => {setSoundMuted(!soundMuted);}}>
-          {soundMuted ? "Unmute" : "Mute"}
-      </MuteButton>
+      <AudioButton/>
 
       <SocialsDiv/>
 
-      <h1 className="centerTitle"> SOLAMBO </h1>
-
-      <h3 className="centerTitle"> Welcome to the Premium Super Car NFT </h3>
+      <h1 className="centerTitle glitch"> SOLAMBO </h1>
       
       {wallet && (
         <div id="walletbox"> 
@@ -231,7 +219,7 @@ const Home = (props: HomeProps) => {
 
       <MintContainer>
         {!wallet ? (
-          <ConnectButton>Connect Wallet</ConnectButton>
+          <ConnectButton>Select Wallet</ConnectButton>
         ) : (
           <MintButton
             disabled={isSoldOut || isMinting || !isActive}
@@ -258,6 +246,12 @@ const Home = (props: HomeProps) => {
         )}
       </MintContainer>
 
+      <h3 className="centerTitle">Super Car NFTs </h3>
+
+      <p className="centerParagraph"> 
+        Custom-made, pixel, super car NFTs on the Solana blockchain
+      </p>
+
       <Snackbar
         open={alertState.open}
         autoHideDuration={6000}
@@ -270,6 +264,7 @@ const Home = (props: HomeProps) => {
           {alertState.message}
         </Alert>
       </Snackbar>
+
     </main>
   );
 };
