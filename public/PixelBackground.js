@@ -26,14 +26,20 @@ for(var x = -250; x<250; x+=6) {
 }
 
 // call the render function 30 times a second
-setInterval(render, 1000 / 60);
+setInterval(render, 1000 / 30);
 
 
 function render() {
-  
+
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight / 2;
+    halfWidth = width / 2,
+    halfHeight = height / 4,
+
     // clear the canvas
     context.clearRect(0, 0, width, height);
     // and get the imagedata out of it
+
     var imagedata = context.getImageData(0, 0, canvas.width, canvas.height);
 
     // iterate through every point in the array
