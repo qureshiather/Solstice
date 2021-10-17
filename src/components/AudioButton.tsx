@@ -20,6 +20,7 @@ export const AudioButton = () => {
         src="loop.mp3"
         autoPlay
         muted={soundMuted}
+        loop
         />
 
         <MuteButton onClick={() => {setSoundMuted(!soundMuted);}}>
