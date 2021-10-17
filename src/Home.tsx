@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Countdown from "react-countdown";
 import { Button, CircularProgress, Snackbar } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
+import ReactAudioPlayer from 'react-audio-player';
 
 import * as anchor from "@project-serum/anchor";
 
@@ -10,6 +11,7 @@ import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { WalletDialogButton } from "@solana/wallet-adapter-material-ui";
+
 
 import {
   CandyMachine,
@@ -19,13 +21,32 @@ import {
   shortenAddress,
 } from "./candy-machine";
 
-const ConnectButton = styled(WalletDialogButton)``;
+import {
+  SocialsDiv,
+} from "./components/SocialsDiv";
+
+import {
+  PhishingBanner
+} from "./components/PhishingBanner";
+
+const ConnectButton = styled(WalletDialogButton)`
+  font-family: 'Changa', sans-serif;
+`;
+
+const MuteButton = styled(Button)`
+  position: absolute;
+`; // add your styles here
 
 const CounterText = styled.span``; // add your styles here
 
-const MintContainer = styled.div``; // add your styles here
+const MintContainer = styled.div`
+  text-align: center;
+`; // add your styles here
 
-const MintButton = styled(Button)``; // add your styles here
+const MintButton = styled(Button)`
+  position: absolute;
+  top: 50%;
+`; // add your styles here
 
 export interface HomeProps {
   candyMachineId: anchor.web3.PublicKey;
@@ -37,6 +58,9 @@ export interface HomeProps {
 }
 
 const Home = (props: HomeProps) => {
+
+  const [soundMuted, setSoundMuted] = useState<boolean>(false);
+
   const [balance, setBalance] = useState<number>();
   const [isActive, setIsActive] = useState(false); // true when countdown completes
   const [isSoldOut, setIsSoldOut] = useState(false); // true when items remaining is zero
@@ -167,17 +191,41 @@ const Home = (props: HomeProps) => {
 
   return (
     <main>
+      
+      <PhishingBanner/>
+
+      <ReactAudioPlayer
+          src="Loop.mp3"
+          autoPlay
+          muted={soundMuted}
+      />
+
+      <MuteButton onClick={() => {setSoundMuted(!soundMuted);}}>
+          {soundMuted ? "Unmute" : "Mute"}
+      </MuteButton>
+
+      <SocialsDiv/>
+
+      <h1 className="centerTitle"> SOLAMBO </h1>
+
+      <h3 className="centerTitle"> Welcome to the Premium Super Car NFT </h3>
+      
       {wallet && (
-        <p>Wallet {shortenAddress(wallet.publicKey.toBase58() || "")}</p>
-      )}
+        <div id="walletbox"> 
+          {<p>Wallet {shortenAddress(wallet.publicKey.toBase58() || "")}</p>}
 
-      {wallet && <p>Balance: {(balance || 0).toLocaleString()} SOL</p>}
+          {<p>Balance: {(balance || 0).toLocaleString()} SOL</p>}
 
-      {wallet && <p>Total Available: {itemsAvailable}</p>}
+          {<p>Total Available: {itemsAvailable}</p>}
 
-      {wallet && <p>Redeemed: {itemsRedeemed}</p>}
+          {<p>Redeemed: {itemsRedeemed}</p>}
 
-      {wallet && <p>Remaining: {itemsRemaining}</p>}
+          {<p>Remaining: {itemsRemaining}</p>}
+        </div>
+        )
+      }
+
+      <p></p>
 
       <MintContainer>
         {!wallet ? (
@@ -230,7 +278,7 @@ interface AlertState {
   severity: "success" | "info" | "warning" | "error" | undefined;
 }
 
-const renderCounter = ({ days, hours, minutes, seconds, completed }: any) => {
+const renderCounter = ({ days, hours, minutes, seconds }: any) => {
   return (
     <CounterText>
       {hours + (days || 0) * 24} hours, {minutes} minutes, {seconds} seconds

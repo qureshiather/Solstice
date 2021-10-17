@@ -1,0 +1,6 @@
+1. Add this Background to the whole application
+2. Put the MINT button in the middle
+3. Make a countdown in the center
+4. Put wallet balance around the top
+
+

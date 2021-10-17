@@ -1,3 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Changa&display=swap');
+
 .App {
   text-align: center;
+}
+
+h3.centerTitle {
+  font-family: 'Changa', sans-serif;
+  text-align: center;
+}
+
+h1.centerTitle {
+  font-family: 'Changa', sans-serif;
+  text-align: center;
+  font-size: 100px;
+  font-weight: bold;
+  color: rgba(150, 248, 252, 1);
+}
+
+h4 {
+  color: black;
+}
+
+.rotatingBanner {
+  font-family: 'Changa', sans-serif;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rotatingBanner.teal {
+  background-color: rgba(150, 248, 252, 1);
+}
+
+#walletbox {
+  padding: 10px ;
+  border: 3px solid rgba(150, 248, 252, 1);
+  margin: auto;
+  width: 50%;
+  padding: 10px;
 }
