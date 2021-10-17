@@ -5,7 +5,7 @@ import Particles from 'react-particles-js';
 class ParticlesContainer extends Component {
 render() {
     return (
-        <div style={{ position: 'absolute'}}>
+        <div style={{ position: 'absolute', zIndex:-1}}>
 
         <Particles 
             height="100vh" 
