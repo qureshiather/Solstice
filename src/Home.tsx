@@ -248,9 +248,9 @@ const Home = (props: HomeProps) => {
 
       <h3 className="centerTitle">Super Car NFTs </h3>
 
-      <p className="centerParagraph"> 
+      <h6 className="centerParagraph"> 
         Custom-made, pixel, super car NFTs on the Solana blockchain
-      </p>
+      </h6>
 
       <Snackbar
         open={alertState.open}

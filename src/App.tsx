@@ -48,14 +48,17 @@ const theme = createTheme({
     palette: {
         type: 'dark',
         primary: {
-          main: "#96F8FC"
+          main: "#1CE2E6"
         },
         secondary: {
           main: "#800000"
+        },
+        text: {
+          primary: "#000000"
         }
     },
     typography: {
-      "fontFamily": "Helvetica",
+      "fontFamily": "Changa",
     },
     overrides: {
         MuiButtonBase: {
