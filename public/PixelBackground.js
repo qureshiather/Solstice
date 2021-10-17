@@ -16,8 +16,10 @@ document.body.appendChild(canvas);
 // set up an grid of 3D Pixels in undulating waves
 var pixels = []; 
 
-for(var x = -250; x<250; x+=6) { 
-    for(var z = -250; z<250; z+=6) { 
+amount_of_pixels = 300;
+
+for(var x = -amount_of_pixels; x<amount_of_pixels; x+=6) { 
+    for(var z = -amount_of_pixels; z<amount_of_pixels; z+=6) { 
         var zOscillation = Math.sin(z*(Math.PI*4/250));
         var xOscillation = Math.sin((x+z)*(Math.PI*2/250));
         max = 255;
