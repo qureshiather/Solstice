@@ -20,13 +20,25 @@ for(var x = -250; x<250; x+=6) {
     for(var z = -250; z<250; z+=6) { 
         var zOscillation = Math.sin(z*(Math.PI*4/250));
         var xOscillation = Math.sin((x+z)*(Math.PI*2/250));
-        var pixel = new Pixel3D(x,(zOscillation+xOscillation)*14+30,z);
+        max = 255;
+        min = 1;
+        pixel_r = Math.floor(Math.random() * (max - min + 1)) + min;
+        pixel_g = Math.floor(Math.random() * (max - min + 1)) + min;
+        pixel_b = Math.floor(Math.random() * (max - min + 1)) + min;
+        var pixel = new Pixel3D(
+            x,
+            (zOscillation+xOscillation)*14+30,
+            z,
+            pixel_r,
+            pixel_g,
+            pixel_b
+        );
         pixels.push(pixel); 
     }
 }
 
 // call the render function 30 times a second
-setInterval(render, 1000 / 30);
+setInterval(render, 1000 / 45);
 
 
 function render() {
@@ -59,7 +71,7 @@ function render() {
         var y2d = ((pixel.y+offsetY) * scale) + halfHeight; 
         
         // and set that 2D pixel to be green
-        setPixel(imagedata, x2d, y2d, 10, 255, 255);
+        setPixel(imagedata, x2d, y2d, pixel);
 
         // add 1 to the z position to bring it a little 
         // closer to the camera each frame
@@ -75,20 +87,23 @@ function render() {
 
 }
 
-function setPixel(imagedata, x, y, r, g, b) {
+function setPixel(imagedata, x, y, pixel) {
 
     if ((x < 0) || (x > width) || (y < 0) || (y > width)) return;
 
     var i = ((y >> 0) * imagedata.width + (x >> 0)) * 4;
 
-    imagedata.data[i] = r;
-    imagedata.data[i + 1] = g;
-    imagedata.data[i + 2] = b;
+    imagedata.data[i] = pixel.r;
+    imagedata.data[i + 1] = pixel.g;
+    imagedata.data[i + 2] = pixel.b;
     imagedata.data[i + 3] = 255;
 }
 
-function Pixel3D(x,y,z) { 
+function Pixel3D(x,y,z, r, g, b) { 
     this.x = x; 
     this.y = y; 
     this.z = z;
+    this.r = r;
+    this.g = g;
+    this.b = b;
 }
