@@ -35,6 +35,8 @@ const ConnectButton = styled(WalletDialogButton)`
 
 const MuteButton = styled(Button)`
   position: absolute;
+  top: 0;
+  left: 0;
 `; // add your styles here
 
 const CounterText = styled.span``; // add your styles here
