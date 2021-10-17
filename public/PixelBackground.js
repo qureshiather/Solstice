@@ -16,12 +16,12 @@ document.body.appendChild(canvas);
 // set up an grid of 3D Pixels in undulating waves
 var pixels = []; 
 
-amount_of_pixels = 300;
+amount_of_pixels = 200;
 
 for(var x = -amount_of_pixels; x<amount_of_pixels; x+=6) { 
     for(var z = -amount_of_pixels; z<amount_of_pixels; z+=6) { 
-        var zOscillation = Math.sin(z*(Math.PI*4/250));
-        var xOscillation = Math.sin((x+z)*(Math.PI*2/250));
+        var zOscillation = Math.sin(z*(Math.PI*4/amount_of_pixels));
+        var xOscillation = Math.sin((x+z)*(Math.PI*2/amount_of_pixels));
         max = 255;
         min = 1;
         // Custom to make the site look cooler with Blue and Green
