@@ -16,7 +16,7 @@ h1.centerTitle {
   font-weight: bold;
   color: rgba(150, 248, 252, 1);
   margin-top: 5%;
-  margin-bottom: 5%;
+  margin-bottom: 10%;
   height: 50px;
 }
 
@@ -71,9 +71,9 @@ p* {
   position: relative;
   width: 250px;
   height: 250px;
-  padding-top: 30px;
-  padding-bottom: 40px;
   margin: auto;
+  border: 3px solid rgba(150, 248, 252, 1);
+  box-shadow: 5px 10px 5px #e709e7;
 }
 
 .data {
