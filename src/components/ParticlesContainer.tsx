@@ -36,12 +36,12 @@ class ParticlesContainer extends Component {
                 },
               },
               opacity: {
-                value: 0.4008530152163807,
+                value: 1,
                 random: true,
                 anim: {
                   enable: false,
                   speed: 2,
-                  opacity_min: 0.1,
+                  opacity_min: 0.5,
                   sync: false,
                 },
               },
@@ -56,7 +56,7 @@ class ParticlesContainer extends Component {
                 },
               },
               line_linked: {
-                enable: true,
+                enable: false,
                 distance: 0,
                 color: "#ffffff",
                 opacity: 0.3687847739990702,

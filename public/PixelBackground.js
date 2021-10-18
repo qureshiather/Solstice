@@ -24,7 +24,7 @@ for (var x = -amount_of_pixels; x < amount_of_pixels; x += 6) {
     max = 255;
     min = 1;
     // Custom to make the site look cooler with Blue and Green
-    const pixel_r = Math.floor(Math.random() * (50 - 0 + 1)) + 0;
+    const pixel_r = Math.floor(Math.random() * (80 - 0 + 1)) + 0;
     const pixel_g = Math.floor(Math.random() * (max - min + 1)) + min;
     const pixel_b = Math.floor(Math.random() * (max - min + 1)) + min;
     var pixel = new Pixel3D(
