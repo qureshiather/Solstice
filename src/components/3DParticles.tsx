@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // @ts-ignore
 import ParticleField from 'react-particles-webgl';
 
@@ -7,7 +7,7 @@ export const ParticleContainer3D = () => {
     const config = {
         showCube: false,
         dimension: '3D',
-        velocity: 2,
+        velocity: 0.5,
         boundaryType: 'bounce',
         antialias: false,
         direction: {
@@ -41,10 +41,10 @@ export const ParticleContainer3D = () => {
         cameraControls: {
           enabled: true,
           enableDamping: true,
-          dampingFactor: 0.2,
+          dampingFactor: 0.4,
           enableZoom: false,
           autoRotate: true,
-          autoRotateSpeed: 2,
+          autoRotateSpeed: 3,
           resetCameraFlag: false
         }
     }
