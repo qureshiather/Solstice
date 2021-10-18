@@ -3,7 +3,12 @@ import React from "react"; // we need this to make JSX compile
 export const SocialsDiv = () => {
   return (
     <div id="topButtonsHolder">
-      <a href="." rel="noreferrer" className="topButtons glitch isInteractive">
+      <a
+        href="."
+        rel="noreferrer"
+        className="topButtons glitch isInteractive"
+        style={{ zIndex: 1 }}
+      >
         <p>HOME</p>
       </a>
       <a
@@ -11,6 +16,7 @@ export const SocialsDiv = () => {
         target="_blank"
         rel="noreferrer"
         className="topButtons glitch isInteractive"
+        style={{ zIndex: 1 }}
       >
         <p>DISCORD</p>
       </a>
@@ -19,6 +25,7 @@ export const SocialsDiv = () => {
         target="_blank"
         rel="noreferrer"
         className="topButtons glitch isInteractive"
+        style={{ zIndex: 1 }}
       >
         <p>TWITTER</p>
       </a>
