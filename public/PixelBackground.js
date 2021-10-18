@@ -44,7 +44,7 @@ setInterval(render, 1000 / 45);
 
 function render() {
   width = canvas.width = window.innerWidth;
-  height = canvas.height = window.innerHeight / 2;
+  height = canvas.height = window.innerHeight / 4;
   (halfWidth = width / 2),
     (halfHeight = height / 4),
     // clear the canvas
