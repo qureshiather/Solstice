@@ -15,7 +15,7 @@ export const AudioButton = () => {
 
   return (
     <>
-      <ReactAudioPlayer src="Loop.mp3" autoPlay muted={soundMuted} loop />
+      <ReactAudioPlayer src="loop.mp3" autoPlay muted={soundMuted} loop />
 
       <MuteButton
         onClick={() => {
