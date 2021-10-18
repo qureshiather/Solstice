@@ -3,9 +3,9 @@ var canvas = document.createElement("canvas"),
   height = (canvas.height = window.innerHeight / 2),
   halfWidth = width / 2,
   halfHeight = height / 4,
-  fov = 200,
+  fov = 100,
   offsetX = 0,
-  offsetY = 0,
+  offsetY = -1,
   mouseX = 0,
   mouseY = 0;
 
