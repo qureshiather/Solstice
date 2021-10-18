@@ -57,10 +57,7 @@ p* {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.rotatingBanner.teal {
-  background-color: rgba(150, 248, 252, 1);
+  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
 }
 
 #walletbox {
@@ -88,36 +85,30 @@ p* {
   box-shadow: 5px 10px 5px #e709e7;
 }
 
-.data {
-  color: white;
-  margin: 1vw;
-}
-
 #dataHolder {
   display: grid;
-  margin: 4vh 20vw;
+  margin: auto;
+  text-align: center;
 }
 
 #content {
   display: flex;
-  flex-direction: row;
   justify-content: space-evenly;
 }
 
 .dataName {
   color: #0fd4c2;
+  align-items: center
 }
 
-.subHolder {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 0 1vw;
+.data {
+  color: white;
+  margin: 1vw;
 }
 
 .gradient-border {
   --borderWidth: 3px;
-  background: #1c1c1d;
+  background: black;
   position: relative;
   border-radius: var(--borderWidth);
 }
@@ -150,9 +141,7 @@ p* {
 
 #box {
   margin: auto;
-  object-fit: contain;
-  display: flex;
-  width: 400px;
+  width: 440px; 
   height: 100px;
   color: white;
 }

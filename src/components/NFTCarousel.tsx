@@ -11,7 +11,7 @@ class NFTCarousel extends Component {
           showArrows
           centerMode
           infiniteLoop
-          interval={6000}
+          interval={4000}
           centerSlidePercentage={100}
           showIndicators={false}
           emulateTouch
