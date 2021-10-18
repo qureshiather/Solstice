@@ -59,7 +59,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: "Changa",
+    fontFamily: "Orbitron",
   },
   overrides: {
     MuiButtonBase: {

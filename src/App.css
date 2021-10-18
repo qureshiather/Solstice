@@ -4,13 +4,16 @@
   text-align: center;
 }
 
+h3 {
+  font-family: 'Orbitron';
+}
+
 h3.centerTitle {
-  font-family: 'Changa';
   text-align: center;
 }
 
 h1.centerTitle {
-  font-family: 'Changa';
+  font-family: 'Orbitron';
   text-align: center;
   font-size: 80px;
   font-weight: bold;
@@ -20,13 +23,22 @@ h1.centerTitle {
   height: 50px;
 }
 
-h5.centerParagraph {
-  font-family: 'Changa';
+h5.blackText {
+  color: black;
+}
+
+h6.centerParagraph {
+  font-family: 'Orbitron';
+  text-align: center;
+}
+
+h5 {
+  font-family: 'Orbitron';
   text-align: center;
 }
 
 h4 {
-  font-family: 'Changa';
+  font-family: 'Orbitron';
   text-align: center;
   color: black;
 }
@@ -92,17 +104,6 @@ p* {
   justify-content: space-evenly;
 }
 
-#cadreHolder,
-#content {
-  grid-row: 1;
-  grid-column: 1;
-}
-#cadreHolder img {
-  height: 100%;
-  width: 100%;
-  object-fit: contain;
-}
-
 .dataName {
   color: #0fd4c2;
 }
@@ -112,4 +113,46 @@ p* {
   flex-direction: row;
   align-items: center;
   margin: 0 1vw;
+}
+
+.gradient-border {
+  --borderWidth: 3px;
+  background: #1c1c1d;
+  position: relative;
+  border-radius: var(--borderWidth);
+}
+.gradient-border:after {
+  content: '';
+  position: absolute;
+  top: calc(-1 * var(--borderWidth));
+  left: calc(-1 * var(--borderWidth));
+  height: calc(100% + var(--borderWidth) * 2);
+  width: calc(100% + var(--borderWidth) * 2);
+  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+  border-radius: calc(2 * var(--borderWidth));
+  z-index: -1;
+  animation: animatedgradient 3s ease alternate infinite;
+  background-size: 300% 300%;
+}
+
+
+@keyframes animatedgradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+#box {
+  margin: auto;
+  object-fit: contain;
+  display: flex;
+  width: 400px;
+  height: 100px;
+  color: white;
 }

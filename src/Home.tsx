@@ -197,9 +197,19 @@ const Home = (props: HomeProps) => {
 
       {wallet && (
         <div id="walletbox">
-          {<h3>Wallet {shortenAddress(wallet.publicKey.toBase58() || "")}</h3>}
+          {
+            <h3 className="centerTitle">
+              {shortenAddress(wallet.publicKey.toBase58() || "")}
+            </h3>
+          }
 
-          {<h3>Balance: {(balance || 0).toLocaleString()} SOL</h3>}
+          {
+            <h3 className="centerTitle">
+              Balance: {(balance || 0).toLocaleString()} SOL
+            </h3>
+          }
+
+          {<h3 className="centerTitle"> 1 SOL </h3>}
 
           {<h5>Total Available: {itemsAvailable}</h5>}
 
@@ -239,8 +249,6 @@ const Home = (props: HomeProps) => {
           </MintButton>
         )}
       </MintContainer>
-
-      <h3 className="centerTitle">The Solambo NFT</h3>
 
       <h5 className="centerParagraph">
         Custom-made, pixel, super car NFTs in the Solana universe
