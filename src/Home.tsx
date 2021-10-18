@@ -26,6 +26,7 @@ import { PhishingBanner } from "./components/PhishingBanner";
 import { AudioButton } from "./components/AudioButton";
 
 import NFTCarousel from "./components/NFTCarousel";
+import { InformationBox } from "./components/InformationBox";
 
 const ConnectButton = styled(WalletDialogButton)`
   font-family: "Changa", sans-serif;
@@ -245,25 +246,7 @@ const Home = (props: HomeProps) => {
         Custom-made, pixel, super car NFTs in the Solana universe
       </h5>
 
-      <div id="dataHolder">
-        <div id="cadreHolder">
-          <img src="/cadre.png" alt="" />
-        </div>
-        <div id="content">
-          <div className="subHolder">
-            <p className="data glitch">1</p>
-            <p className="dataName">SOL</p>
-          </div>
-          <div className="subHolder">
-            <p className="data glitch">4444</p>
-            <p className="dataName">SUPPLY</p>
-          </div>
-          <div className="subHolder">
-            <p className="data glitch">11/01</p>
-            <p className="dataName">LAUNCH</p>
-          </div>
-        </div>
-      </div>
+      <InformationBox />
 
       <Snackbar
         open={alertState.open}
