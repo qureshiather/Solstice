@@ -34,7 +34,7 @@ export const ParticleContainer3D = () => {
       boundingBox: "canvas",
       count: 150,
       minSize: 10,
-      maxSize: 75,
+      maxSize: 50,
       visible: true,
     },
     cameraControls: {
