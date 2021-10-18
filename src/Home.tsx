@@ -202,20 +202,20 @@ const Home = (props: HomeProps) => {
       
       {wallet && (
         <div id="walletbox"> 
-          {<p>Wallet {shortenAddress(wallet.publicKey.toBase58() || "")}</p>}
+          {<h3>Wallet {shortenAddress(wallet.publicKey.toBase58() || "")}</h3>}
 
-          {<p>Balance: {(balance || 0).toLocaleString()} SOL</p>}
+          {<h3>Balance: {(balance || 0).toLocaleString()} SOL</h3>}
 
-          {<p>Total Available: {itemsAvailable}</p>}
+          {<h5>Total Available: {itemsAvailable}</h5>}
 
-          {<p>Redeemed: {itemsRedeemed}</p>}
+          {<h5>Redeemed: {itemsRedeemed}</h5>}
 
-          {<p>Remaining: {itemsRemaining}</p>}
+          {<h5>Remaining: {itemsRemaining}</h5>}
         </div>
         )
       }
 
-      <p></p>
+      <br/>
 
       <MintContainer>
         {!wallet ? (
