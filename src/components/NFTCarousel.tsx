@@ -16,6 +16,7 @@ class NFTCarousel extends Component {
           showIndicators={false}
           emulateTouch
           showStatus={false}
+          showThumbs={false}
         >
           <div>
             <img src="assets/0.png" alt="Solambo #0" />
