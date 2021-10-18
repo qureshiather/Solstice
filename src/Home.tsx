@@ -33,6 +33,8 @@ import {
   AudioButton
 } from "./components/AudioButton";
 
+import NFTCarousel from "./components/NFTCarousel";
+
 const ConnectButton = styled(WalletDialogButton)`
   font-family: 'Changa', sans-serif;
 `;
@@ -199,6 +201,8 @@ const Home = (props: HomeProps) => {
       <SocialsDiv/>
 
       <h1 className="centerTitle glitch"> SOLAMBO </h1>
+
+      <NFTCarousel/>
       
       {wallet && (
         <div id="walletbox"> 
