@@ -22,7 +22,7 @@ import {
 import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 
-import ParticlesContainer from "./components/ParticlesContainer";
+import { ParticleContainer3D } from "./components/3DParticles";
 
 const treasury = new anchor.web3.PublicKey(
   process.env.REACT_APP_TREASURY_ADDRESS!
@@ -98,7 +98,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <ParticlesContainer />
+      <ParticleContainer3D/>
       <ConnectionProvider endpoint={endpoint}>
         <WalletProvider wallets={wallets} autoConnect={true}>
           <WalletDialogProvider>
