@@ -5,7 +5,7 @@
 }
 
 h3.centerTitle {
-  font-family: 'Changa', sans-serif;
+  font-family: 'Changa';
   text-align: center;
 }
 
@@ -21,10 +21,12 @@ h1.centerTitle {
 }
 
 h5.centerParagraph {
+  font-family: 'Changa';
   text-align: center;
 }
 
 h4 {
+  font-family: 'Changa';
   text-align: center;
   color: black;
 }
