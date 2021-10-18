@@ -203,6 +203,8 @@ const Home = (props: HomeProps) => {
       <h1 className="centerTitle glitch"> SOLAMBO </h1>
 
       <NFTCarousel/>
+
+      <br/>
       
       {wallet && (
         <div id="walletbox"> 
@@ -250,11 +252,11 @@ const Home = (props: HomeProps) => {
         )}
       </MintContainer>
 
-      <h3 className="centerTitle">Super Car NFTs </h3>
+      <h3 className="centerTitle">The Solambo NFT</h3>
 
-      <h6 className="centerParagraph"> 
-        Custom-made, pixel, super car NFTs on the Solana blockchain
-      </h6>
+      <h5 className="centerParagraph"> 
+        Custom-made, pixel, super car NFTs in the Solana universe
+      </h5>
 
       <Snackbar
         open={alertState.open}

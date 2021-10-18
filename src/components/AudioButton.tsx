@@ -17,7 +17,7 @@ export const AudioButton = () => {
     return (
         <>
         <ReactAudioPlayer
-        src="loop.mp3"
+        src="Loop.mp3"
         autoPlay
         muted={soundMuted}
         loop
