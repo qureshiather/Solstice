@@ -220,6 +220,17 @@ const Home = (props: HomeProps) => {
       )}
 
       <br />
+      
+      <div style={{margin: "auto", textAlign: "center"}}>
+        <Countdown
+          date={startDate}
+          onMount={({ completed }) => completed && setIsActive(true)}
+          onComplete={() => setIsActive(true)}
+          renderer={renderCounter}
+        />
+      </div>
+
+      <br/>
 
       <MintContainer>
         {!wallet ? (
@@ -239,12 +250,7 @@ const Home = (props: HomeProps) => {
                 "MINT"
               )
             ) : (
-              <Countdown
-                date={startDate}
-                onMount={({ completed }) => completed && setIsActive(true)}
-                onComplete={() => setIsActive(true)}
-                renderer={renderCounter}
-              />
+                "COMING SOON"
             )}
           </MintButton>
         )}
