@@ -22,7 +22,7 @@ import {
 import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 
-import ParticlesContainer from "./components/ParticlesContainer"
+import ParticlesContainer from "./components/ParticlesContainer";
 
 const treasury = new anchor.web3.PublicKey(
   process.env.REACT_APP_TREASURY_ADDRESS!
@@ -43,44 +43,43 @@ const connection = new anchor.web3.Connection(rpcHost);
 
 const startDateSeed = parseInt(process.env.REACT_APP_CANDY_START_DATE!, 10);
 
-
 const txTimeout = 30000; // milliseconds (confirm this works for your project)
 
 const theme = createTheme({
-    palette: {
-        type: 'dark',
-        primary: {
-          main: "#1CE2E6"
-        },
-        secondary: {
-          main: "#e709e7"
-        },
-        text: {
-          primary: "#000000"
-        }
+  palette: {
+    type: "dark",
+    primary: {
+      main: "#1CE2E6",
     },
-    typography: {
-      "fontFamily": "Changa",
+    secondary: {
+      main: "#e709e7",
     },
-    overrides: {
-        MuiButtonBase: {
-            root: {
-                justifyContent: 'flex-start',
-            },
-        },
-        MuiButton: {
-            root: {
-                textTransform: undefined,
-                padding: '12px 16px',
-            },
-            startIcon: {
-                marginRight: 8,
-            },
-            endIcon: {
-                marginLeft: 8,
-            },
-        },
+    text: {
+      primary: "#000000",
     },
+  },
+  typography: {
+    fontFamily: "Changa",
+  },
+  overrides: {
+    MuiButtonBase: {
+      root: {
+        justifyContent: "flex-start",
+      },
+    },
+    MuiButton: {
+      root: {
+        textTransform: undefined,
+        padding: "12px 16px",
+      },
+      startIcon: {
+        marginRight: 8,
+      },
+      endIcon: {
+        marginLeft: 8,
+      },
+    },
+  },
 });
 
 const App = () => {
@@ -88,33 +87,33 @@ const App = () => {
 
   const wallets = useMemo(
     () => [
-        getPhantomWallet(),
-        getSlopeWallet(),
-        getSolflareWallet(),
-        getSolletWallet({ network }),
-        getSolletExtensionWallet({ network })
+      getPhantomWallet(),
+      getSlopeWallet(),
+      getSolflareWallet(),
+      getSolletWallet({ network }),
+      getSolletExtensionWallet({ network }),
     ],
     []
   );
 
   return (
-      <ThemeProvider theme={theme}>
-          <ParticlesContainer/>
-            <ConnectionProvider endpoint={endpoint}>
-              <WalletProvider wallets={wallets} autoConnect={true}>
-                <WalletDialogProvider>
-                  <Home
-                    candyMachineId={candyMachineId}
-                    config={config}
-                    connection={connection}
-                    startDate={startDateSeed}
-                    treasury={treasury}
-                    txTimeout={txTimeout}
-                  />
-                </WalletDialogProvider>
-              </WalletProvider>
-            </ConnectionProvider> 
-      </ThemeProvider>
+    <ThemeProvider theme={theme}>
+      <ParticlesContainer />
+      <ConnectionProvider endpoint={endpoint}>
+        <WalletProvider wallets={wallets} autoConnect={true}>
+          <WalletDialogProvider>
+            <Home
+              candyMachineId={candyMachineId}
+              config={config}
+              connection={connection}
+              startDate={startDateSeed}
+              treasury={treasury}
+              txTimeout={txTimeout}
+            />
+          </WalletDialogProvider>
+        </WalletProvider>
+      </ConnectionProvider>
+    </ThemeProvider>
   );
 };
 

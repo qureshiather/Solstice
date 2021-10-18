@@ -73,3 +73,41 @@ p* {
   padding-bottom: 120px;
   margin: auto;
 }
+
+.data {
+  color: white;
+  margin: 1vw;
+}
+
+#dataHolder {
+  display: grid;
+  margin: 2vh 10vw;
+}
+
+#content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+#cadreHolder,
+#content {
+  grid-row: 1;
+  grid-column: 1;
+}
+#cadreHolder img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.dataName {
+  color: #0fd4c2;
+}
+
+.subHolder {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 1vw;
+}

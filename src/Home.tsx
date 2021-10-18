@@ -4,14 +4,12 @@ import Countdown from "react-countdown";
 import { Button, CircularProgress, Snackbar } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 
-
 import * as anchor from "@project-serum/anchor";
 
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { WalletDialogButton } from "@solana/wallet-adapter-material-ui";
-
 
 import {
   CandyMachine,
@@ -21,25 +19,17 @@ import {
   shortenAddress,
 } from "./candy-machine";
 
-import {
-  SocialsDiv,
-} from "./components/SocialsDiv";
+import { SocialsDiv } from "./components/SocialsDiv";
 
-import {
-  PhishingBanner
-} from "./components/PhishingBanner";
+import { PhishingBanner } from "./components/PhishingBanner";
 
-import {
-  AudioButton
-} from "./components/AudioButton";
+import { AudioButton } from "./components/AudioButton";
 
 import NFTCarousel from "./components/NFTCarousel";
 
 const ConnectButton = styled(WalletDialogButton)`
-  font-family: 'Changa', sans-serif;
+  font-family: "Changa", sans-serif;
 `;
-
-
 
 const CounterText = styled.span``; // add your styles here
 
@@ -62,7 +52,6 @@ export interface HomeProps {
 }
 
 const Home = (props: HomeProps) => {
-
   const [balance, setBalance] = useState<number>();
   const [isActive, setIsActive] = useState(false); // true when countdown completes
   const [isSoldOut, setIsSoldOut] = useState(false); // true when items remaining is zero
@@ -193,21 +182,20 @@ const Home = (props: HomeProps) => {
 
   return (
     <main>
-      
-      <PhishingBanner/>
+      <PhishingBanner />
 
-      <AudioButton/>
+      <AudioButton />
 
-      <SocialsDiv/>
+      <SocialsDiv />
 
       <h1 className="centerTitle glitch"> SOLAMBO </h1>
 
-      <NFTCarousel/>
+      <NFTCarousel />
 
-      <br/>
-      
+      <br />
+
       {wallet && (
-        <div id="walletbox"> 
+        <div id="walletbox">
           {<h3>Wallet {shortenAddress(wallet.publicKey.toBase58() || "")}</h3>}
 
           {<h3>Balance: {(balance || 0).toLocaleString()} SOL</h3>}
@@ -218,10 +206,9 @@ const Home = (props: HomeProps) => {
 
           {<h5>Remaining: {itemsRemaining}</h5>}
         </div>
-        )
-      }
+      )}
 
-      <br/>
+      <br />
 
       <MintContainer>
         {!wallet ? (
@@ -254,9 +241,29 @@ const Home = (props: HomeProps) => {
 
       <h3 className="centerTitle">The Solambo NFT</h3>
 
-      <h5 className="centerParagraph"> 
+      <h5 className="centerParagraph">
         Custom-made, pixel, super car NFTs in the Solana universe
       </h5>
+
+      <div id="dataHolder">
+        <div id="cadreHolder">
+          <img src="/cadre.png" alt="" />
+        </div>
+        <div id="content">
+          <div className="subHolder">
+            <p className="data glitch">1</p>
+            <p className="dataName">SOL</p>
+          </div>
+          <div className="subHolder">
+            <p className="data glitch">4444</p>
+            <p className="dataName">SUPPLY</p>
+          </div>
+          <div className="subHolder">
+            <p className="data glitch">11/01</p>
+            <p className="dataName">LAUNCH</p>
+          </div>
+        </div>
+      </div>
 
       <Snackbar
         open={alertState.open}
@@ -270,7 +277,6 @@ const Home = (props: HomeProps) => {
           {alertState.message}
         </Alert>
       </Snackbar>
-
     </main>
   );
 };
