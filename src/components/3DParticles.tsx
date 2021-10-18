@@ -6,7 +6,7 @@ export const ParticleContainer3D = () => {
   const config = {
     showCube: false,
     dimension: "3D",
-    velocity: 0.5,
+    velocity: 0,
     boundaryType: "bounce",
     antialias: false,
     direction: {
@@ -43,7 +43,7 @@ export const ParticleContainer3D = () => {
       dampingFactor: 0.4,
       enableZoom: false,
       autoRotate: true,
-      autoRotateSpeed: 3,
+      autoRotateSpeed: 2,
       resetCameraFlag: false,
     },
   };
