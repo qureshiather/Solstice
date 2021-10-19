@@ -3,6 +3,7 @@
 3. Make a countdown in the center
 4. Put wallet balance around the top
 5. Add Material UI Tabs to go through collection and FAQ section on bottom:
-https://mui.com/components/tabs/
 
+Do this to create buttons and tabs for collections and FAQs
 
+https://codepen.io/AbubakerSaeed/pen/eYOvKpY

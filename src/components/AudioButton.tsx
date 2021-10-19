@@ -1,8 +1,10 @@
-import React from "react"; // we need this to make JSX compile;
+import React from "react";
 import { useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
 import styled from "styled-components";
 import { Button } from "@material-ui/core";
+// @ts-ignore
+import mp3_file from '../sounds/loop.mp3';
 
 const MuteButton = styled(Button)`
   position: absolute;
@@ -15,7 +17,7 @@ export const AudioButton = () => {
 
   return (
     <>
-      <ReactAudioPlayer src="loop.mp3" autoPlay muted={soundMuted} loop />
+      <ReactAudioPlayer src={mp3_file} autoPlay muted={soundMuted} loop />
 
       <MuteButton
         onClick={() => {
