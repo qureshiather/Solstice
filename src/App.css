@@ -65,8 +65,7 @@ p* {
   border: 3px solid rgba(150, 248, 252, 1);
   box-shadow: 5px 10px 5px #e709e7;
   margin: auto;
-  width: 50%;
-  padding: 10px;
+  width: 30%;
 }
 
 #particles-js {
