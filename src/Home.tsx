@@ -68,7 +68,7 @@ const Home = (props: HomeProps) => {
     severity: undefined,
   });
 
-  const [startDate, setStartDate] = useState(new Date(props.startDate));
+  const [startDate, setStartDate] = useState(new Date(props.startDate * 1000));
 
   const wallet = useAnchorWallet();
   const [candyMachine, setCandyMachine] = useState<CandyMachine>();
@@ -221,14 +221,14 @@ const Home = (props: HomeProps) => {
 
       <br />
       
-      <div style={{margin: "auto", textAlign: "center"}}>
+      {/* <div style={{margin: "auto", textAlign: "center"}}>
         <Countdown
           date={startDate}
           onMount={({ completed }) => completed && setIsActive(true)}
           onComplete={() => setIsActive(true)}
           renderer={renderCounter}
         />
-      </div>
+      </div> */}
 
       <br/>
 
@@ -250,7 +250,12 @@ const Home = (props: HomeProps) => {
                 "MINT"
               )
             ) : (
-                "COMING SOON"
+              <Countdown
+              date={startDate}
+              onMount={({ completed }) => completed && setIsActive(true)}
+              onComplete={() => setIsActive(true)}
+              renderer={renderCounter}
+            />
             )}
           </MintButton>
         )}
