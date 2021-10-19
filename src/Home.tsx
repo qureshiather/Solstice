@@ -29,7 +29,7 @@ import NFTCarousel from "./components/NFTCarousel";
 import { InformationBox } from "./components/InformationBox";
 
 const ConnectButton = styled(WalletDialogButton)`
-  font-family: "Changa", sans-serif;
+  font-family: "Orbitron";
 `;
 
 const CounterText = styled.span``; // add your styles here

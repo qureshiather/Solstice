@@ -1,21 +1,16 @@
 body {
   margin: 0;
-  font-family:'Ubuntu';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: black;
   color: #FFFFFF;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  background-color: #4834d4;
+  background-image: linear-gradient(905deg, #4834d4 0%, #0c0c0c 35%);
 }
 
 .topButtons
 {
   text-decoration: none;
-  color: rgb(128,0,0);
   margin: 15px;
   font-size: 20px;
 }
@@ -32,7 +27,6 @@ code {
 {
   cursor: pointer;
   pointer-events: all !important;
-
   transition-duration: 200ms;
 }
 .isInteractive:hover

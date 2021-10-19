@@ -7,11 +7,11 @@ export const InformationBox = () => {
         <div id="content">
           <div className="subHolder">
             <p className="dataName">SOLANA</p>
-            <p className="data glitch">0.777</p>
+            <p className="data glitch">1</p>
           </div>
           <div className="subHolder">
             <p className="dataName">SUPPLY</p>
-            <p className="data glitch">7777</p>
+            <p className="data glitch">777</p>
           </div>
           <div className="subHolder">
             <p className="dataName">LAUNCH</p>
