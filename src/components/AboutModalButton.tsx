@@ -31,11 +31,10 @@ export const AboutModalButton = () => {
       >
         <Box sx={style} className="transparentBlackBackground">
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            About
+            About Solstice
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 1 }}>
-            The entered in string value will be used in my handcrafted algorithm
-            to generate a unique image
+            The artwork samples you here are generated via a single unique string.
             <ul>
               <li>
                 {" "}
@@ -46,7 +45,7 @@ export const AboutModalButton = () => {
                 {" "}
                 Each image will be unique and there will only be 8888 of them{" "}
               </li>
-              <li>Airdrop will contain 4k version of your seed art</li>
+              <li>The NFT will link to a 4k version of your seed art</li>
               <li>
                 The MINT# and seed value will be visible on the top left of the
                 image
