@@ -30,6 +30,8 @@ import { AudioButton } from "./components/AudioButton";
 
 import NFTCarousel from "./components/NFTCarousel";
 import { InformationBox } from "./components/InformationBox";
+import { FAQModalButton } from "./components/FAQModalButton";
+import { AboutModalButton } from "./components/AboutModalButton";
 
 // eslint-disable-next-line
 const ConnectButton = styled(WalletDialogButton)`
@@ -204,7 +206,7 @@ const Home = (props: HomeProps) => {
 
       <NFTCarousel />
 
-      <br />
+      {/* <br /> */}
 
       {wallet && (
         <div id="walletbox">
@@ -229,8 +231,8 @@ const Home = (props: HomeProps) => {
           {<h5>Remaining: {itemsRemaining}</h5>}
         </div>
       )}
-
-      <br />
+{/* 
+      <br /> */}
 
       {/* <div style={{ margin: "auto", textAlign: "center" }}>
         <Countdown
@@ -241,7 +243,7 @@ const Home = (props: HomeProps) => {
         />
       </div> */}
 
-      <br />
+      {/* <br /> */}
 
       {/* <MintContainer>
         {!wallet ? (
@@ -273,11 +275,14 @@ const Home = (props: HomeProps) => {
       </MintContainer> */}
 
       <h5 className="centerParagraph">
-        Mint to generate unique art tied to your seed forever on display in the
-        solana multiverse
+        Each SolsticeNFT will be uniquely generated based on your entered-in seed value 
       </h5>
 
       <InformationBox />
+
+      <FAQModalButton/>
+
+      <AboutModalButton/>
 
       <Snackbar
         open={alertState.open}

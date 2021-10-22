@@ -96,6 +96,16 @@ p* {
   justify-content: space-evenly;
 }
 
+#FAQButton {
+  margin: auto;
+  text-align: center;
+  padding: 0.5%;
+}
+
+.transparentBlackBackground {
+  background: rgba(0, 0, 0, 0.78);
+}
+
 .dataName {
   color: #0fd4c2;
   align-items: center
