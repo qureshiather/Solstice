@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
-/* eslint-disable no-unused-vars */
-
 import styled from "styled-components";
+// eslint-disable-next-line
 import Countdown from "react-countdown";
+// eslint-disable-next-line
 import { Button, CircularProgress, Snackbar } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 
@@ -31,16 +31,19 @@ import { AudioButton } from "./components/AudioButton";
 import NFTCarousel from "./components/NFTCarousel";
 import { InformationBox } from "./components/InformationBox";
 
+// eslint-disable-next-line
 const ConnectButton = styled(WalletDialogButton)`
   font-family: "Orbitron";
 `;
 
 const CounterText = styled.span``; // add your styles here
 
+// eslint-disable-next-line
 const MintContainer = styled.div`
   text-align: center;
 `; // add your styles here
 
+// eslint-disable-next-line
 const MintButton = styled(Button)`
   position: absolute;
   top: 50%;
@@ -57,8 +60,11 @@ export interface HomeProps {
 
 const Home = (props: HomeProps) => {
   const [balance, setBalance] = useState<number>();
+  // eslint-disable-next-line
   const [isActive, setIsActive] = useState(false); // true when countdown completes
+  // eslint-disable-next-line
   const [isSoldOut, setIsSoldOut] = useState(false); // true when items remaining is zero
+  // eslint-disable-next-line
   const [isMinting, setIsMinting] = useState(false); // true when user got to press MINT
 
   const [itemsAvailable, setItemsAvailable] = useState(0);
@@ -71,6 +77,7 @@ const Home = (props: HomeProps) => {
     severity: undefined,
   });
 
+  // eslint-disable-next-line
   const [startDate, setStartDate] = useState(new Date(props.startDate * 1000));
 
   const wallet = useAnchorWallet();
@@ -102,6 +109,7 @@ const Home = (props: HomeProps) => {
     })();
   };
 
+  // eslint-disable-next-line
   const onMint = async () => {
     try {
       setIsMinting(true);
@@ -293,6 +301,7 @@ interface AlertState {
   severity: "success" | "info" | "warning" | "error" | undefined;
 }
 
+// eslint-disable-next-line
 const renderCounter = ({ days, hours, minutes, seconds }: any) => {
   return (
     <CounterText>
@@ -302,5 +311,3 @@ const renderCounter = ({ days, hours, minutes, seconds }: any) => {
 };
 
 export default Home;
-
-/* eslint-enable no-unused-vars */
