@@ -1,1 +1,1 @@
-# Front end for the Solambo NFT Mint Project
+# Front end for the Solstice NFT Mint Project
