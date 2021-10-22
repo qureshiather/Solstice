@@ -34,7 +34,10 @@ export const FAQModalButton = () => {
             How Solstice NFT will Mint
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            The minting process for Solstice is very unique
+            The minting process for Solstice is very unique!
+            I will be making a youtube video how how it works very soon!
+            <br/>
+            Here is the overall process:
             <ol>
               <li>
                 10 minutes prior to minting, I will allow you to connect your
@@ -42,23 +45,27 @@ export const FAQModalButton = () => {
               </li>
               <li>
                 After connecting wallet, you can enter in a unique string and it
-                will be reserved for you for 60 seconds
+                will be reserved for you for 60 seconds. You can refresh your
+                string as many times as you want.
               </li>
               <li>
                 Once exact mint time is reached, you will be allowed to mint
               </li>
               <li>
                 Once minted, you will receive an SolsticeNFTPass and we will
-                save your string
+                save your unique string
               </li>
               <li>
-                After mint, your SolsticeNFT with the artwork will be generated
-                based on entered in seed strings and airdropped to the wallets
+                After mint, your SolsticeNFT with the generated artwork will be generated
+                based on your unique string and will be airdropped to the wallets
                 who have the corresponding SolsticeNFTPass
               </li>
             </ol>
-            Unfortunately, generation is a slow process, I have to airdrop the minters
-            in batch after minting is done. 
+            Unfortunately, 4k art generation, signing each image with seed + number, and uploading
+            it to arweave, and creating the NFT is not a fast process and thus, it can not happen on mint. 
+            As soon as minting is done, I will be sequentially airdropping your NFT to your wallets.
+            I expect to make sure everyone gets their art before Nov 1st at midnight.
+            I am working on making this process as fast as possible!!
           </Typography>
         </Box>
       </Modal>

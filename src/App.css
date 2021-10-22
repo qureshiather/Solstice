@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Changa&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Changa&display=swap");
 
 .App {
   text-align: center;
 }
 
 .rotatingBanner {
-  font-family: 'Orbitron';
+  font-family: "Orbitron";
   position: absolute;
   top: 0;
   left: 0;
@@ -14,11 +14,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(60deg, #4834d4, #5073b8, #1098ad, #5073b8, #4834d4);
+  background: linear-gradient(
+    60deg,
+    #4834d4,
+    #5073b8,
+    #1098ad,
+    #5073b8,
+    #4834d4
+  );
 }
 
 h3 {
-  font-family: 'Orbitron';
+  font-family: "Orbitron";
 }
 
 h3.centerTitle {
@@ -26,7 +33,7 @@ h3.centerTitle {
 }
 
 h1.centerTitle {
-  font-family: 'Orbitron';
+  font-family: "Orbitron";
   text-align: center;
   font-size: 80px;
   font-weight: bold;
@@ -41,27 +48,27 @@ h5.blackText {
 }
 
 h6.centerParagraph {
-  font-family: 'Orbitron';
+  font-family: "Orbitron";
   text-align: center;
 }
 
 h5 {
-  font-family: 'Orbitron';
+  font-family: "Orbitron";
   text-align: center;
 }
 
 h4 {
-  font-family: 'Orbitron';
+  font-family: "Orbitron";
   text-align: center;
   color: black;
 }
 
 p* {
-  font-family: 'Orbitron';
+  font-family: "Orbitron";
 }
 
 #walletbox {
-  padding: 10px ;
+  padding: 10px;
   border: 3px solid rgba(150, 248, 252, 1);
   box-shadow: 5px 10px 5px #4834d4;
   margin: auto;
@@ -69,10 +76,17 @@ p* {
 }
 
 #particles-js {
-  position : absolute;
-  width:100%;
-  height:100%;
-  z-index:-1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+#Carouselbox {
+  margin: auto;
+  width: 450px;
+  height: 450px;
+  color: white;
 }
 
 #carouselDiv {
@@ -80,20 +94,7 @@ p* {
   width: 500px;
   height: 500px;
   margin: auto;
-  /* border: 3px solid rgba(150, 248, 252, 1); */
   border: 10px solid black;
-  /* box-shadow: 5px 10px 5px #4834d4; */
-}
-
-#dataHolder {
-  display: grid;
-  margin: auto;
-  text-align: center;
-}
-
-#content {
-  display: flex;
-  justify-content: space-evenly;
 }
 
 #FAQButton {
@@ -105,17 +106,6 @@ p* {
 .transparentBlackBackground {
   background: rgba(0, 0, 0, 0.78);
 }
-
-.dataName {
-  color: #0fd4c2;
-  align-items: center
-}
-
-.data {
-  color: white;
-  margin: 1vw;
-}
-
 .gradient-border {
   --borderWidth: 3px;
   background: black;
@@ -123,42 +113,72 @@ p* {
   border-radius: var(--borderWidth);
 }
 .gradient-border:after {
-  content: '';
+  content: "";
   position: absolute;
   top: calc(-1 * var(--borderWidth));
   left: calc(-1 * var(--borderWidth));
   height: calc(100% + var(--borderWidth) * 2);
   width: calc(100% + var(--borderWidth) * 2);
-  background: linear-gradient(60deg, #4834d4, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+  background: linear-gradient(
+    60deg,
+    #4834d4,
+    #a166ab,
+    #5073b8,
+    #1098ad,
+    #07b39b,
+    #6fba82
+  );
   border-radius: calc(2 * var(--borderWidth));
   z-index: -1;
   animation: animatedgradient 3s ease alternate infinite;
   background-size: 300% 300%;
 }
 
-
 @keyframes animatedgradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+#dataHolder {
+  display: inherit;
+  margin: auto;
+  text-align: center;
+  width: 400px;
 }
 
 #box {
-  margin: auto;
-  width: 350px; 
-  height: 95px;
-  color: white;
+  display: flex;
 }
 
-#Carouselbox {
-  margin: auto;
-  width: 500px; 
-  height: 500px;
+.box:first-child > span {
+  margin-right: auto;
+}
+
+.box:last-child > span {
+  margin-left: auto;
+}
+
+.subHolder {
+  flex: 1;
+  display: grid;
+  justify-content: center;
+}
+
+.dataName {
+  float: none; 
+  color: #0fd4c2;
+  align-items: center;
+}
+
+.data {
+  float: none; 
   color: white;
+  align-items: center;
 }
