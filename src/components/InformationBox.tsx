@@ -15,7 +15,7 @@ export const InformationBox = () => {
           </div>
           <div className="subHolder">
             <p className="dataName">LAUNCH</p>
-            <p className="data glitch">11/01</p>
+            <p className="data glitch">11/01/2021</p>
           </div>
         </div>
       </div>

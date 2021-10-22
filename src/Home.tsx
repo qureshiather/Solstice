@@ -221,18 +221,18 @@ const Home = (props: HomeProps) => {
 
       <br />
 
-      <div style={{ margin: "auto", textAlign: "center" }}>
+      {/* <div style={{ margin: "auto", textAlign: "center" }}>
         <Countdown
           date={startDate}
           onMount={({ completed }) => completed && setIsActive(true)}
           onComplete={() => setIsActive(true)}
           renderer={renderCounter}
         />
-      </div>
+      </div> */}
 
       <br />
 
-      <MintContainer>
+      {/* <MintContainer>
         {!wallet ? (
           <ConnectButton>Select Wallet</ConnectButton>
         ) : (
@@ -259,7 +259,7 @@ const Home = (props: HomeProps) => {
             )}
           </MintButton>
         )}
-      </MintContainer>
+      </MintContainer> */}
 
       <h5 className="centerParagraph">
         Mint to generate unique art tied to your seed forever on display in the
