@@ -38,13 +38,13 @@ export const ParticleContainer3D = () => {
       visible: true,
     },
     cameraControls: {
-      enabled: true,
+      enabled: false,
       enableDamping: true,
       dampingFactor: 0.4,
       enableZoom: false,
       autoRotate: true,
       autoRotateSpeed: 2,
-      resetCameraFlag: false,
+      resetCameraFlag: true,
     },
   };
 

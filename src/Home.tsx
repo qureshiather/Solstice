@@ -189,7 +189,7 @@ const Home = (props: HomeProps) => {
 
       <SocialsDiv />
 
-      <h1 className="centerTitle glitch"> SOLAMBO </h1>
+      <h1 className="centerTitle glitch"> SOLSTICE </h1>
 
       <NFTCarousel />
 
@@ -220,17 +220,17 @@ const Home = (props: HomeProps) => {
       )}
 
       <br />
-      
-      {/* <div style={{margin: "auto", textAlign: "center"}}>
+
+      <div style={{ margin: "auto", textAlign: "center" }}>
         <Countdown
           date={startDate}
           onMount={({ completed }) => completed && setIsActive(true)}
           onComplete={() => setIsActive(true)}
           renderer={renderCounter}
         />
-      </div> */}
+      </div>
 
-      <br/>
+      <br />
 
       <MintContainer>
         {!wallet ? (
@@ -251,18 +251,19 @@ const Home = (props: HomeProps) => {
               )
             ) : (
               <Countdown
-              date={startDate}
-              onMount={({ completed }) => completed && setIsActive(true)}
-              onComplete={() => setIsActive(true)}
-              renderer={renderCounter}
-            />
+                date={startDate}
+                onMount={({ completed }) => completed && setIsActive(true)}
+                onComplete={() => setIsActive(true)}
+                renderer={renderCounter}
+              />
             )}
           </MintButton>
         )}
       </MintContainer>
 
       <h5 className="centerParagraph">
-        Custom-made, pixel, super car NFTs in the Solana universe
+        Mint to generate unique art tied to your seed forever on display in the
+        solana multiverse
       </h5>
 
       <InformationBox />
