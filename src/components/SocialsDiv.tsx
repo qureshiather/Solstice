@@ -12,7 +12,7 @@ export const SocialsDiv = () => {
         <p>HOME</p>
       </a>
       <a
-        href="https://discord.gg/N9JY6sjGdt"
+        href="https://discord.gg/KUE85VAXBF"
         target="_blank"
         rel="noreferrer"
         className="topButtons glitch isInteractive"
@@ -21,7 +21,7 @@ export const SocialsDiv = () => {
         <p>DISCORD</p>
       </a>
       <a
-        href="https://twitter.com/SolanaLambos"
+        href="https://twitter.com/NftSolstice"
         target="_blank"
         rel="noreferrer"
         className="topButtons glitch isInteractive"

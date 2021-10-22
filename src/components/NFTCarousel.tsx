@@ -5,7 +5,8 @@ import { Carousel } from "react-responsive-carousel";
 class NFTCarousel extends Component {
   render() {
     return (
-      <div id="carouselDiv">
+      <div className="gradient-border" id="Carouselbox">
+      {/* <div id="carouselDiv"> */}
         <Carousel
           autoPlay
           showArrows

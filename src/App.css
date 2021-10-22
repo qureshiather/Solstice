@@ -80,8 +80,9 @@ p* {
   width: 500px;
   height: 500px;
   margin: auto;
-  border: 3px solid rgba(150, 248, 252, 1);
-  box-shadow: 5px 10px 5px #4834d4;
+  /* border: 3px solid rgba(150, 248, 252, 1); */
+  border: 10px solid black;
+  /* box-shadow: 5px 10px 5px #4834d4; */
 }
 
 #dataHolder {
@@ -142,5 +143,12 @@ p* {
   margin: auto;
   width: 350px; 
   height: 95px;
+  color: white;
+}
+
+#Carouselbox {
+  margin: auto;
+  width: 500px; 
+  height: 500px;
   color: white;
 }
