@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+
+/* eslint-disable no-unused-vars */
+
 import styled from "styled-components";
 import Countdown from "react-countdown";
 import { Button, CircularProgress, Snackbar } from "@material-ui/core";
@@ -299,3 +302,5 @@ const renderCounter = ({ days, hours, minutes, seconds }: any) => {
 };
 
 export default Home;
+
+/* eslint-enable no-unused-vars */
