@@ -31,6 +31,9 @@ class NFTCarousel extends Component {
           <div>
             <img src="assets/3.png" alt="Solstice #3" />
           </div>
+          <div>
+            <img src="assets/4.png" alt="Solstice #4" />
+          </div>
         </Carousel>
       </div>
     );
