@@ -175,6 +175,7 @@ p* {
   float: none; 
   color: #0fd4c2;
   align-items: center;
+  margin-bottom: 0px;
 }
 
 .data {
