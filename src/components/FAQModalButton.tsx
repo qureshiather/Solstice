@@ -9,7 +9,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 500,
+  width: 350,
   border: "2px solid #999",
   boxShadow: 24,
   p: 4,
@@ -35,10 +35,6 @@ export const FAQModalButton = () => {
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <br />
-            The minting process for Solstice is very unique! Youtube video
-            coming soon!
-            <br />
-            <br />
             Minting Process:
             <ol>
               <li>
@@ -46,40 +42,14 @@ export const FAQModalButton = () => {
                 wallet
               </li>
               <li>
-                After connecting wallet, you can enter in a unique string and it
-                will be reserved for you for 60 seconds
-                <ul>
-                  <li>
-                    You can re-reserve your unique string to extend your
-                    reservation of that string.
-                  </li>
-                  <li>
-                    If someone else has your string, you will prompted to choose
-                    another
-                  </li>
-                </ul>
-              </li>
-              <li>
                 Once exact mint time is reached, you will be allowed to mint
-                provided you have a reserved unique string and enough funds
+                provided you have enough funds
               </li>
               <li>
-                Once minted, you will IMMEDIATELY receive a SolsticeNFTPass and
-                we will save your unique string
-              </li>
-              <li>
-                Shortly after mint, your artwork will be generated based on your
-                unique string and an NFT containing it will be airdropped to the
-                wallets who have the corresponding SolsticeNFTPass
+                Once minted, you will IMMEDIATELY receive a SolsticeNFT that you
+                can view in your wallet
               </li>
             </ol>
-            Unfortunately, 4k art generation, signing each image with seed +
-            number, uploading the image to arweave, and creating a NFT is not a
-            fast process and thus, it can not happen on mint.
-            <br /> <br />
-            As soon as minting is done, I will be sequentially airdropping
-            generated NFTs. I am working on making this process as fast as
-            possible and completely automated!!
           </Typography>
         </Box>
       </Modal>

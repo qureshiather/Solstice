@@ -47,7 +47,7 @@ export const AboutModalButton = () => {
               </li>
               <li>The NFT will link to a 4k version of your seed art</li>
               <li>
-                The MINT# and seed value will be visible on the top left of the
+                The MINT# will be visible on the top left of the
                 image
               </li>
               <li>
