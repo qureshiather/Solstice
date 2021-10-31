@@ -10,7 +10,7 @@ export const InformationBox = () => {
           </div>
           <div className="subHolder">
             <p className="dataName">SUPPLY</p>
-            <p className="data glitch">8888</p>
+            <p className="data glitch">4444</p>
           </div>
           <div className="subHolder">
             <p className="dataName">LAUNCH</p>
