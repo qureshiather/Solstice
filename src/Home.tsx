@@ -275,7 +275,7 @@ const Home = (props: HomeProps) => {
       </MintContainer> */}
 
       <h5 className="centerParagraph">
-        Each SolsticeNFT will be uniquely generated based on your entered-in seed value 
+        Each SolsticeNFT will be uniquely generated and signed with the mint number 
       </h5>
 
       <InformationBox />
