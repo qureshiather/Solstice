@@ -43,7 +43,7 @@ export const AboutModalButton = () => {
               </li>
               <li>
                 {" "}
-                Each image will be unique and there will only be 8888 of them{" "}
+                Each image will be unique and there will only be 4444 of them{" "}
               </li>
               <li>The NFT will link to a 4k version of your seed art</li>
               <li>
@@ -62,6 +62,11 @@ export const AboutModalButton = () => {
             </ul>
             This entire project was made with love by a single dev who hates his
             job and wants to pursue his creative interests full-time
+            <br/>
+            Join the discord, talk generative art be it audio or visuals, smart contracts,
+            NFT tools etc.
+            we are the builders
+            SolsticeDAO
           </Typography>
         </Box>
       </Modal>
