@@ -34,7 +34,7 @@ export const AboutModalButton = () => {
             About Solstice
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 1 }}>
-            The artwork samples you here are generated via a single unique string.
+            The artwork samples here are all uniquely generated!
             <ul>
               <li>
                 {" "}
@@ -43,30 +43,19 @@ export const AboutModalButton = () => {
               </li>
               <li>
                 {" "}
-                Each image will be unique and there will only be 4444 of them{" "}
+                Each image will be unique and there will only be 999 of them{" "}
               </li>
               <li>The NFT will link to a 4k version of your seed art</li>
-              <li>
-                The MINT# will be visible on the top left of the
-                image
-              </li>
               <li>
                 Minters will receive half the royalties from every subsequent
                 sale of the art
               </li>
-              <li>
-                {" "}
-                A month after launch, all generation code will be deleted and
-                never used again{" "}
-              </li>
             </ul>
             This entire project was made with love by a single dev who hates his
             job and wants to pursue his creative interests full-time
-            <br/>
-            Join the discord, talk generative art be it audio or visuals, smart contracts,
-            NFT tools etc.
-            we are the builders
-            SolsticeDAO
+            <br />
+            Join the discord, talk generative art be it audio or visuals, smart
+            contracts, NFT tools etc. we are the builders SolsticeDAO
           </Typography>
         </Box>
       </Modal>
