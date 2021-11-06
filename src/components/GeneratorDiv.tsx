@@ -1,8 +1,7 @@
 import React from "react";
 import Sketch from "react-p5";
 
-const SEED_NUMBER = 1234;
-
+const SEED_NUMBER = 100;
 
 const RESOLUTION = 1080;
 const CIRCLE_RADIUS = RESOLUTION / 3;
@@ -10,22 +9,22 @@ const CIRCLE_DIAMETER = (RESOLUTION / 3) * 2;
 const SQUARE_SIZE = RESOLUTION / 2;
 
 const get_angle_function_from_string = (value: string, p5: any) => {
-    switch(value) {
-      case "tan":
-        return (angle: any) => p5.tan(angle)
-      case "sin":
-        return (angle: any) => p5.sin(angle)
-      case "cos":
-        return (angle: any) => p5.cos(angle)
-      case "inverse_tan":
-        return (angle: any) => 1/p5.tan(angle)
-      case "inverse_sin":
-        return (angle: any) => 1/p5.sin(angle)
-      case "inverse_cos":
-        return (angle: any) => 1/p5.cos(angle)
-    }
+  switch (value) {
+    case "tan":
+      return (angle: any) => p5.tan(angle);
+    case "sin":
+      return (angle: any) => p5.sin(angle);
+    case "cos":
+      return (angle: any) => p5.cos(angle);
+    case "inverse_tan":
+      return (angle: any) => 1 / p5.tan(angle);
+    case "inverse_sin":
+      return (angle: any) => 1 / p5.sin(angle);
+    case "inverse_cos":
+      return (angle: any) => 1 / p5.cos(angle);
   }
-
+  return (angle: any) => p5.sin(angle);
+};
 
 class GeneratorDiv extends React.Component<{
   BACKGROUND_TYPE: number;
@@ -63,13 +62,35 @@ class GeneratorDiv extends React.Component<{
       p5.noLoop();
     }, 7000);
     p5.createCanvas(RESOLUTION, RESOLUTION).parent(parentRef);
+    p5.smooth();
+    p5.angleMode(p5.DEGREES);
     p5.frameRate(160);
     p5.randomSeed(SEED_NUMBER);
     p5.noiseSeed(SEED_NUMBER);
     // use random seed to generate these numbers
-    // const factors = [0.5, 1, 1.5, 2, 2.5, 3]
-    p5.noiseDetail(3, 5);
-    p5.smooth();
+
+    const NOISE_FACTORS = [0.5, 1, 1.5, 2, 2.5, 3];
+    const REVERSED_NOISE_FACTORS = NOISE_FACTORS.reverse()
+    p5.noiseDetail(
+      p5.random(NOISE_FACTORS),
+      p5.random(REVERSED_NOISE_FACTORS)
+    );
+    const ANGLE_FUNC_OPTIONS = [
+      "sin",
+      "cos",
+      "tan",
+      "inverse_sin",
+      "inverse_cos",
+      "inverse_tan",
+    ];
+    const REVERSED_ANGLE_FUNC_OPTIONS = ANGLE_FUNC_OPTIONS.reverse()
+    this.angle_func_a = get_angle_function_from_string(
+      p5.random(ANGLE_FUNC_OPTIONS), p5);
+    this.angle_func_b = get_angle_function_from_string(
+      p5.random(REVERSED_ANGLE_FUNC_OPTIONS),
+      p5
+    );
+
     const DENSITY = p5.random(500, 1500);
     var space = p5.width / DENSITY;
 
@@ -119,6 +140,7 @@ class GeneratorDiv extends React.Component<{
     }
 
     this.mult = p5.random(0.0005, 0.01);
+
     p5.fill(15, 25);
     if (this.props.SHAPE_BORDER === false) {
       // draw circle (color, alpha value(transparency))
@@ -140,15 +162,6 @@ class GeneratorDiv extends React.Component<{
     p5.drawingContext.shadowOffsetX = 0;
     p5.drawingContext.shadowOffsetY = 0;
     p5.drawingContext.shadowBlur = 0;
-
-    // let options = ["tan","inverse_tan","sin","cos","inverse_sin","inverse_cos"];
-    // let options_reversed = options.reverse()
-
-    // @ts-ignore
-    // this.angle_func_a = get_angle_function_from_string(p5.random(options), p5);
-    this.angle_func_a = get_angle_function_from_string('sin', p5);
-    // @ts-ignore
-    this.angle_func_b = get_angle_function_from_string('cos', p5);
   };
 
   // @ts-ignore
@@ -218,14 +231,7 @@ class GeneratorDiv extends React.Component<{
         720
       );
       this.points[i].add(
-        p5.createVector(
-          this.angle_func_a(
-            angle
-          ),
-          this.angle_func_b(
-            angle
-          )
-        )
+        p5.createVector(this.angle_func_a(angle), this.angle_func_b(angle))
       );
 
       if (this.props.SHAPE_TYPE === 0) {
