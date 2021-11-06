@@ -9,7 +9,9 @@ export const Generator = () => {
 
     <h1 className="centerTitle glitch"> GENERATOR </h1>
 
-    <GeneratorDiv />
+
+
+    <GeneratorDiv BACKGROUND_TYPE={1} SHAPE_TYPE={1} SHAPE_BORDER={false} />
 
     </main>
 }

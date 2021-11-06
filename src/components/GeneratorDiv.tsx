@@ -3,14 +3,6 @@ import Sketch from "react-p5";
 
 const SEED_NUMBER = 1234;
 
-// THESE WILL BE PROPS
-// 0 is just black, 1 is gradient background
-const BACKGROUND_TYPE: number = 1;
-// 0 is no shape, 1 is circle, 2 is square
-const SHAPE_TYPE: number = 1;
-// Shape Border + Line
-const SHAPE_BORDER: boolean = false;
-
 
 const RESOLUTION = 1080;
 const CIRCLE_RADIUS = RESOLUTION / 3;
@@ -35,7 +27,11 @@ const get_angle_function_from_string = (value: string, p5: any) => {
   }
 
 
-class GeneratorDiv extends React.Component {
+class GeneratorDiv extends React.Component<{
+  BACKGROUND_TYPE: number;
+  SHAPE_TYPE: number;
+  SHAPE_BORDER: boolean;
+}> {
   points: any[];
   r1: number;
   r2: number;
@@ -71,7 +67,7 @@ class GeneratorDiv extends React.Component {
     p5.randomSeed(SEED_NUMBER);
     p5.noiseSeed(SEED_NUMBER);
     // use random seed to generate these numbers
-    const factors = [0.5, 1, 1.5, 2, 2.5, 3]
+    // const factors = [0.5, 1, 1.5, 2, 2.5, 3]
     p5.noiseDetail(3, 5);
     p5.smooth();
     const DENSITY = p5.random(500, 1500);
@@ -94,7 +90,7 @@ class GeneratorDiv extends React.Component {
     this.b2 = p5.random(255);
     p5.background(0);
 
-    if (BACKGROUND_TYPE === 1) {
+    if (this.props.BACKGROUND_TYPE === 1) {
       p5.background(40);
       var c1 = p5.color(0);
       var c2 = p5.color(
@@ -124,7 +120,7 @@ class GeneratorDiv extends React.Component {
 
     this.mult = p5.random(0.0005, 0.01);
     p5.fill(15, 25);
-    if (SHAPE_BORDER === false) {
+    if (this.props.SHAPE_BORDER === false) {
       // draw circle (color, alpha value(transparency))
       // border around shape if no stroke is on
       p5.noStroke();
@@ -136,17 +132,17 @@ class GeneratorDiv extends React.Component {
     p5.drawingContext.shadowColor = "black";
 
     // draw shape
-    if (SHAPE_TYPE === 1) {
+    if (this.props.SHAPE_TYPE === 1) {
       p5.circle(p5.width / 2, p5.height / 2, CIRCLE_DIAMETER);
-    } else if (SHAPE_TYPE === 2) {
+    } else if (this.props.SHAPE_TYPE === 2) {
       p5.rect(p5.width / 4, p5.height / 4, SQUARE_SIZE, SQUARE_SIZE);
     }
     p5.drawingContext.shadowOffsetX = 0;
     p5.drawingContext.shadowOffsetY = 0;
     p5.drawingContext.shadowBlur = 0;
 
-    let options = ["tan","inverse_tan","sin","cos","inverse_sin","inverse_cos"];
-    let options_reversed = options.reverse()
+    // let options = ["tan","inverse_tan","sin","cos","inverse_sin","inverse_cos"];
+    // let options_reversed = options.reverse()
 
     // @ts-ignore
     // this.angle_func_a = get_angle_function_from_string(p5.random(options), p5);
@@ -171,7 +167,7 @@ class GeneratorDiv extends React.Component {
       var b = p5.map(this.points[i].x, 0, p5.width, this.b1, this.b2);
 
       var alpha;
-      if (SHAPE_TYPE === 0) {
+      if (this.props.SHAPE_TYPE === 0) {
         alpha = p5.map(
           p5.dist(
             p5.width / 2,
@@ -184,7 +180,7 @@ class GeneratorDiv extends React.Component {
           700,
           0
         );
-      } else if (SHAPE_TYPE === 1) {
+      } else if (this.props.SHAPE_TYPE === 1) {
         alpha = p5.map(
           p5.dist(
             p5.width / 2,
@@ -197,7 +193,7 @@ class GeneratorDiv extends React.Component {
           700,
           0
         );
-      } else if (SHAPE_TYPE === 2) {
+      } else if (this.props.SHAPE_TYPE === 2) {
         alpha = p5.map(
           p5.dist(
             p5.width / 2,
@@ -232,9 +228,9 @@ class GeneratorDiv extends React.Component {
         )
       );
 
-      if (SHAPE_TYPE === 0) {
+      if (this.props.SHAPE_TYPE === 0) {
         p5.ellipse(this.points[i].x, this.points[i].y, 1, p5.random(3));
-      } else if (SHAPE_TYPE === 1) {
+      } else if (this.props.SHAPE_TYPE === 1) {
         if (
           p5.dist(
             p5.width / 2,
@@ -245,7 +241,7 @@ class GeneratorDiv extends React.Component {
         ) {
           p5.ellipse(this.points[i].x, this.points[i].y, 1, p5.random(3));
         }
-      } else if (SHAPE_TYPE === 2) {
+      } else if (this.props.SHAPE_TYPE === 2) {
         if (
           this.points[i].x > SQUARE_SIZE - SQUARE_SIZE / 2 &&
           this.points[i].x < SQUARE_SIZE + SQUARE_SIZE / 2 &&
@@ -263,7 +259,8 @@ class GeneratorDiv extends React.Component {
       <div
         className="gradient-border"
         style={{
-          width: "50%",
+          width: "1080px",
+          height: "1080px",
           margin: "0 auto",
         }}
       >
