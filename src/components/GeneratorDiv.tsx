@@ -1,8 +1,6 @@
 import React from "react";
 import Sketch from "react-p5";
 
-const SEED_NUMBER = 100;
-
 const RESOLUTION = 1080;
 const CIRCLE_RADIUS = RESOLUTION / 3;
 const CIRCLE_DIAMETER = (RESOLUTION / 3) * 2;
@@ -29,7 +27,8 @@ const get_angle_function_from_string = (value: string, p5: any) => {
 class GeneratorDiv extends React.Component<{
   BACKGROUND_TYPE: number;
   SHAPE_TYPE: number;
-  SHAPE_BORDER: boolean;
+  SHAPE_BORDER: number;
+  SEED_STRING: string;
 }> {
   points: any[];
   r1: number;
@@ -41,6 +40,7 @@ class GeneratorDiv extends React.Component<{
   mult: any;
   angle_func_a: Function;
   angle_func_b: Function;
+  SEED_NUMBER: number;
 
   constructor(props: any) {
     super(props);
@@ -54,6 +54,8 @@ class GeneratorDiv extends React.Component<{
     this.mult = 0;
     this.angle_func_a = () => {};
     this.angle_func_b = () => {};
+    var seedrandom = require("seedrandom");
+    this.SEED_NUMBER = seedrandom(props.SEED_STRING).int32();
   }
 
   // @ts-ignore
@@ -65,16 +67,13 @@ class GeneratorDiv extends React.Component<{
     p5.smooth();
     p5.angleMode(p5.DEGREES);
     p5.frameRate(160);
-    p5.randomSeed(SEED_NUMBER);
-    p5.noiseSeed(SEED_NUMBER);
+    p5.randomSeed(this.SEED_NUMBER);
+    p5.noiseSeed(this.SEED_NUMBER);
     // use random seed to generate these numbers
 
     const NOISE_FACTORS = [0.5, 1, 1.5, 2, 2.5, 3];
-    const REVERSED_NOISE_FACTORS = NOISE_FACTORS.reverse()
-    p5.noiseDetail(
-      p5.random(NOISE_FACTORS),
-      p5.random(REVERSED_NOISE_FACTORS)
-    );
+    const REVERSED_NOISE_FACTORS = NOISE_FACTORS.reverse();
+    p5.noiseDetail(p5.random(NOISE_FACTORS), p5.random(REVERSED_NOISE_FACTORS));
     const ANGLE_FUNC_OPTIONS = [
       "sin",
       "cos",
@@ -83,9 +82,11 @@ class GeneratorDiv extends React.Component<{
       "inverse_cos",
       "inverse_tan",
     ];
-    const REVERSED_ANGLE_FUNC_OPTIONS = ANGLE_FUNC_OPTIONS.reverse()
+    const REVERSED_ANGLE_FUNC_OPTIONS = ANGLE_FUNC_OPTIONS.reverse();
     this.angle_func_a = get_angle_function_from_string(
-      p5.random(ANGLE_FUNC_OPTIONS), p5);
+      p5.random(ANGLE_FUNC_OPTIONS),
+      p5
+    );
     this.angle_func_b = get_angle_function_from_string(
       p5.random(REVERSED_ANGLE_FUNC_OPTIONS),
       p5
@@ -142,7 +143,7 @@ class GeneratorDiv extends React.Component<{
     this.mult = p5.random(0.0005, 0.01);
 
     p5.fill(15, 25);
-    if (this.props.SHAPE_BORDER === false) {
+    if (this.props.SHAPE_BORDER === 0) {
       // draw circle (color, alpha value(transparency))
       // border around shape if no stroke is on
       p5.noStroke();
