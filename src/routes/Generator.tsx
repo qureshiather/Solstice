@@ -10,8 +10,6 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
 
 export const Generator = () => {
   const [backgroundType, setBackgroundType] = useState(0);
@@ -24,7 +22,6 @@ export const Generator = () => {
   const [disableBorderType, setDisableBorderType] = useState<boolean>(false);
 
   const [childKey, setChildKey] = useState(1);
-  const [generating, setGenerating] = useState(false);
 
   const validateSeedString = (value: string) => {
     if (value.length > 16) {
@@ -46,6 +43,10 @@ export const Generator = () => {
     }
   }, [shapeType, backgroundType]);
 
+  useEffect(() => {
+    setChildKey((prev) => prev + 1)
+  }, [shapeType, backgroundType, shapeBorder])
+
   const SelectItem = styled(Select)(({ theme }) => ({
     padding: 2,
     textAlign: "center",
@@ -57,13 +58,6 @@ export const Generator = () => {
       <SocialsDiv />
 
       <h1 className="centerTitle glitch"> GENERATOR </h1>
-
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={generating}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
 
       <Box
         component="form"
@@ -169,7 +163,6 @@ export const Generator = () => {
           variant="outlined"
           size="large"
           onClick={() => {
-            setGenerating(true);
             setChildKey((prev) => prev + 1);
           }}
         >
@@ -183,7 +176,6 @@ export const Generator = () => {
           SHAPE_TYPE={shapeType}
           SHAPE_BORDER={shapeBorder}
           SEED_STRING={seedString}
-          generatingFinished={() => setGenerating(false)}
         />
       </div>
     </main>

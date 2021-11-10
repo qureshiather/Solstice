@@ -1,5 +1,6 @@
 import React from "react";
 import Sketch from "react-p5";
+import { Typography } from '@mui/material';
 
 const RESOLUTION = 1080;
 const CIRCLE_RADIUS = RESOLUTION / 3;
@@ -29,7 +30,6 @@ class GeneratorDiv extends React.Component<{
   SHAPE_TYPE: number;
   SHAPE_BORDER: number;
   SEED_STRING: string;
-  generatingFinished: Function;
 }> {
   points: any[];
   r1: number;
@@ -42,6 +42,7 @@ class GeneratorDiv extends React.Component<{
   angle_func_a: Function;
   angle_func_b: Function;
   SEED_NUMBER: number;
+  SEED_STRING: string;
 
   constructor(props: any) {
     super(props);
@@ -56,6 +57,7 @@ class GeneratorDiv extends React.Component<{
     this.angle_func_a = () => {};
     this.angle_func_b = () => {};
     var seedrandom = require("seedrandom");
+    this.SEED_STRING = props.SEED_STRING;
     this.SEED_NUMBER = seedrandom(props.SEED_STRING).int32();
   }
 
@@ -165,10 +167,8 @@ class GeneratorDiv extends React.Component<{
 
   // @ts-ignore
   draw = (p5) => {
-
     if (p5.frameCount > 2000) {
       p5.noLoop();
-      this.props.generatingFinished()
     }
 
     p5.noStroke();
@@ -267,16 +267,20 @@ class GeneratorDiv extends React.Component<{
 
   render() {
     return (
-      <div
-        className="gradient-border"
-        style={{
-          width: "1080px",
-          height: "1080px",
-          margin: "0 auto",
-        }}
-      >
-        <Sketch setup={this.setup} draw={this.draw} />
-      </div>
+      <>
+        <Typography align="center">{`Generating with Seed: ${this.SEED_STRING}`}</Typography>
+        <br/>
+        <div
+          className="gradient-border"
+          style={{
+            width: "1080px",
+            height: "1080px",
+            margin: "0 auto",
+          }}
+        >
+          <Sketch setup={this.setup} draw={this.draw} />
+        </div>
+      </>
     );
   }
 }
