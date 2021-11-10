@@ -10,6 +10,8 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export const Generator = () => {
   const [backgroundType, setBackgroundType] = useState(0);
@@ -55,127 +57,125 @@ export const Generator = () => {
       <SocialsDiv />
 
       <h1 className="centerTitle glitch"> GENERATOR </h1>
-      {!generating && (
-        <>
-          <Box
-            component="form"
-            autoComplete="off"
-            noValidate
-            sx={{
-              width: 600,
-              bgcolor: "#4834d4",
-              "& .MuiTextField-root": { m: 1, width: "25ch" },
-              margin: "0 auto",
-              opacity: "0.6",
-              border: "20px solid black",
-              padding: 3,
-              borderRadius: 1,
-              boxShadow: 1,
-            }}
-          >
-            <Stack spacing={3}>
-              <FormControl>
-                <InputLabel id="demo-simple-select-label">
-                  Background
-                </InputLabel>
-                <SelectItem
-                  variant="filled"
-                  autoWidth
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={backgroundType}
-                  label="Background"
-                  onChange={(event) => {
-                    setBackgroundType(event.target.value as number);
-                  }}
-                >
-                  <MenuItem value={0}>Black</MenuItem>
-                  <MenuItem value={1}>Gradient</MenuItem>
-                </SelectItem>
-              </FormControl>
-              <FormControl>
-                <InputLabel id="demo-simple-select-label">
-                  Shape Type
-                </InputLabel>
-                <SelectItem
-                  variant="filled"
-                  autoWidth
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={shapeType}
-                  label="Shape Type"
-                  onChange={(event) => {
-                    setShapeType(event.target.value as number);
-                  }}
-                >
-                  <MenuItem value={0}>None</MenuItem>
-                  <MenuItem value={1}>Circle</MenuItem>
-                  <MenuItem value={2}>Square</MenuItem>
-                </SelectItem>
-              </FormControl>
-              <FormControl>
-                <InputLabel id="demo-simple-select-label">
-                  Shape Border
-                </InputLabel>
-                <SelectItem
-                  variant="filled"
-                  autoWidth
-                  disabled={disableBorderType}
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={shapeBorder}
-                  label="Shape Border"
-                  onChange={(event) => {
-                    setShapeBorder(event.target.value as number);
-                  }}
-                >
-                  <MenuItem value={0}>No Border</MenuItem>
-                  <MenuItem value={1}>Border</MenuItem>
-                </SelectItem>
-              </FormControl>
-              <FormControl>
-                <TextField
-                  sx={{
-                    textAlign: "center",
-                    padding: 2,
-                    fontFamily: "Orbitron",
-                  }}
-                  label="Seed String"
-                  variant="outlined"
-                  error={seedStringError !== undefined}
-                  helperText={seedStringError}
-                  id="outlined-multiline-flexible"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  value={seedString}
-                  onChange={(event) => {
-                    validateSeedString(event.target.value);
-                  }}
-                />
-              </FormControl>
-            </Stack>
-          </Box>
-          <Stack
-            direction="row"
-            justifyContent="center"
-            alignItems="center"
-            sx={{ padding: "20px" }}
-          >
-            <Button
-              sx={{ margin: "0 auto" }}
-              variant="outlined"
-              size="large"
-              onClick={() => {
-                setGenerating(true);
-                setChildKey((prev) => prev + 1);
+
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={generating}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+
+      <Box
+        component="form"
+        autoComplete="off"
+        noValidate
+        sx={{
+          width: 600,
+          bgcolor: "#4834d4",
+          "& .MuiTextField-root": { m: 1, width: "25ch" },
+          margin: "0 auto",
+          opacity: "0.6",
+          border: "20px solid black",
+          padding: 3,
+          borderRadius: 1,
+          boxShadow: 1,
+        }}
+      >
+        <Stack spacing={3}>
+          <FormControl>
+            <InputLabel id="demo-simple-select-label">Background</InputLabel>
+            <SelectItem
+              variant="filled"
+              autoWidth
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={backgroundType}
+              label="Background"
+              onChange={(event) => {
+                setBackgroundType(event.target.value as number);
               }}
             >
-              GENERATE
-            </Button>
-          </Stack>
-        </>
-      )}
+              <MenuItem value={0}>Black</MenuItem>
+              <MenuItem value={1}>Gradient</MenuItem>
+            </SelectItem>
+          </FormControl>
+          <FormControl>
+            <InputLabel id="demo-simple-select-label">Shape Type</InputLabel>
+            <SelectItem
+              variant="filled"
+              autoWidth
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={shapeType}
+              label="Shape Type"
+              onChange={(event) => {
+                setShapeType(event.target.value as number);
+              }}
+            >
+              <MenuItem value={0}>None</MenuItem>
+              <MenuItem value={1}>Circle</MenuItem>
+              <MenuItem value={2}>Square</MenuItem>
+            </SelectItem>
+          </FormControl>
+          <FormControl>
+            <InputLabel id="demo-simple-select-label">Shape Border</InputLabel>
+            <SelectItem
+              variant="filled"
+              autoWidth
+              disabled={disableBorderType}
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={shapeBorder}
+              label="Shape Border"
+              onChange={(event) => {
+                setShapeBorder(event.target.value as number);
+              }}
+            >
+              <MenuItem value={0}>No Border</MenuItem>
+              <MenuItem value={1}>Border</MenuItem>
+            </SelectItem>
+          </FormControl>
+          <FormControl>
+            <TextField
+              sx={{
+                textAlign: "center",
+                padding: 2,
+                fontFamily: "Orbitron",
+              }}
+              label="Seed String"
+              variant="outlined"
+              error={seedStringError !== undefined}
+              helperText={seedStringError}
+              id="outlined-multiline-flexible"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              value={seedString}
+              onChange={(event) => {
+                validateSeedString(event.target.value);
+              }}
+            />
+          </FormControl>
+        </Stack>
+      </Box>
+      <Stack
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        sx={{ padding: "20px" }}
+      >
+        <Button
+          sx={{ margin: "0 auto" }}
+          variant="outlined"
+          size="large"
+          onClick={() => {
+            setGenerating(true);
+            setChildKey((prev) => prev + 1);
+          }}
+        >
+          GENERATE
+        </Button>
+      </Stack>
 
       <div key={childKey}>
         <GeneratorDiv
