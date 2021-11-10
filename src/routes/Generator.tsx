@@ -6,7 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { SocialsDiv } from "../components/SocialsDiv";
 import GeneratorDiv from "../components/GeneratorDiv";
-import TextField from '@mui/material/TextField';
+import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
@@ -22,10 +22,13 @@ export const Generator = () => {
   const [disableBorderType, setDisableBorderType] = useState<boolean>(false);
 
   const [childKey, setChildKey] = useState(1);
+  const [generating, setGenerating] = useState(false);
 
   const validateSeedString = (value: string) => {
-    if (value.length > 32) {
-      setSeedStringError("Seed String must equal 32 characters or less characters");
+    if (value.length > 16) {
+      setSeedStringError(
+        "Seed String must equal 16 characters or less characters"
+      );
     } else {
       setSeedString(value);
       setSeedStringError(undefined);
@@ -44,7 +47,7 @@ export const Generator = () => {
   const SelectItem = styled(Select)(({ theme }) => ({
     padding: 2,
     textAlign: "center",
-    fontFamily: "Orbitron"
+    fontFamily: "Orbitron",
   }));
 
   return (
@@ -52,120 +55,127 @@ export const Generator = () => {
       <SocialsDiv />
 
       <h1 className="centerTitle glitch"> GENERATOR </h1>
-
-      <Box
-        component="form"
-        autoComplete="off"
-        noValidate
-        sx={{
-          width: 600,
-          bgcolor: 'white',
-          "& .MuiTextField-root": { m: 1, width: "25ch" },
-          margin: "0 auto",
-          opacity: "0.9",
-          border: '20px solid black',
-          padding: 3,
-          borderRadius: 1,
-          boxShadow: 1
-        }}
-      >
-      <Stack spacing={3}>
-            <FormControl>
-              <InputLabel id="demo-simple-select-label">Background</InputLabel>
-              <SelectItem
-                variant="filled"
-                autoWidth
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={backgroundType}
-                label="Background"
-                onChange={(event) => {
-                  setBackgroundType(event.target.value as number);
-                }}
-              >
-                <MenuItem value={0}>Black</MenuItem>
-                <MenuItem value={1}>Gradient</MenuItem>
-              </SelectItem>
-            </FormControl>
-            <FormControl>
-              <InputLabel id="demo-simple-select-label">Shape Type</InputLabel>
-              <SelectItem
-                variant="filled"
-                autoWidth
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={shapeType}
-                label="Shape Type"
-                onChange={(event) => {
-                  setShapeType(event.target.value as number);
-                }}
-              >
-                <MenuItem value={0}>None</MenuItem>
-                <MenuItem value={1}>Circle</MenuItem>
-                <MenuItem value={2}>Square</MenuItem>
-              </SelectItem>
-            </FormControl>
-            <FormControl>
-              <InputLabel id="demo-simple-select-label">
-                Shape Border
-              </InputLabel>
-              <SelectItem
-                variant="filled"
-                autoWidth
-                disabled={disableBorderType}
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={shapeBorder}
-                label="Shape Border"
-                onChange={(event) => {
-                  setShapeBorder(event.target.value as number);
-                }}
-              >
-                <MenuItem value={0}>No Border</MenuItem>
-                <MenuItem value={1}>Border</MenuItem>
-              </SelectItem>
-            </FormControl>
-            <FormControl>
-              <TextField
-                sx={{
-                  textAlign: "center",
-                  padding: 2,
-                  fontFamily: "Orbitron"
-                }}
-
-                label="Seed String"
-                variant="outlined"
-                error={seedStringError !== undefined}
-                helperText={seedStringError}
-                id="outlined-multiline-flexible"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                value={seedString}
-                onChange={(event) => {
-                  validateSeedString(event.target.value);
-                }}
-              />
-            </FormControl>
+      {!generating && (
+        <>
+          <Box
+            component="form"
+            autoComplete="off"
+            noValidate
+            sx={{
+              width: 600,
+              bgcolor: "#4834d4",
+              "& .MuiTextField-root": { m: 1, width: "25ch" },
+              margin: "0 auto",
+              opacity: "0.6",
+              border: "20px solid black",
+              padding: 3,
+              borderRadius: 1,
+              boxShadow: 1,
+            }}
+          >
+            <Stack spacing={3}>
+              <FormControl>
+                <InputLabel id="demo-simple-select-label">
+                  Background
+                </InputLabel>
+                <SelectItem
+                  variant="filled"
+                  autoWidth
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={backgroundType}
+                  label="Background"
+                  onChange={(event) => {
+                    setBackgroundType(event.target.value as number);
+                  }}
+                >
+                  <MenuItem value={0}>Black</MenuItem>
+                  <MenuItem value={1}>Gradient</MenuItem>
+                </SelectItem>
+              </FormControl>
+              <FormControl>
+                <InputLabel id="demo-simple-select-label">
+                  Shape Type
+                </InputLabel>
+                <SelectItem
+                  variant="filled"
+                  autoWidth
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={shapeType}
+                  label="Shape Type"
+                  onChange={(event) => {
+                    setShapeType(event.target.value as number);
+                  }}
+                >
+                  <MenuItem value={0}>None</MenuItem>
+                  <MenuItem value={1}>Circle</MenuItem>
+                  <MenuItem value={2}>Square</MenuItem>
+                </SelectItem>
+              </FormControl>
+              <FormControl>
+                <InputLabel id="demo-simple-select-label">
+                  Shape Border
+                </InputLabel>
+                <SelectItem
+                  variant="filled"
+                  autoWidth
+                  disabled={disableBorderType}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={shapeBorder}
+                  label="Shape Border"
+                  onChange={(event) => {
+                    setShapeBorder(event.target.value as number);
+                  }}
+                >
+                  <MenuItem value={0}>No Border</MenuItem>
+                  <MenuItem value={1}>Border</MenuItem>
+                </SelectItem>
+              </FormControl>
+              <FormControl>
+                <TextField
+                  sx={{
+                    textAlign: "center",
+                    padding: 2,
+                    fontFamily: "Orbitron",
+                  }}
+                  label="Seed String"
+                  variant="outlined"
+                  error={seedStringError !== undefined}
+                  helperText={seedStringError}
+                  id="outlined-multiline-flexible"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={seedString}
+                  onChange={(event) => {
+                    validateSeedString(event.target.value);
+                  }}
+                />
+              </FormControl>
             </Stack>
-      </Box>
-      <Stack
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ padding: "20px" }}
-      >
-        <Button
-          sx={{ margin: "0 auto" }}
-          variant="outlined"
-          size="large"
-          onClick={() => {
-            setChildKey((prev) => prev + 1);
-          }}
-        >
-          GENERATE
-        </Button>
-      </Stack>
+          </Box>
+          <Stack
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            sx={{ padding: "20px" }}
+          >
+            <Button
+              sx={{ margin: "0 auto" }}
+              variant="outlined"
+              size="large"
+              onClick={() => {
+                setGenerating(true);
+                setChildKey((prev) => prev + 1);
+              }}
+            >
+              GENERATE
+            </Button>
+          </Stack>
+        </>
+      )}
 
       <div key={childKey}>
         <GeneratorDiv
@@ -173,6 +183,7 @@ export const Generator = () => {
           SHAPE_TYPE={shapeType}
           SHAPE_BORDER={shapeBorder}
           SEED_STRING={seedString}
+          generatingFinished={() => setGenerating(false)}
         />
       </div>
     </main>

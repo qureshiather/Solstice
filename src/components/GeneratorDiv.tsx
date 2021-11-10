@@ -29,6 +29,7 @@ class GeneratorDiv extends React.Component<{
   SHAPE_TYPE: number;
   SHAPE_BORDER: number;
   SEED_STRING: string;
+  generatingFinished: Function;
 }> {
   points: any[];
   r1: number;
@@ -60,9 +61,6 @@ class GeneratorDiv extends React.Component<{
 
   // @ts-ignore
   setup = (p5, parentRef) => {
-    setTimeout(() => {
-      p5.noLoop();
-    }, 7000);
     p5.createCanvas(RESOLUTION, RESOLUTION).parent(parentRef);
     p5.smooth();
     p5.angleMode(p5.DEGREES);
@@ -167,6 +165,12 @@ class GeneratorDiv extends React.Component<{
 
   // @ts-ignore
   draw = (p5) => {
+
+    if (p5.frameCount > 2000) {
+      p5.noLoop();
+      this.props.generatingFinished()
+    }
+
     p5.noStroke();
     var max = 0;
     if (p5.frameCount * 2 <= this.points.length) {
