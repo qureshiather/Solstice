@@ -62,14 +62,13 @@ class GeneratorDiv extends React.Component<{
   }
 
   // @ts-ignore
-  setup = (p5, parentRef) => {
-    p5.createCanvas(RESOLUTION, RESOLUTION).parent(parentRef);
+  setup = (p5, canvasParentRef) => {
+    p5.createCanvas(RESOLUTION, RESOLUTION).parent(canvasParentRef);
     p5.smooth();
     p5.angleMode(p5.DEGREES);
     p5.frameRate(160);
     p5.randomSeed(this.SEED_NUMBER);
     p5.noiseSeed(this.SEED_NUMBER);
-    // use random seed to generate these numbers
 
     const NOISE_FACTORS = [0.5, 1, 1.5, 2, 2.5, 3];
     const REVERSED_NOISE_FACTORS = NOISE_FACTORS.reverse();
@@ -268,7 +267,7 @@ class GeneratorDiv extends React.Component<{
   render() {
     return (
       <>
-        <Typography align="center">{`Generating with Seed: ${this.SEED_STRING}`}</Typography>
+        <Typography align="center">{`Seed: ${this.SEED_STRING}`}</Typography>
         <br/>
         <div
           className="gradient-border"

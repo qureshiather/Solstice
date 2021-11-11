@@ -106,6 +106,7 @@ p* {
 .transparentBlackBackground {
   background: rgba(0, 0, 0, 0.78);
 }
+
 .gradient-border {
   --borderWidth: 3px;
   background: black;

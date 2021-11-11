@@ -15,7 +15,7 @@ export const Generator = () => {
   const [backgroundType, setBackgroundType] = useState(0);
   const [shapeType, setShapeType] = useState(1);
   const [shapeBorder, setShapeBorder] = useState(0);
-  const [seedString, setSeedString] = useState("123");
+  const [seedString, setSeedString] = useState("Solana");
   const [seedStringError, setSeedStringError] = useState<string | undefined>(
     undefined
   );
@@ -68,7 +68,7 @@ export const Generator = () => {
           bgcolor: "#4834d4",
           "& .MuiTextField-root": { m: 1, width: "25ch" },
           margin: "0 auto",
-          opacity: "0.6",
+          opacity: "0.8",
           border: "20px solid black",
           padding: 3,
           borderRadius: 1,
@@ -170,7 +170,7 @@ export const Generator = () => {
         </Button>
       </Stack>
 
-      <div key={childKey}>
+      {childKey !== 1 ? (<div key={childKey}>
         <GeneratorDiv
           BACKGROUND_TYPE={backgroundType}
           SHAPE_TYPE={shapeType}
@@ -178,6 +178,8 @@ export const Generator = () => {
           SEED_STRING={seedString}
         />
       </div>
+      ) : <></>
+    }
     </main>
   );
 };

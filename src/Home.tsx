@@ -32,6 +32,7 @@ import NFTCarousel from "./components/NFTCarousel";
 import { InformationBox } from "./components/InformationBox";
 import { FAQModalButton } from "./components/FAQModalButton";
 import { AboutModalButton } from "./components/AboutModalButton";
+import { ParticleContainer3D } from "./components/3DParticles";
 
 // eslint-disable-next-line
 const ConnectButton = styled(WalletDialogButton)`
@@ -196,6 +197,7 @@ const Home = (props: HomeProps) => {
 
   return (
     <main>
+      <ParticleContainer3D />
       <PhishingBanner />
 
       <AudioButton />

@@ -22,7 +22,6 @@ import {
 import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 
-import { ParticleContainer3D } from "./components/3DParticles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Generator } from "./routes/Generator";
 
@@ -100,7 +99,6 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <ParticleContainer3D />
       <ConnectionProvider endpoint={endpoint}>
         <WalletProvider wallets={wallets} autoConnect={true}>
           <WalletDialogProvider>
@@ -122,7 +120,6 @@ const App = () => {
                 <Route path="/generator" element={<Generator/>} />
               </Routes>
             </BrowserRouter>
-            ,
           </WalletDialogProvider>
         </WalletProvider>
       </ConnectionProvider>
