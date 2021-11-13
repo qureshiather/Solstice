@@ -29,6 +29,8 @@ export const Generator = (props: GeneratorProps) => {
   const [seedStringError, setSeedStringError] = useState<string | undefined>(
     undefined
   );
+  const [isStringUnique, setIsStringUnique] = useState<string | undefined>(undefined);
+
   const [disableBorderType, setDisableBorderType] = useState<boolean>(false);
 
   const [childKey, setChildKey] = useState(1);
@@ -49,6 +51,17 @@ export const Generator = (props: GeneratorProps) => {
     }
   };
 
+  const CheckIfStringIsUnique = async (value: String) => {
+    const API_URL = "/api/ValidateStringUnique?"
+    const response = await fetch(API_URL + `seedString=${value}`);
+    const body = await response.json();
+    if (body['seedString'] === true){
+      setIsStringUnique(`${value} is unique (Has not been minted)`);
+    } else {
+      setIsStringUnique(`${value} is not unique (Has been minted)`);
+    }
+  }
+
   useEffect(() => {
     if (shapeType === 0 || backgroundType === 0) {
       setShapeBorder(0);
@@ -63,21 +76,21 @@ export const Generator = (props: GeneratorProps) => {
   }, [shapeType, backgroundType, shapeBorder]);
 
   useEffect(() => {
-    if (wallet) {
-      props.connection
-        .getTokenAccountsByOwner(wallet?.publicKey, {
-          programId: new PublicKey(TICKET_TOKEN_PROGRAM_ID),
-        })
-          .then(async (result) => {
-            // loop through public keys, check if they were already created in db
-            console.log(result.value[0].pubkey.toBase58());
-            const response = await fetch('/api/hello');
-            const body = await response.json()
-            console.log(body);
-            setTickets(result.value.length);
-          }
-        );
-    }
+    // if (wallet) {
+    //   props.connection
+    //     .getTokenAccountsByOwner(wallet?.publicKey, {
+    //       programId: new PublicKey(TICKET_TOKEN_PROGRAM_ID),
+    //     })
+    //       .then(async (result) => {
+    //         // loop through public keys, check if they were already created in db
+    //         console.log(result.value[0].pubkey.toBase58());
+    //         const response = await fetch('/api/hello');
+    //         const body = await response.json()
+    //         console.log(body);
+    //         setTickets(result.value.length);
+    //       }
+    //     );
+    // }
   }, [wallet, props.connection]);
 
   const SelectItem = styled(Select)(({ theme }) => ({
@@ -185,12 +198,12 @@ export const Generator = (props: GeneratorProps) => {
             <Button
               variant="contained"
               onClick={() => {
-                console.log("Check if seed string has been minted");
+                CheckIfStringIsUnique(seedString);
               }}
             >
-              {" "}
-              IS TAKEN?{" "}
+              IS TAKEN?
             </Button>
+            { isStringUnique && <p> {isStringUnique} </p> }
           </FormControl>
         </Stack>
       </Box>
