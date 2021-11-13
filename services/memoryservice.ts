@@ -2,24 +2,32 @@ export class MemoryService {
   /*
 
         String Unique: 
-            SeedString: TokenId
+            SEED_<SeedString>: TokenId
         
         VerifyWalletHasTicket:
             Check to see if the TokenId has not been updated yet
-            TokenId -> Wallet
+            TOKEN_<TokenId> -> Wallet
 
         */
   store: Map<String, String>;
 
   constructor() {
     this.store = new Map();
+
+    // Solana is unique
+    this.store.set("SEED_SOLANA", "19203i20913iflkes");
+    // Token
   }
 
   MarkStringAsTaken(seedString: String, TokenPubkey: String) {
-    this.store.set(seedString, TokenPubkey);
+    this.store.set(`SEED_${seedString}`, TokenPubkey);
   }
 
-  ValidateStringUnique(seedString: String) {
-    return this.store.get(seedString) == undefined;
+  IsTokenUnused(tokenId: String) {
+    return this.store.get(`TOKEN_${tokenId}`) === undefined;
+  }
+
+  IsStringUnique(seedString: String) {
+    return this.store.get(`SEED_${seedString}`) === undefined;
   }
 }
