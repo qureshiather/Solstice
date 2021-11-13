@@ -1,9 +1,0 @@
-1. Add this Background to the whole application (DONE)
-2. Put the MINT button in the middle (DONE)
-3. Make a countdown in the center
-4. Put wallet balance around the top
-5. Add Material UI Tabs to go through collection and FAQ section on bottom:
-
-Do this to create buttons and tabs for collections and FAQs
-
-https://codepen.io/AbubakerSaeed/pen/eYOvKpY
