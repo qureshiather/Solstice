@@ -27,7 +27,7 @@ export const Generator = (props: GeneratorProps) => {
   const [seedString, setSeedString] = useState("Solana");
   const [seedStringError, setSeedStringError] = useState<string | undefined>();
   const [isStringUnique, setIsStringUnique] = useState<string | undefined>();
-  const [hasTicket, setHasTicket] = useState<boolean>(false);
+  const [validTicketCount, setValidTicketCount] = useState<number>(0);
 
   const [disableBorderType, setDisableBorderType] = useState<boolean>(false);
 
@@ -50,7 +50,7 @@ export const Generator = (props: GeneratorProps) => {
     const API_URL = "/api/ValidateStringUnique?";
     const response = await fetch(API_URL + `seedString=${value}`);
     const body = await response.json();
-    if (body["seedString"] === true) {
+    if (body["seedString"] === "true") {
       setIsStringUnique(`${value} is unique (Has not been minted)`);
     } else {
       setIsStringUnique(`${value} is not unique (Has been minted)`);
@@ -58,17 +58,12 @@ export const Generator = (props: GeneratorProps) => {
   };
 
   const DoesWalletHaveUnusuedTicket = async (walletPublicKey: String) => {
-    const API_URL = "/api/VerifyWalletHasTicket?";
+    const API_URL = "/api/GetUnusedTicketCount?";
     const response = await fetch(
       API_URL + `walletPublicKey=${walletPublicKey}`
     );
     const body = await response.json();
-    console.log(body);
-    if (body["walletPublicKey"] === true) {
-      setHasTicket(true);
-    } else {
-      setHasTicket(false);
-    }
+    setValidTicketCount(body["walletPublicKey"])
   };
 
   useEffect(() => {
@@ -102,8 +97,9 @@ export const Generator = (props: GeneratorProps) => {
 
       <h1 className="centerTitle glitch"> GENERATOR </h1>
 
-      {hasTicket ? (
+      {validTicketCount !== 0 ? (
         <>
+          <p> {`You have a total of ${validTicketCount} valid ticket(s)`} </p>
           <Box
             component="form"
             autoComplete="off"

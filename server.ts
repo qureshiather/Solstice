@@ -19,9 +19,8 @@ const memoryService = new MemoryService();
 const connection = new anchor.web3.Connection(SOLANA_RPC_HOST);
 const TICKET_TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 
-app.get("/api/VerifyWalletHasTicket", (req: any, res) => {
+app.get("/api/GetUnusedTicketCount", (req: any, res) => {
   const walletPublicKey = req.query.walletPublicKey;
-  let doesWalletHaveUnusedTicket = false;
   let amountOfUnsuedTickets = 0;
   connection
     .getTokenAccountsByOwner(new PublicKey(walletPublicKey), {
@@ -32,12 +31,11 @@ app.get("/api/VerifyWalletHasTicket", (req: any, res) => {
         const tokenId = result.value[i].pubkey.toBase58();
         if (memoryService.IsTokenUnused(tokenId) === true) {
           amountOfUnsuedTickets = amountOfUnsuedTickets + 1;
-          doesWalletHaveUnusedTicket = true;
         }
       }
     })
     .finally(() => {
-      res.send({ walletPublicKey: doesWalletHaveUnusedTicket, "TotalUnusedTickets": amountOfUnsuedTickets });
+      res.send({ walletPublicKey: amountOfUnsuedTickets});
     });
 });
 
@@ -55,9 +53,9 @@ app.get("/api/ValidateStringUnique", (req: any, res: any) => {
 app.post(
   "/api/updateMetadata",
   (req: any, res: { send: (arg0: string) => void }) => {
-    // Given a wallet, grab an unusued token,
+    // Given a walletPubkey, grab an unusued token, return if no valid token
+    // mark the string as submitted in db
     // generate the image in 4k, and update metadata of the token
-    // mark the string as submitted in db, as well as the token has been updated
     // This can be done async?
     res.send(
       `I received your POST request. This is what you sent me: ${req.body.post}`

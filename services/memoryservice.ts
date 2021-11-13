@@ -19,8 +19,9 @@ export class MemoryService {
     // Token
   }
 
-  MarkStringAsTaken(seedString: String, TokenPubkey: String) {
+  MarkSeedStringAsTaken(seedString: String, TokenPubkey: String) {
     this.store.set(`SEED_${seedString}`, TokenPubkey);
+    this.store.set(`TOKEN_${TokenPubkey}`, seedString);
   }
 
   IsTokenUnused(tokenId: String) {
