@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import path from "path";
 
 import { MemoryService } from "./services/memoryservice";
-import { allowedNodeEnvironmentFlags } from "process";
+import { UploadService } from "./services/uploadservice";
 import * as anchor from "@project-serum/anchor";
 import { PublicKey } from "@solana/web3.js";
 
@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const SOLANA_RPC_HOST = "https://explorer-api.devnet.solana.com";
 
 const memoryService = new MemoryService();
+const uploadService = new UploadService();
 const connection = new anchor.web3.Connection(SOLANA_RPC_HOST);
 const TICKET_TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 
@@ -52,14 +53,40 @@ app.get("/api/ValidateStringUnique", (req: any, res: any) => {
 
 app.post(
   "/api/updateMetadata",
-  (req: any, res: { send: (arg0: string) => void }) => {
+  (req: any, res: any) => {
     // Given a walletPubkey, grab an unusued token, return if no valid token
     // mark the string as submitted in db
     // generate the image in 4k, and update metadata of the token
     // This can be done async?
-    res.send(
-      `I received your POST request. This is what you sent me: ${req.body.post}`
-    );
+    const params = res.json(req.body)
+    const walletPublicKey = params.walletPublicKey;
+    const seedString = params.seedString;
+    let HasValidTicket = false;
+    let token_to_use = "";
+    connection
+    .getTokenAccountsByOwner(new PublicKey(walletPublicKey), {
+      programId: new PublicKey(TICKET_TOKEN_PROGRAM_ID),
+    })
+    .then(async (result) => {
+      for (let i = 0; i < result.value.length; i++) {
+        const tokenId = result.value[i].pubkey.toBase58();
+        if (memoryService.IsTokenUnused(tokenId) === true) {
+          HasValidTicket = true;
+          token_to_use = tokenId;
+          break;
+        }
+      }
+    })
+    .finally(() => {
+      if (HasValidTicket === false) {
+        res.send({ walletPublicKey: "no valid tickets" });
+      } else {
+        memoryService.MarkSeedStringAsTaken(seedString, token_to_use)
+        // process the seed and ticket, do this async!!
+        uploadService.updateMetadata(seedString, params.artConfig, token_to_use);
+        res.send({walletPublicKey: "Processing request!"})
+      }
+    });
   }
 );
 

@@ -15,6 +15,7 @@ import * as anchor from "@project-serum/anchor";
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { WalletDialogButton } from "@solana/wallet-adapter-material-ui";
 import { shortenAddress } from "../candy-machine";
+import axios from "axios";
 
 export interface GeneratorProps {
   connection: anchor.web3.Connection;
@@ -262,10 +263,20 @@ export const Generator = (props: GeneratorProps) => {
               variant="contained"
               size="large"
               onClick={() => {
-                // create loading overlay
-                // POST request to backend
-                // send pubkey of wallet + seed string, and parameters (background, shape, border etc)
-                // then, remove overlay, and refresh ticket count (query blockchain again)
+                // create loading overlay!
+                const requestBody = {
+                  seedString: seedString,
+                  walletPublicKey: wallet.publicKey.toBase58(),
+                  artConfig: {
+                    BackgroundType: backgroundType,
+                    ShapeType: shapeType,
+                    borderType: shapeBorder
+                  }
+                }
+                axios
+                .post("/api/updateMetadata", requestBody)
+                .then(()=>{console.log("Submitted request!");})
+                .finally(()=>{window.location.reload();})
               }}
             >
               SUBMIT TICKET
