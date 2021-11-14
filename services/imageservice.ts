@@ -1,5 +1,3 @@
-import {p5} from "node-p5"
-
 export class ImageService {
 
     constructor() {

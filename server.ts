@@ -1,5 +1,4 @@
 import express from "express";
-import bodyParser from "body-parser";
 import path from "path";
 
 import { MemoryService } from "./services/memoryservice";
@@ -10,8 +9,8 @@ import { PublicKey } from "@solana/web3.js";
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const SOLANA_RPC_HOST = "https://explorer-api.devnet.solana.com";
 
@@ -58,7 +57,7 @@ app.post(
     // mark the string as submitted in db
     // generate the image in 4k, and update metadata of the token
     // This can be done async?
-    const params = res.json(req.body)
+    const params = req.body;
     const walletPublicKey = params.walletPublicKey;
     const seedString = params.seedString;
     let HasValidTicket = false;
