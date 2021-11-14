@@ -6,11 +6,11 @@ export const InformationBox = () => {
       <div className="gradient-border" id="box">
         <div className="subHolder">
           <p className="dataName">MINT PRICE</p>
-          <p className="data glitch">1 SOL</p>
+          <p className="data glitch">0.1 SOL</p>
         </div>
         <div className="subHolder">
           <p className="dataName">SUPPLY</p>
-          <p className="data glitch">999</p>
+          <p className="data glitch">3333</p>
         </div>
         <div className="subHolder">
           <p className="dataName">LAUNCH</p>
