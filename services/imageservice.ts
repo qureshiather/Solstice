@@ -29,7 +29,7 @@ function sketch(p5: any) {
   var g2 = 0;
   var b1 = 0;
   var b2 = 0;
-  const RESOLUTION = 720;
+  const RESOLUTION = 1080;
   const CIRCLE_RADIUS = RESOLUTION / 3;
   const CIRCLE_DIAMETER = (RESOLUTION / 3) * 2;
   const SQUARE_SIZE = RESOLUTION / 2;

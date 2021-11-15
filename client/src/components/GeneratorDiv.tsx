@@ -2,7 +2,7 @@ import React from "react";
 import Sketch from "react-p5";
 import { Typography } from "@mui/material";
 
-const RESOLUTION = 720;
+const RESOLUTION = 1080;
 const CIRCLE_RADIUS = RESOLUTION / 3;
 const CIRCLE_DIAMETER = (RESOLUTION / 3) * 2;
 const SQUARE_SIZE = RESOLUTION / 2;
@@ -284,8 +284,8 @@ class GeneratorDiv extends React.Component<{
         <div
           className="gradient-border"
           style={{
-            width: "720px",
-            height: "720px",
+            width: "1080px",
+            height: "1080px",
             margin: "0 auto",
           }}
         >
