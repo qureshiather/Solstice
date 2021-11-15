@@ -33,7 +33,7 @@ function sketch(p5: any) {
   const CIRCLE_RADIUS = RESOLUTION / 3;
   const CIRCLE_DIAMETER = (RESOLUTION / 3) * 2;
   const SQUARE_SIZE = RESOLUTION / 2;
-  var mult: number;
+  var mult = 0;
   var canvas: any;
   var angle_func_a: any;
   var angle_func_b: any;
@@ -55,6 +55,16 @@ function sketch(p5: any) {
     }
     return (angle: any) => p5.sin(angle);
   };
+
+  // @ts-ignore
+function shuffleArray(array: any[]) {
+  for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+  }
+}
 
   p5.setup = () => {
     canvas = p5.createCanvas(RESOLUTION, RESOLUTION);
@@ -99,8 +109,8 @@ function sketch(p5: any) {
         points.push(p);
       }
     }
-
-    p5.shuffle(points, true);
+    shuffleArray(points)
+    // p5.shuffle(points, true);
     r1 = p5.random(255);
     r2 = p5.random(255);
     g1 = p5.random(255);

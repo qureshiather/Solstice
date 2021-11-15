@@ -25,6 +25,16 @@ const get_angle_function_from_string = (value: string, p5: any) => {
   return (angle: any) => p5.sin(angle);
 };
 
+// @ts-ignore
+function shuffleArray(array: any[]) {
+  for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+  }
+}
+
 class GeneratorDiv extends React.Component<{
   BACKGROUND_TYPE: number;
   SHAPE_TYPE: number;
@@ -102,7 +112,9 @@ class GeneratorDiv extends React.Component<{
         this.points.push(p);
       }
     }
-    p5.shuffle(this.points, true);
+
+    // p5.shuffle(this.points, true);
+    shuffleArray(this.points)
     this.r1 = p5.random(255);
     this.r2 = p5.random(255);
     this.g1 = p5.random(255);
