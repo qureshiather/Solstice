@@ -1,6 +1,6 @@
 import React from "react";
 import Sketch from "react-p5";
-import { Typography } from '@mui/material';
+import { Typography } from "@mui/material";
 
 const RESOLUTION = 720;
 const CIRCLE_RADIUS = RESOLUTION / 3;
@@ -268,7 +268,7 @@ class GeneratorDiv extends React.Component<{
     return (
       <>
         <Typography align="center">{`Seed: ${this.SEED_STRING}`}</Typography>
-        <br/>
+        <br />
         <div
           className="gradient-border"
           style={{

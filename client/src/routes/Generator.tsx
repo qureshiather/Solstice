@@ -64,7 +64,7 @@ export const Generator = (props: GeneratorProps) => {
       API_URL + `walletPublicKey=${walletPublicKey}`
     );
     const body = await response.json();
-    setValidTicketCount(body["walletPublicKey"])
+    setValidTicketCount(body["walletPublicKey"]);
   };
 
   useEffect(() => {
@@ -100,7 +100,10 @@ export const Generator = (props: GeneratorProps) => {
 
       {validTicketCount !== 0 ? (
         <>
-          <p> {`You have a total of ${validTicketCount} valid ticket(s)`} </p>
+          <p style={{ margin: "0 auto", textAlign: "center" }}>
+            {" "}
+            {`You have a total of ${validTicketCount} valid ticket(s)`}{" "}
+          </p>
           <Box
             component="form"
             autoComplete="off"
@@ -247,15 +250,24 @@ export const Generator = (props: GeneratorProps) => {
       )}
 
       <Stack
-        direction="row"
+        direction="column"
         justifyContent="center"
         alignItems="center"
         sx={{ padding: "20px" }}
       >
-        {!wallet ? (
-          <WalletDialogButton variant="contained" size="large">
-            Connect Wallet
-          </WalletDialogButton>
+        {!wallet || validTicketCount === 0 ? (
+          <>
+            {validTicketCount === 0 && (
+              <p>
+                {" "}
+                No valid tickets on connected wallet. Refresh and connect a
+                wallet that has some!{" "}
+              </p>
+            )}
+            <WalletDialogButton variant="contained" size="large">
+              Connect Wallet
+            </WalletDialogButton>
+          </>
         ) : (
           <div>
             <p> Wallet: {shortenAddress(wallet.publicKey.toBase58())} </p>
@@ -270,13 +282,17 @@ export const Generator = (props: GeneratorProps) => {
                   artConfig: {
                     BackgroundType: backgroundType,
                     ShapeType: shapeType,
-                    borderType: shapeBorder
-                  }
-                }
+                    borderType: shapeBorder,
+                  },
+                };
                 axios
-                .post("/api/updateMetadata", requestBody)
-                .then(()=>{console.log("Submitted request!");})
-                .finally(()=>{window.location.reload();})
+                  .post("/api/updateMetadata", requestBody)
+                  .then(() => {
+                    console.log("Submitted request!");
+                  })
+                  .finally(() => {
+                    window.location.reload();
+                  });
               }}
             >
               SUBMIT TICKET
