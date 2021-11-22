@@ -1,4 +1,5 @@
 import React from "react"; // we need this to make JSX compile
+import { Link } from "react-router-dom";
 
 export const SocialsDiv = () => {
   return (
@@ -29,6 +30,15 @@ export const SocialsDiv = () => {
       >
         <p>TWITTER</p>
       </a>
+      <Link
+          to={{
+            pathname: "/generator",
+          }}
+          style={{ zIndex: 1 }}
+          className="topButtons glitch isInteractive"
+      >
+        <p>GENERATOR</p>
+      </Link>
     </div>
   );
 };

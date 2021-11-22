@@ -3,8 +3,9 @@ import path from "path";
 
 import { MemoryService } from "./services/memoryservice";
 import { UploadService } from "./services/uploadservice";
+import { fetchNFTsOwnedByWallet } from "./utils/queryUtils"
 import * as anchor from "@project-serum/anchor";
-import { PublicKey } from "@solana/web3.js";
+import { PublicKey, Keypair } from "@solana/web3.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -12,35 +13,38 @@ const port = process.env.PORT || 5000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const SOLANA_RPC_HOST = "https://explorer-api.devnet.solana.com";
+export const SOLANA_RPC_HOST = "https://explorer-api.devnet.solana.com";
+export const UPDATE_AUTHORITY = "6A4ordc3gBx1UodDNPTqQs8zSYnzYzb7YWFPRnAbKUK3"
+export const UPDATE_AUTHORITY_KEYPAIR = Keypair.fromSecretKey(Uint8Array.from([
+  32, 219, 242, 155, 200, 41, 117, 93, 171, 185, 95, 71, 115, 136, 230,
+  249, 7, 138, 206, 79, 105, 5, 198, 137, 233, 14, 34, 251, 69, 166, 255,
+  172, 76, 156, 247, 172, 48, 18, 241, 9, 20, 241, 172, 157, 137, 24, 53,
+  245, 174, 97, 164, 166, 1, 172, 229, 248, 91, 209, 58, 214, 32, 29, 223,
+  178,
+]))
+export const IMAGE_FILE_LOCATION = '/tmp'
 
 const memoryService = new MemoryService();
 const uploadService = new UploadService();
-const connection = new anchor.web3.Connection(SOLANA_RPC_HOST);
-const TICKET_TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
 
 app.get("/api/GetUnusedTicketCount", (req: any, res) => {
   const walletPublicKey = req.query.walletPublicKey;
   let amountOfUnsuedTickets = 0;
-  connection
-    .getTokenAccountsByOwner(new PublicKey(walletPublicKey), {
-      programId: new PublicKey(TICKET_TOKEN_PROGRAM_ID),
-    })
+  fetchNFTsOwnedByWallet(new PublicKey(walletPublicKey))
     .then(async (result) => {
-      for (let i = 0; i < result.value.length; i++) {
-        const tokenId = result.value[i].pubkey.toBase58();
+      for (let i = 0; i < result.length; i++) {
+        const tokenId = result[i].mint;
         if (memoryService.IsTokenUnused(tokenId) === true) {
           amountOfUnsuedTickets = amountOfUnsuedTickets + 1;
         }
       }
     })
     .finally(() => {
-      res.send({ walletPublicKey: amountOfUnsuedTickets});
+      res.send({ walletPublicKey: amountOfUnsuedTickets });
     });
 });
 
 app.get("/api/ValidateStringUnique", (req: any, res: any) => {
-  // Validate that there is no other SolsticePass ticket token that has same CheckStringUniqueness
   const seedString = req.query.seedString;
   const isUnique = memoryService.IsStringUnique(seedString);
   if (isUnique) {
@@ -50,25 +54,16 @@ app.get("/api/ValidateStringUnique", (req: any, res: any) => {
   }
 });
 
-app.post(
-  "/api/updateMetadata",
-  (req: any, res: any) => {
-    // Given a walletPubkey, grab an unusued token, return if no valid token
-    // mark the string as submitted in db
-    // generate the image in 4k, and update metadata of the token
-    // This can be done async?
-    const params = req.body;
-    const walletPublicKey = params.walletPublicKey;
-    const seedString = params.seedString;
-    let HasValidTicket = false;
-    let token_to_use = "";
-    connection
-    .getTokenAccountsByOwner(new PublicKey(walletPublicKey), {
-      programId: new PublicKey(TICKET_TOKEN_PROGRAM_ID),
-    })
+app.post("/api/updateMetadata", (req: any, res: any) => {
+  const params = req.body;
+  const walletPublicKey = params.walletPublicKey;
+  const seedString = params.seedString;
+  let HasValidTicket = false;
+  let token_to_use = "";
+  fetchNFTsOwnedByWallet(new PublicKey(walletPublicKey))
     .then(async (result) => {
-      for (let i = 0; i < result.value.length; i++) {
-        const tokenId = result.value[i].pubkey.toBase58();
+      for (let i = 0; i < result.length; i++) {
+        const tokenId = result[i].mint;
         if (memoryService.IsTokenUnused(tokenId) === true) {
           HasValidTicket = true;
           token_to_use = tokenId;
@@ -80,14 +75,16 @@ app.post(
       if (HasValidTicket === false) {
         res.send({ walletPublicKey: "no valid tickets" });
       } else {
-        memoryService.MarkSeedStringAsTaken(seedString, token_to_use)
-        // process the seed and ticket, do this async!!
-        uploadService.updateMetadata(seedString, params.artConfig, token_to_use);
-        res.send({walletPublicKey: "Processing request!"})
+        memoryService.MarkSeedStringAsTaken(seedString, token_to_use);
+        uploadService.updateMetadata(
+          seedString,
+          params.artConfig,
+          token_to_use
+        );
+        res.send({ walletPublicKey: "Processing request!" });
       }
     });
-  }
-);
+});
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static files

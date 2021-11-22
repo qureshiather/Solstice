@@ -11,12 +11,15 @@
         "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
     },
     "dependencies": {
+        "@metaplex/js": "^4.3.0",
         "@project-serum/anchor": "^0.18.0",
         "@solana/web3.js": "^1.30.2",
+        "arweave": "^1.10.18",
         "body-parser": "^1.18.3",
         "express": "^4.16.4",
         "node-p5": "^1.0.4",
-        "seedrandom": "^3.0.5"
+        "seedrandom": "^3.0.5",
+        "testweave-sdk": "^0.2.2"
     },
     "devDependencies": {
         "@types/express": "^4.17.13",

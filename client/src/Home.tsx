@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 import styled from "styled-components";
-// eslint-disable-next-line
+
 import Countdown from "react-countdown";
-// eslint-disable-next-line
+
 import { Button, CircularProgress, Snackbar } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 
@@ -34,19 +34,19 @@ import { FAQModalButton } from "./components/FAQModalButton";
 import { AboutModalButton } from "./components/AboutModalButton";
 import { ParticleContainer3D } from "./components/3DParticles";
 
-// eslint-disable-next-line
+
 const ConnectButton = styled(WalletDialogButton)`
   font-family: "Orbitron";
 `;
 
 const CounterText = styled.span``; // add your styles here
 
-// eslint-disable-next-line
+
 const MintContainer = styled.div`
   text-align: center;
 `; // add your styles here
 
-// eslint-disable-next-line
+
 const MintButton = styled(Button)`
   position: absolute;
   top: 50%;
@@ -63,11 +63,8 @@ export interface HomeProps {
 
 const Home = (props: HomeProps) => {
   const [balance, setBalance] = useState<number>();
-  // eslint-disable-next-line
   const [isActive, setIsActive] = useState(false); // true when countdown completes
-  // eslint-disable-next-line
   const [isSoldOut, setIsSoldOut] = useState(false); // true when items remaining is zero
-  // eslint-disable-next-line
   const [isMinting, setIsMinting] = useState(false); // true when user got to press MINT
 
   const [itemsAvailable, setItemsAvailable] = useState(0);
@@ -80,7 +77,6 @@ const Home = (props: HomeProps) => {
     severity: undefined,
   });
 
-  // eslint-disable-next-line
   const [startDate, setStartDate] = useState(new Date(props.startDate * 1000));
 
   const wallet = useAnchorWallet();
@@ -112,7 +108,6 @@ const Home = (props: HomeProps) => {
     })();
   };
 
-  // eslint-disable-next-line
   const onMint = async () => {
     try {
       setIsMinting(true);
@@ -208,7 +203,7 @@ const Home = (props: HomeProps) => {
 
       <NFTCarousel />
 
-      {/* <br /> */}
+      <br />
 
       {wallet && (
         <div id="walletbox">
@@ -224,7 +219,7 @@ const Home = (props: HomeProps) => {
             </h3>
           }
 
-          {<h3 className="centerTitle"> 1 SOL </h3>}
+          {<h3 className="centerTitle"> 0.1 SOL </h3>}
 
           {<h5>Total Available: {itemsAvailable}</h5>}
 
@@ -233,21 +228,21 @@ const Home = (props: HomeProps) => {
           {<h5>Remaining: {itemsRemaining}</h5>}
         </div>
       )}
-{/* 
-      <br /> */}
 
-      {/* <div style={{ margin: "auto", textAlign: "center" }}>
+      <br />
+
+      <div style={{ margin: "auto", textAlign: "center" }}>
         <Countdown
           date={startDate}
           onMount={({ completed }) => completed && setIsActive(true)}
           onComplete={() => setIsActive(true)}
           renderer={renderCounter}
         />
-      </div> */}
+      </div>
 
-      {/* <br /> */}
+      <br />
 
-      {/* <MintContainer>
+      <MintContainer>
         {!wallet ? (
           <ConnectButton>Select Wallet</ConnectButton>
         ) : (
@@ -274,7 +269,7 @@ const Home = (props: HomeProps) => {
             )}
           </MintButton>
         )}
-      </MintContainer> */}
+      </MintContainer>
 
       <h5 className="centerParagraph">
         Each SolsticeNFT will be uniquely generated and signed with the mint number 
@@ -308,7 +303,6 @@ interface AlertState {
   severity: "success" | "info" | "warning" | "error" | undefined;
 }
 
-// eslint-disable-next-line
 const renderCounter = ({ days, hours, minutes, seconds }: any) => {
   return (
     <CounterText>
