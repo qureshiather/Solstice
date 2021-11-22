@@ -74,7 +74,7 @@ export class ImageService {
       p5.angleMode(p5.DEGREES);
       p5.frameRate(160);
       var seedrandom = require("seedrandom");
-      const NUMBER_SEED = seedrandom(Cfg.STRING_SEED).int32();
+      const NUMBER_SEED = seedrandom(Cfg.STRING_SEED+'\0').int32();
       p5.randomSeed(NUMBER_SEED);
       p5.noiseSeed(NUMBER_SEED);
   

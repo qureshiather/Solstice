@@ -68,7 +68,7 @@ class GeneratorDiv extends React.Component<{
     this.angle_func_b = () => {};
     var seedrandom = require("seedrandom");
     this.SEED_STRING = props.SEED_STRING;
-    this.SEED_NUMBER = seedrandom(props.SEED_STRING).int32();
+    this.SEED_NUMBER = seedrandom(props.SEED_STRING+'\0').int32();
   }
 
   // @ts-ignore
