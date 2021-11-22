@@ -45,8 +45,7 @@ export const FAQModalButton = () => {
               </li>
               <li>
                 4. Once you are satisfied, you can submit your ticket, and it
-                will then kick off the process to update your ticket with a 4k
-                version of your art + metadata.
+                will then kick off the process to update your ticket metadata with your ART (will take a few min)
               </li>
             </ol>
           </Typography>

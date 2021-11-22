@@ -68,8 +68,6 @@ const Home = (props: HomeProps) => {
   const [isMinting, setIsMinting] = useState(false); // true when user got to press MINT
 
   const [itemsAvailable, setItemsAvailable] = useState(0);
-  const [itemsRedeemed, setItemsRedeemed] = useState(0);
-  const [itemsRemaining, setItemsRemaining] = useState(0);
 
   const [alertState, setAlertState] = useState<AlertState>({
     open: false,
@@ -91,7 +89,6 @@ const Home = (props: HomeProps) => {
         goLiveDate,
         itemsAvailable,
         itemsRemaining,
-        itemsRedeemed,
       } = await getCandyMachineState(
         wallet as anchor.Wallet,
         props.candyMachineId,
@@ -99,8 +96,6 @@ const Home = (props: HomeProps) => {
       );
 
       setItemsAvailable(itemsAvailable);
-      setItemsRemaining(itemsRemaining);
-      setItemsRedeemed(itemsRedeemed);
 
       setIsSoldOut(itemsRemaining === 0);
       setStartDate(goLiveDate);
@@ -219,13 +214,10 @@ const Home = (props: HomeProps) => {
             </h3>
           }
 
-          {<h3 className="centerTitle"> 0.1 SOL </h3>}
+          {<h3 className="centerTitle"> 0.5 SOL </h3>}
 
           {<h5>Total Available: {itemsAvailable}</h5>}
 
-          {<h5>Redeemed: {itemsRedeemed}</h5>}
-
-          {<h5>Remaining: {itemsRemaining}</h5>}
         </div>
       )}
 
