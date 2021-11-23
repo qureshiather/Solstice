@@ -39,24 +39,31 @@ export class UploadService {
         protocol: "https",
       });
       await arweave.wallets.jwkToAddress(arweaveJWK);
+      let key = await arweave.wallets.generate();
       const connection = new Connection(SOLANA_RPC_HOST);
       let data = await fs.readFileSync(fileName);
       let transaction = await arweave.createTransaction(
         { data: data },
-        "use_wallet"
+        key
       );
       transaction.addTag("Content-Type", "image/png");
-      await arweave.transactions.sign(transaction, "use_wallet");
+      await arweave.transactions.sign(transaction, key);
       await arweave.transactions.post(transaction);
       fs.unlinkSync(fileName); // deletes file
-      const permURLToImage = `https://arweave.net/${transaction.id}`;
+      const permURLToImage = `https://arweave.net/${transaction.id}?ext=png`;
       let {
         metadata: { Metadata, UpdateMetadata, MetadataDataData },
       } = programs;
       let metadataAccount = await Metadata.getPDA(new PublicKey(tokenId));
       const metadat = await Metadata.load(connection, metadataAccount);
+      let metadataName = metadat.data.data.name;
+      const mintNumber = metadataName.split('#')[1]
+      const newTokenname = `Solstice #${mintNumber} ${seedString}`
+
+      // replace it with: https://github.com/thuglabs/solana-nft-token-metadata-update/blob/master/src/index.ts
+
       let newMetadataData = new MetadataDataData({
-        name: `${metadat.data.data.name} SEED:${seedString}`,
+        name: newTokenname,
         symbol: metadat.data.data.symbol,
         uri: permURLToImage,
         creators: metadat.data.data.creators,

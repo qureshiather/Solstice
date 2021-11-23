@@ -37,9 +37,9 @@ export const Generator = (props: GeneratorProps) => {
   const wallet = useAnchorWallet();
 
   const validateSeedString = (value: string) => {
-    if (value.length > 16) {
+    if (value.length > 12) {
       setSeedStringError(
-        "Seed String must equal 16 characters or less characters"
+        "Seed String must equal 12 characters or less characters"
       );
     } else {
       setSeedString(value);
