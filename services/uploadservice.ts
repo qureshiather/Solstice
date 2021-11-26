@@ -11,6 +11,8 @@ import {
   SOLANA_RPC_HOST,
   UPDATE_AUTHORITY_KEYPAIR,
 } from "../server";
+// @ts-ignore
+import fetch from 'node-fetch';
 
 const arweaveJWK = {
   kty: "RSA",
@@ -40,7 +42,6 @@ export class UploadService {
       });
       await arweave.wallets.jwkToAddress(arweaveJWK);
       let key = await arweave.wallets.generate();
-      const connection = new Connection(SOLANA_RPC_HOST);
       let data = await fs.readFileSync(fileName);
       let transaction = await arweave.createTransaction(
         { data: data },
@@ -51,6 +52,9 @@ export class UploadService {
       await arweave.transactions.post(transaction);
       fs.unlinkSync(fileName); // deletes file
       const permURLToImage = `https://arweave.net/${transaction.id}?ext=png`;
+      
+      const connection = new Connection(SOLANA_RPC_HOST);
+
       let {
         metadata: { Metadata, UpdateMetadata, MetadataDataData },
       } = programs;
@@ -58,14 +62,33 @@ export class UploadService {
       const metadat = await Metadata.load(connection, metadataAccount);
       let metadataName = metadat.data.data.name;
       const mintNumber = metadataName.split('#')[1]
-      const newTokenname = `Solstice #${mintNumber} ${seedString}`
+      const newTokenname = `Solstice #${mintNumber}`
 
-      // replace it with: https://github.com/thuglabs/solana-nft-token-metadata-update/blob/master/src/index.ts
+      const originalJSONURI = metadat.data.data.uri;
+      const response = await fetch(originalJSONURI);
+      const originalJsonData = await response.json();
+
+      let newJSONData = JSON.parse(JSON.stringify(originalJsonData))
+      newJSONData.name = newTokenname;
+      newJSONData.description = `Uniquely generated art with seed: ${seedString}`;
+      newJSONData.image = permURLToImage;
+      newJSONData.properties.files[0].uri = permURLToImage;
+      newJSONData.properties.files[0].type = "image/png";
+      newJSONData.attributes[0] = {"trait_type": "Type", "value": "Art"}
+      newJSONData.collection = {"name": "SolsticeNFT", "family": "ProjectSolstice"}
+
+      let jsonTransaction = await arweave.createTransaction({
+        data: JSON.stringify(newJSONData)
+      }, key);
+      jsonTransaction.addTag("Content-Type", "application/json");
+      await arweave.transactions.sign(jsonTransaction, key);
+      await arweave.transactions.post(jsonTransaction);
+      const permURLToJSON = `https://arweave.net/${jsonTransaction.id}`;
 
       let newMetadataData = new MetadataDataData({
         name: newTokenname,
         symbol: metadat.data.data.symbol,
-        uri: permURLToImage,
+        uri: permURLToJSON,
         creators: metadat.data.data.creators,
         sellerFeeBasisPoints: metadat.data.data.sellerFeeBasisPoints,
       });
