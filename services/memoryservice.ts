@@ -56,11 +56,11 @@ export class FirestoreMemoryService implements MemoryService {
     });
   }
 
-  async IsTokenUnused(tokenId: string): Promise<string|undefined> {
+  async IsTokenUnused(tokenId: string): Promise<string|null> {
     const docRef = doc(this.db, "tokensUsed", tokenId);
     const docSnap = await getDoc(docRef)
     if (docSnap.exists()) {
-      return undefined;
+      return null;
     } else {
       return tokenId;
     }

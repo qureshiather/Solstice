@@ -51,7 +51,7 @@ export class UploadService {
       await arweave.transactions.sign(transaction, key);
       await arweave.transactions.post(transaction);
       fs.unlinkSync(fileName); // deletes file
-      const permURLToImage = `https://arweave.net/${transaction.id}?ext=png`;
+      const permURLToImage = `https://www.arweave.net/${transaction.id}?ext=png`;
       
       const connection = new Connection(SOLANA_RPC_HOST);
 
@@ -83,7 +83,7 @@ export class UploadService {
       jsonTransaction.addTag("Content-Type", "application/json");
       await arweave.transactions.sign(jsonTransaction, key);
       await arweave.transactions.post(jsonTransaction);
-      const permURLToJSON = `https://arweave.net/${jsonTransaction.id}`;
+      const permURLToJSON = `https://www.arweave.net/${jsonTransaction.id}`;
 
       let newMetadataData = new MetadataDataData({
         name: newTokenname,

@@ -7,8 +7,12 @@ import * as anchor from "@project-serum/anchor";
 import { PublicKey, Keypair } from "@solana/web3.js";
 import { Factories } from "./utils/factories";
 
+// used to read .env files
+require("dotenv").config();
+
 const app = express();
 const port = process.env.PORT || 5000;
+
 export const ENVIRONMENT = process.env.ENVIRONMENT || "dev";
 
 app.use(express.json());
@@ -34,7 +38,7 @@ app.get("/api/GetUnusedTicketCount", (req: any, res) => {
   let amountOfUnsuedTickets = 0;
   fetchNFTsOwnedByWallet(new PublicKey(walletPublicKey))
     .then((result) => {
-      let promises= [];
+      let promises = [];
       for (let i = 0; i < result.length; i++) {
         const tokenId = result[i].mint;
         promises.push(memoryService.IsTokenUnused(tokenId));
@@ -43,9 +47,9 @@ app.get("/api/GetUnusedTicketCount", (req: any, res) => {
     })
     .then((result) => {
       // counts number of non-null objects in array
-      for(let i = 0; i < result.length; i++) {
+      for (let i = 0; i < result.length; i++) {
         if (result[i] !== null) {
-          amountOfUnsuedTickets = amountOfUnsuedTickets + 1
+          amountOfUnsuedTickets = amountOfUnsuedTickets + 1;
         }
       }
     })
@@ -75,26 +79,45 @@ app.post("/api/updateMetadata", (req: any, res: any) => {
   const params = req.body;
   const walletPublicKey = params.walletPublicKey;
   const seedString = params.seedString;
-  let tokenToUse: string | null = null;
-  fetchNFTsOwnedByWallet(new PublicKey(walletPublicKey))
-    .then(async (result) => {
-      let promises = [];
-      for (let i = 0; i < result.length; i++) {
-        const tokenId = result[i].mint;
-        promises.push(memoryService.IsTokenUnused(tokenId));
-      }
-      return Promise.all(promises);
-    })
+
+  let isUnique = false;
+  memoryService
+    .IsStringUnique(seedString)
     .then((result) => {
-      tokenToUse = result.find((item) => item !== null);
+      isUnique = result;
     })
     .finally(() => {
-      if (tokenToUse === null) {
-        res.send({ walletPublicKey: "no valid tickets" });
+      if (isUnique === false) {
+        res.send({
+          walletPublicKey: `seedString ${seedString} has already been used`,
+        });
       } else {
-        memoryService.MarkSeedStringAsTaken(seedString, tokenToUse);
-        uploadService.updateMetadata(seedString, params.artConfig, tokenToUse);
-        res.send({ walletPublicKey: "Processing request!" });
+        let tokenToUse: string | null = null;
+        fetchNFTsOwnedByWallet(new PublicKey(walletPublicKey))
+          .then(async (result) => {
+            let promises = [];
+            for (let i = 0; i < result.length; i++) {
+              const tokenId = result[i].mint;
+              promises.push(memoryService.IsTokenUnused(tokenId));
+            }
+            return Promise.all(promises);
+          })
+          .then((result) => {
+            tokenToUse = result.find((item) => item !== null);
+          })
+          .finally(() => {
+            if (tokenToUse === null) {
+              res.send({ walletPublicKey: "no valid tickets" });
+            } else {
+              memoryService.MarkSeedStringAsTaken(seedString, tokenToUse);
+              uploadService.updateMetadata(
+                seedString,
+                params.artConfig,
+                tokenToUse
+              );
+              res.send({ walletPublicKey: "Processing request!" });
+            }
+          });
       }
     });
 });

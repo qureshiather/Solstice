@@ -15,9 +15,11 @@ const firebaseConfig = {
 export module Factories {
     export const getMemoryService = () => {
         if (ENVIRONMENT === "prod") {
+          console.log("Using Firebase as storage Service");
           const firebaseApp = initializeApp(firebaseConfig);
           return new FirestoreMemoryService(firebaseApp);
         } else {
+          console.log("Using in-memory map as storage Service");
           return new MapMemoryService();
         }
     }
