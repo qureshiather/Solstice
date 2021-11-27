@@ -1,8 +1,4 @@
-1. Create Node BFF server (https://www.freecodecamp.org/news/how-to-make-create-react-app-work-with-a-node-backend-api-7c5c48acb1b0/)
-2. Initialize Cloud Key Value Store (Store for each token -> MINTED, UPDATED_METADATA, String)
-3. VerifyTokenOnPubkey -> Check if there are existing tickets on pubkey, it has not been updated meta already and return one
-4. CheckStringUniqueness -> Validate that there is no other SolsticePass ticket token that has same CheckStringUniqueness
-5. UpdateMetadata -> Given a single token ID, generate the image in 1080, upload the file to arweave, then update metadata of the token
-    a) Done the image in 1080p
-    b) Upload the fiel to arweave (in progress) https://github.com/ArweaveTeam/testweave-docker
-    c) update metadata (todo)
+Remember to send Free SolsticeTicket to thereal1, they won the giveaway
+
+Sol address:
+5L1hMhk9nfvt2DjcTMGqvc23YucoRid5MD3kVsiSv1As

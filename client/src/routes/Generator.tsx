@@ -306,8 +306,7 @@ export const Generator = (props: GeneratorProps) => {
                 axios
                   .post("/api/updateMetadata", requestBody)
                   .then((result) => {
-                    //@ts-ignore
-                    if (result[wallet.publicKey.toBase58()] === "no valid tickets") {
+                    if (result.data.walletPublicKey === "no valid tickets") {
                       setBanner("no valid tickets found");
                     } else {
                       setBanner("Processing request");
@@ -319,6 +318,7 @@ export const Generator = (props: GeneratorProps) => {
                     //@ts-ignore
                     DoesWalletHaveUnusuedTicket(wallet.publicKey.toBase58());
                   });
+                setBanner("sent request");
               }}
             >
               SUBMIT TICKET
