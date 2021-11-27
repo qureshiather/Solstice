@@ -58,26 +58,35 @@ export const Generator = (props: GeneratorProps) => {
   const CheckIfStringIsUnique = async (value: String) => {
     const API_URL = "/api/ValidateStringUnique?";
     if (sinceLastUniqueFetch && Date.now() - sinceLastUniqueFetch < 5000) {
-      setBanner("Please wait 5 seconds before next request")
+      const timeLeft = (5000 - (Date.now() - sinceLastUniqueFetch))/1000;
+      setBanner(`Please wait ${timeLeft} seconds before next request`);
     } else {
       setSinceLastUniqueFetch(Date.now());
-      const response = await fetch(API_URL + `seedString=${value}`);
-      const body = await response.json();
-      if (body["seedString"] === "true") {
-        setIsStringUnique(`${value} is unique (Has not been minted)`);
-      } else {
-        setIsStringUnique(`${value} is not unique (Has been minted)`);
-      }
+      axios.get(
+        API_URL + `seedString=${value}`
+      ).then(
+        (response) => {
+          if (response.data.seedString === "true") {
+            setIsStringUnique(`${value} is unique (Has not been minted)`);
+          } else {
+            setIsStringUnique(`${value} is not unique (Has been minted)`);
+          }
+        }
+      ).catch(() => {setBanner("Error submitting unique request, try again")})
     }
   };
 
   const DoesWalletHaveUnusuedTicket = async (walletPublicKey: String) => {
     const API_URL = "/api/GetUnusedTicketCount?";
-    const response = await fetch(
+    axios.get(
       API_URL + `walletPublicKey=${walletPublicKey}`
-    );
-    const body = await response.json();
-    setValidTicketCount(body["walletPublicKey"]);
+    ).then((response) => {
+      setBanner(`Found ${response.data.walletPublicKey} Tickets!`);
+      setValidTicketCount(response.data.walletPublicKey);
+    }).catch(
+      () => setBanner("Error when grabbing ticket count")
+    )
+    setBanner("Grabbing Ticket Count");
   };
 
   useEffect(() => {
@@ -120,7 +129,6 @@ export const Generator = (props: GeneratorProps) => {
         <>
           <br></br>
           <p style={{ margin: "0 auto", textAlign: "center" }}>
-            {" "}
             {`You have a total of ${validTicketCount} valid ticket(s)`}{" "}
           </p>
           <Box
@@ -322,6 +330,7 @@ export const Generator = (props: GeneratorProps) => {
         open={banner !== ""}
         autoHideDuration={6000}
         onClose={() => setBanner("")}
+        anchorOrigin={{ vertical: "top", horizontal: "right"}}
       >
         <Alert
           onClose={() => setBanner("")}
