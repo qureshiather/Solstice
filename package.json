@@ -16,6 +16,7 @@
         "@solana/web3.js": "^1.30.2",
         "arweave": "^1.10.18",
         "body-parser": "^1.18.3",
+        "ddos": "^0.2.1",
         "express": "^4.16.4",
         "firebase": "^9.5.0",
         "node-fetch": "2",

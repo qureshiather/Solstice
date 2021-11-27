@@ -16,21 +16,29 @@ import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { WalletDialogButton } from "@solana/wallet-adapter-material-ui";
 import { shortenAddress } from "../candy-machine";
 import axios from "axios";
+import { Snackbar } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 
 export interface GeneratorProps {
   connection: anchor.web3.Connection;
 }
 
 export const Generator = (props: GeneratorProps) => {
+  // 0 is black, and 1 is gradient
   const [backgroundType, setBackgroundType] = useState(0);
+  // 0 is no shape, 1 is circle, 2 is square
   const [shapeType, setShapeType] = useState(1);
+  // 0 is no border, 1 is border
   const [shapeBorder, setShapeBorder] = useState(0);
+  // You can not have black background, or no shape -> then have border
   const [seedString, setSeedString] = useState("Solana");
   const [seedStringError, setSeedStringError] = useState<string | undefined>();
   const [isStringUnique, setIsStringUnique] = useState<string | undefined>();
   const [validTicketCount, setValidTicketCount] = useState<number>(0);
 
   const [disableBorderType, setDisableBorderType] = useState<boolean>(false);
+  const [banner, setBanner] = useState<string>("");
+  const [sinceLastUniqueFetch, setSinceLastUniqueFetch] = useState<number | undefined>(0);
 
   const [childKey, setChildKey] = useState(1);
 
@@ -49,12 +57,17 @@ export const Generator = (props: GeneratorProps) => {
 
   const CheckIfStringIsUnique = async (value: String) => {
     const API_URL = "/api/ValidateStringUnique?";
-    const response = await fetch(API_URL + `seedString=${value}`);
-    const body = await response.json();
-    if (body["seedString"] === "true") {
-      setIsStringUnique(`${value} is unique (Has not been minted)`);
+    if (sinceLastUniqueFetch && Date.now() - sinceLastUniqueFetch < 5000) {
+      setBanner("Please wait 5 seconds before next request")
     } else {
-      setIsStringUnique(`${value} is not unique (Has been minted)`);
+      setSinceLastUniqueFetch(Date.now());
+      const response = await fetch(API_URL + `seedString=${value}`);
+      const body = await response.json();
+      if (body["seedString"] === "true") {
+        setIsStringUnique(`${value} is unique (Has not been minted)`);
+      } else {
+        setIsStringUnique(`${value} is not unique (Has been minted)`);
+      }
     }
   };
 
@@ -98,8 +111,14 @@ export const Generator = (props: GeneratorProps) => {
 
       <h1 className="centerTitle glitch"> GENERATOR </h1>
 
-      {validTicketCount !== 0 ? (
+      {wallet && (
+        <p style={{ margin: "0 auto", textAlign: "center" }}>
+          {" "}
+          Wallet: {shortenAddress(wallet.publicKey.toBase58())}{" "}
+        </p>
+      )}
         <>
+          <br></br>
           <p style={{ margin: "0 auto", textAlign: "center" }}>
             {" "}
             {`You have a total of ${validTicketCount} valid ticket(s)`}{" "}
@@ -238,16 +257,9 @@ export const Generator = (props: GeneratorProps) => {
                 SEED_STRING={seedString}
               />
             </div>
-          ) : (
-            <></>
-          )}
+          ) : <></>
+          }
         </>
-      ) : (
-        <p style={{ margin: "0 auto", textAlign: "center" }}>
-          {" "}
-          You must have a SolsticeTicket in your wallet to generate art{" "}
-        </p>
-      )}
 
       <Stack
         direction="column"
@@ -255,13 +267,11 @@ export const Generator = (props: GeneratorProps) => {
         alignItems="center"
         sx={{ padding: "20px" }}
       >
-        {!wallet || validTicketCount === 0 ? (
+        {validTicketCount === 0 ? (
           <>
             {validTicketCount === 0 && (
               <p>
-                {" "}
-                No valid tickets on connected wallet. Refresh and connect a
-                wallet that has some!{" "}
+                Connect a wallet that has Solstice Tickets
               </p>
             )}
             <WalletDialogButton variant="contained" size="large">
@@ -270,7 +280,6 @@ export const Generator = (props: GeneratorProps) => {
           </>
         ) : (
           <div>
-            <p> Wallet: {shortenAddress(wallet.publicKey.toBase58())} </p>
             <Button
               variant="contained"
               size="large"
@@ -278,6 +287,7 @@ export const Generator = (props: GeneratorProps) => {
                 // create loading overlay!
                 const requestBody = {
                   seedString: seedString,
+                  //@ts-ignore
                   walletPublicKey: wallet.publicKey.toBase58(),
                   artConfig: {
                     BackgroundType: backgroundType,
@@ -287,11 +297,19 @@ export const Generator = (props: GeneratorProps) => {
                 };
                 axios
                   .post("/api/updateMetadata", requestBody)
-                  .then(() => {
-                    console.log("Submitted request!");
+                  .then((result) => {
+                    //@ts-ignore
+                    if (result[wallet.publicKey.toBase58()] === "no valid tickets") {
+                      setBanner("no valid tickets found");
+                    } else {
+                      setBanner("Processing request");
+                    }
+                  }).catch(() => {
+                    setBanner("Error processing Request, try again");
                   })
                   .finally(() => {
-                    window.location.reload();
+                    //@ts-ignore
+                    DoesWalletHaveUnusuedTicket(wallet.publicKey.toBase58());
                   });
               }}
             >
@@ -300,6 +318,17 @@ export const Generator = (props: GeneratorProps) => {
           </div>
         )}
       </Stack>
+      <Snackbar
+        open={banner !== ""}
+        autoHideDuration={6000}
+        onClose={() => setBanner("")}
+      >
+        <Alert
+          onClose={() => setBanner("")}
+        >
+          {banner}
+        </Alert>
+      </Snackbar>
     </main>
   );
 };

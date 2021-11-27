@@ -6,6 +6,7 @@ import { fetchNFTsOwnedByWallet } from "./utils/queryUtils";
 import * as anchor from "@project-serum/anchor";
 import { PublicKey, Keypair } from "@solana/web3.js";
 import { Factories } from "./utils/factories";
+var Ddos = require('ddos')
 
 // used to read .env files
 require("dotenv").config();
@@ -14,7 +15,9 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 export const ENVIRONMENT = process.env.ENVIRONMENT || "dev";
+var ddos = new Ddos({burst:10, limit:15})
 
+app.use(ddos.express);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
