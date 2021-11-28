@@ -2,14 +2,14 @@
 import { programs } from "@metaplex/js";
 import { PublicKey, Connection } from "@solana/web3.js";
 import { web3 } from "@project-serum/anchor";
-import { UPDATE_AUTHORITY } from "../server"; 
+import { SOLANA_RPC_HOST, UPDATE_AUTHORITY } from "../server"; 
 const {
   metadata: { MetadataData },
   TokenAccount,
 } = programs;
 
 export const fetchNFTsOwnedByWallet = async (userWallet: web3.PublicKey) => {
-  const connection = new Connection("https://api.devnet.solana.com/");
+  const connection = new Connection(SOLANA_RPC_HOST);
   const accounts = await TokenAccount.getTokenAccountsByOwner(
     connection,
     userWallet

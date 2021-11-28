@@ -46,7 +46,10 @@ app.get("/api/GetUnusedTicketCount", (req: any, res) => {
       let promises = [];
       for (let i = 0; i < result.length; i++) {
         const tokenId = result[i].mint;
-        promises.push(memoryService.IsTokenUnused(tokenId));
+        const name = result[i].data.name;
+        if (name.includes('Solstice Ticket')) {
+          promises.push(memoryService.IsTokenUnused(tokenId));
+        }
       }
       return Promise.all(promises);
     })
@@ -103,7 +106,10 @@ app.post("/api/updateMetadata", (req: any, res: any) => {
             let promises = [];
             for (let i = 0; i < result.length; i++) {
               const tokenId = result[i].mint;
-              promises.push(memoryService.IsTokenUnused(tokenId));
+              const name = result[i].data.name;
+              if (name.includes('Solstice Ticket')) {
+                promises.push(memoryService.IsTokenUnused(tokenId));
+              }
             }
             return Promise.all(promises);
           })

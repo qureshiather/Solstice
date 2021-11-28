@@ -20,4 +20,4 @@ test('image service generates images', () => {
     () => {}
   );
   expect(test).toBe(undefined);
-}, 50000);
+}, 60000);

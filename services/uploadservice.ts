@@ -101,7 +101,6 @@ export class UploadService {
         UPDATE_AUTHORITY_KEYPAIR,
       ]);
     };
-
-    ImageService.generateArt(seedString, artConfig, uploadFile);
+    ImageService.generateArt(seedString, artConfig, uploadFile)
   }
 }
