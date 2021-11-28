@@ -1,7 +1,8 @@
-import { ImageService } from "./imageservice";
+import { generateArt } from "./imageservice";
 import { programs } from "@metaplex/js";
 import Arweave from "arweave";
-const fs = require("fs");
+
+import fs from "fs";
 import {
   PublicKey,
   Connection,
@@ -28,18 +29,18 @@ const arweaveJWK = {
 
 export class UploadService {
 
-  async updateMetadata(seedString: String, artConfig: any, tokenId: String) {
-    const uploadFile = async (fileName: String) => {
+  async updateMetadata(seedString: string, artConfig: any, tokenId: string) {
+    const uploadFile = async (fileName: string) => {
       const arweave = Arweave.init({
         host: "arweave.net",
         port: 443,
         protocol: "https",
       });
       await arweave.wallets.jwkToAddress(arweaveJWK);
-      let key = await arweave.wallets.generate();
-      let data = await fs.readFileSync(fileName);
-      let transaction = await arweave.createTransaction(
-        { data: data },
+      const key = await arweave.wallets.generate();
+      const data = await fs.readFileSync(fileName);
+      const transaction = await arweave.createTransaction(
+        { data },
         key
       );
       transaction.addTag("Content-Type", "image/png");
@@ -47,15 +48,15 @@ export class UploadService {
       await arweave.transactions.post(transaction);
       fs.unlinkSync(fileName); // deletes file
       const permURLToImage = `https://www.arweave.net/${transaction.id}?ext=png`;
-      
+
       const connection = new Connection(SOLANA_RPC_HOST);
 
-      let {
+      const {
         metadata: { Metadata, UpdateMetadata, MetadataDataData },
       } = programs;
-      let metadataAccount = await Metadata.getPDA(new PublicKey(tokenId));
+      const metadataAccount = await Metadata.getPDA(new PublicKey(tokenId));
       const metadat = await Metadata.load(connection, metadataAccount);
-      let metadataName = metadat.data.data.name;
+      const metadataName = metadat.data.data.name;
       const mintNumber = metadataName.split('#')[1]
       const newTokenname = `Solstice #${mintNumber}`
 
@@ -63,16 +64,15 @@ export class UploadService {
       const response = await fetch(originalJSONURI);
       const originalJsonData = await response.json();
 
-      let newJSONData = JSON.parse(JSON.stringify(originalJsonData))
+      const newJSONData = JSON.parse(JSON.stringify(originalJsonData))
       newJSONData.name = newTokenname;
-      newJSONData.description = `Uniquely generated art with seed: ${seedString}`;
+      newJSONData.description = `Solstice NFT, Uniquely generated with seed: ${seedString}`;
       newJSONData.image = permURLToImage;
       newJSONData.properties.files[0].uri = permURLToImage;
       newJSONData.properties.files[0].type = "image/png";
-      newJSONData.attributes[0] = {"trait_type": "Type", "value": "Art"}
-      newJSONData.collection = {"name": "SolsticeNFT", "family": "ProjectSolstice"}
+      newJSONData.attributes[0] = {"trait_type": "type", "value": "art"}
 
-      let jsonTransaction = await arweave.createTransaction({
+      const jsonTransaction = await arweave.createTransaction({
         data: JSON.stringify(newJSONData)
       }, key);
       jsonTransaction.addTag("Content-Type", "application/json");
@@ -80,7 +80,7 @@ export class UploadService {
       await arweave.transactions.post(jsonTransaction);
       const permURLToJSON = `https://www.arweave.net/${jsonTransaction.id}`;
 
-      let newMetadataData = new MetadataDataData({
+      const newMetadataData = new MetadataDataData({
         name: newTokenname,
         symbol: metadat.data.data.symbol,
         uri: permURLToJSON,
@@ -101,6 +101,6 @@ export class UploadService {
         UPDATE_AUTHORITY_KEYPAIR,
       ]);
     };
-    ImageService.generateArt(seedString, artConfig, uploadFile)
+    generateArt(seedString, artConfig, uploadFile)
   }
 }

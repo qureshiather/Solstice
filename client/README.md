@@ -1,1 +1,0 @@
-# Front end for the Solstice NFT Mint Project

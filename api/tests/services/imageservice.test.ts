@@ -1,4 +1,4 @@
-import { ImageService } from "../../services/imageservice";
+import { generateArt } from "../../services/imageservice";
 
 test('adding positive numbers is not zero', () => {
   for (let a = 1; a < 10; a++) {
@@ -9,7 +9,7 @@ test('adding positive numbers is not zero', () => {
 });
 
 test('image service generates images', () => {
-  let test = ImageService.generateArt(
+  const test = generateArt(
     "test1",
     {
       BackgroundType: 1,
@@ -17,7 +17,7 @@ test('image service generates images', () => {
       borderType: 1,
     }
     ,
-    () => {}
+    () => undefined
   );
   expect(test).toBe(undefined);
 }, 60000);

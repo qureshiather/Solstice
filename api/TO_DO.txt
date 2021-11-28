@@ -2,3 +2,8 @@ Remember to send Free SolsticeTicket to thereal1, they won the giveaway
 
 Sol address:
 5L1hMhk9nfvt2DjcTMGqvc23YucoRid5MD3kVsiSv1As
+
+
+1. convert express js to serverless
+
+https://www.youtube.com/watch?v=C1Sf_ntbqZQ

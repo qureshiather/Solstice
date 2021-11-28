@@ -5,16 +5,19 @@ import { UploadService } from "./services/uploadservice";
 import { fetchNFTsOwnedByWallet } from "./utils/queryUtils";
 import * as anchor from "@project-serum/anchor";
 import { PublicKey, Keypair } from "@solana/web3.js";
-import { Factories } from "./utils/factories";
-var Ddos = require('ddos')
+import { getMemoryService, getFileLocation } from "./utils/factories";
+import { Logger  } from "tslog";
 
-// used to read .env files
-require("dotenv").config();
+// @ts-ignore
+import Ddos from 'ddos';
+import * as dotenv from "dotenv";
+dotenv.config({ path: __dirname+'/.env' });
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 export const ENVIRONMENT = process.env.ENVIRONMENT || "dev";
+export const LOG: Logger = new Logger({ name: "Logger" });
 
 if (process.env.NODE_ENV !== "test") {
   app.use(new Ddos({burst:10, limit:15}).express);
@@ -34,29 +37,30 @@ export const UPDATE_AUTHORITY_KEYPAIR = Keypair.fromSecretKey(
   ])
 );
 
-export const IMAGE_FILE_LOCATION = Factories.getFileLocation();
-const memoryService = Factories.getMemoryService();
+export const IMAGE_FILE_LOCATION = getFileLocation();
+const memoryService = getMemoryService();
 const uploadService = new UploadService();
+
 
 app.get("/api/GetUnusedTicketCount", (req: any, res) => {
   const walletPublicKey = req.query.walletPublicKey;
   let amountOfUnsuedTickets = 0;
   fetchNFTsOwnedByWallet(new PublicKey(walletPublicKey))
-    .then((result) => {
-      let promises = [];
-      for (let i = 0; i < result.length; i++) {
-        const tokenId = result[i].mint;
-        const name = result[i].data.name;
+    .then((results) => {
+      const promises = [];
+      for (const result of results) {
+        const tokenId = result.mint;
+        const name = result.data.name;
         if (name.includes('Solstice Ticket')) {
           promises.push(memoryService.IsTokenUnused(tokenId));
         }
       }
       return Promise.all(promises);
     })
-    .then((result) => {
+    .then((results) => {
       // counts number of non-null objects in array
-      for (let i = 0; i < result.length; i++) {
-        if (result[i] !== null) {
+      for (const result of results) {
+        if (result !== null) {
           amountOfUnsuedTickets = amountOfUnsuedTickets + 1;
         }
       }
@@ -102,11 +106,11 @@ app.post("/api/updateMetadata", (req: any, res: any) => {
       } else {
         let tokenToUse: string | null = null;
         fetchNFTsOwnedByWallet(new PublicKey(walletPublicKey))
-          .then(async (result) => {
-            let promises = [];
-            for (let i = 0; i < result.length; i++) {
-              const tokenId = result[i].mint;
-              const name = result[i].data.name;
+          .then(async (results) => {
+            const promises = [];
+            for (const result of results) {
+              const tokenId = result.mint;
+              const name = result.data.name;
               if (name.includes('Solstice Ticket')) {
                 promises.push(memoryService.IsTokenUnused(tokenId));
               }
@@ -138,13 +142,13 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client/build")));
 
   // Handle React routing, return all requests to React app
-  app.get("*", function (req, res) {
+  app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
   });
 }
 
 if (process.env.NODE_ENV !== "test") {
-  app.listen(port, () => console.log(`Listening on port ${port}`));
+  app.listen(port, () => LOG.info(`Listening on port ${port}`));
 }
 
 

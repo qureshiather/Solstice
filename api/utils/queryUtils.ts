@@ -1,8 +1,8 @@
-//ts-ignore:
+// ts-ignore:
 import { programs } from "@metaplex/js";
 import { PublicKey, Connection } from "@solana/web3.js";
 import { web3 } from "@project-serum/anchor";
-import { SOLANA_RPC_HOST, UPDATE_AUTHORITY } from "../server"; 
+import { SOLANA_RPC_HOST, UPDATE_AUTHORITY } from "../server";
 const {
   metadata: { MetadataData },
   TokenAccount,
@@ -18,9 +18,9 @@ export const fetchNFTsOwnedByWallet = async (userWallet: web3.PublicKey) => {
     .map(({ data }) => data)
     .filter(({ amount }) => amount?.toNumber() > 0);
 
-  let nftMintAddresses = accountsWithAmount.map(({ mint }) => mint);
+  const nftMintAddresses = accountsWithAmount.map(({ mint }) => mint);
 
-  let nftMetadataAddresses = [];
+  const nftMetadataAddresses = [];
   let nftAcInfo;
 
   for (let i = 0; i < nftMintAddresses.length; i++) {
@@ -34,17 +34,17 @@ export const fetchNFTsOwnedByWallet = async (userWallet: web3.PublicKey) => {
     );
   }
 
-  let nftAcInfoDeserialized = nftAcInfo
+  const nftAcInfoDeserialized = nftAcInfo
     ?.map((info) =>
       info?.data !== undefined
         ? MetadataData.deserialize(info?.data)
         : undefined
     )
-    .filter(function (element) {
+    .filter( (element) => {
       return element !== undefined;
     });
   return nftAcInfoDeserialized.filter(
-      (metadataItem) => metadataItem.updateAuthority == UPDATE_AUTHORITY
+      (metadataItem) => metadataItem.updateAuthority === UPDATE_AUTHORITY
   );
 };
 
