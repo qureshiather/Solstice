@@ -37,17 +37,15 @@ export const FAQModalButton = () => {
             <br />
             Minting Process:
             <ol>
+              <li>Mint a SolsticeTicket on the home page</li>
+              <li>Go to the generator</li>
               <li>
-                10 minutes prior to minting, I will allow you to connect your
-                wallet
+                Connect your wallet, and if you have a unsued SolsticeTicket,
+                you can experiment with different generations
               </li>
               <li>
-                Once exact mint time is reached, you will be allowed to mint
-                provided you have enough funds
-              </li>
-              <li>
-                Once minted, you will IMMEDIATELY receive a SolsticeNFT that you
-                can view in your wallet
+                Once you are satisfied, you can submit your ticket, and it
+                will then kick off the process to update your ticket metadata with your ART (will take a few min)
               </li>
             </ol>
           </Typography>

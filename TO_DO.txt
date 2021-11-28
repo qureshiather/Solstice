@@ -1,9 +1,8 @@
-1. Add this Background to the whole application (DONE)
-2. Put the MINT button in the middle (DONE)
-3. Make a countdown in the center
-4. Put wallet balance around the top
-5. Add Material UI Tabs to go through collection and FAQ section on bottom:
+Remember to send Free SolsticeTicket to thereal1, they won the giveaway
 
-Do this to create buttons and tabs for collections and FAQs
+Sol address:
+5L1hMhk9nfvt2DjcTMGqvc23YucoRid5MD3kVsiSv1As
 
-https://codepen.io/AbubakerSaeed/pen/eYOvKpY
+
+# Move this to Heroku
+https://dev.to/myogeshchavan97/how-to-deploy-react-node-js-application-to-heroku-4jb4

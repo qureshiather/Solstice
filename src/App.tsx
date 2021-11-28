@@ -6,6 +6,7 @@ import Home from "./Home";
 import * as anchor from "@project-serum/anchor";
 import { clusterApiUrl } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+
 import {
   getPhantomWallet,
   getSlopeWallet,
@@ -22,7 +23,8 @@ import {
 import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 
-import { ParticleContainer3D } from "./components/3DParticles";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Generator } from "./routes/Generator";
 
 const treasury = new anchor.web3.PublicKey(
   process.env.REACT_APP_TREASURY_ADDRESS!
@@ -41,7 +43,6 @@ const network = process.env.REACT_APP_SOLANA_NETWORK as WalletAdapterNetwork;
 const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST!;
 const connection = new anchor.web3.Connection(rpcHost);
 
-console.log(process.env.REACT_APP_CANDY_START_DATE);
 const startDateSeed = parseInt(process.env.REACT_APP_CANDY_START_DATE!, 10);
 
 const txTimeout = 30000; // milliseconds (confirm this works for your project)
@@ -61,7 +62,7 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: "Orbitron",
-  },  
+  },
   overrides: {
     MuiButtonBase: {
       root: {
@@ -99,18 +100,27 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <ParticleContainer3D/>
       <ConnectionProvider endpoint={endpoint}>
         <WalletProvider wallets={wallets} autoConnect={true}>
           <WalletDialogProvider>
-            <Home
-              candyMachineId={candyMachineId}
-              config={config}
-              connection={connection}
-              startDate={startDateSeed}
-              treasury={treasury}
-              txTimeout={txTimeout}
-            />
+            <BrowserRouter>
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <Home
+                      candyMachineId={candyMachineId}
+                      config={config}
+                      connection={connection}
+                      startDate={startDateSeed}
+                      treasury={treasury}
+                      txTimeout={txTimeout}
+                    />
+                  }
+                />
+                <Route path="/generator" element={<Generator connection={connection}/>} />
+              </Routes>
+            </BrowserRouter>
           </WalletDialogProvider>
         </WalletProvider>
       </ConnectionProvider>
