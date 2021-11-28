@@ -156,28 +156,19 @@ export module ImageService {
 
         mult = p5.random(0.0005, 0.01);
 
-        p5.fill(15, 25);
         if (Cfg.SHAPE_BORDER === 0) {
-          // draw circle (color, alpha value(transparency))
-          // border around shape if no stroke is on
+          // no border around shape if no stroke is on
           p5.noStroke();
         }
 
-        // create shadow for circle
-        p5.drawingContext.shadowOffsetX = 5;
-        p5.drawingContext.shadowOffsetY = -5;
-        p5.drawingContext.shadowBlur = 10;
-        p5.drawingContext.shadowColor = "black";
-
+        // draw shape
+        p5.fill(15, 15, 15, 25);
         if (Cfg.SHAPE_TYPE === 1) {
           p5.circle(p5.width / 2, p5.height / 2, CIRCLE_DIAMETER);
         } else if (Cfg.SHAPE_TYPE === 2) {
           p5.rect(p5.width / 4, p5.height / 4, SQUARE_SIZE, SQUARE_SIZE);
         }
-
-        p5.drawingContext.shadowOffsetX = 0;
-        p5.drawingContext.shadowOffsetY = 0;
-        p5.drawingContext.shadowBlur = 0;
+        
       };
 
       p5.draw = () => {
@@ -258,10 +249,10 @@ export module ImageService {
             }
           } else if (Cfg.SHAPE_TYPE === 2) {
             if (
-              points[i].x > SQUARE_SIZE - SQUARE_SIZE / 2 &&
-              points[i].x < SQUARE_SIZE + SQUARE_SIZE / 2 &&
-              points[i].y > SQUARE_SIZE - SQUARE_SIZE / 2 &&
-              points[i].y < SQUARE_SIZE + SQUARE_SIZE / 2
+              points[i].x > (SQUARE_SIZE - SQUARE_SIZE / 2)+2 &&
+              points[i].x < (SQUARE_SIZE + SQUARE_SIZE / 2)-2 &&
+              points[i].y > (SQUARE_SIZE - SQUARE_SIZE / 2)+2 &&
+              points[i].y < (SQUARE_SIZE + SQUARE_SIZE / 2)-2
             ) {
               p5.ellipse(points[i].x, points[i].y, 1, p5.random(3));
             }

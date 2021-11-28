@@ -10,10 +10,10 @@ test('adding positive numbers is not zero', () => {
 
 test('image service generates images', () => {
   let test = ImageService.generateArt(
-    "test2",
+    "test1",
     {
       BackgroundType: 1,
-      ShapeType: 1,
+      ShapeType: 2,
       borderType: 1,
     }
     ,

@@ -26,7 +26,7 @@ export interface GeneratorProps {
 export const Generator = (props: GeneratorProps) => {
   // 0 is black, and 1 is gradient
   const [backgroundType, setBackgroundType] = useState(0);
-  // 0 is no shape, 1 is circle, 2 is square
+  // 1 is circle, 2 is square
   const [shapeType, setShapeType] = useState(1);
   // 0 is no border, 1 is border
   const [shapeBorder, setShapeBorder] = useState(0);
@@ -90,7 +90,7 @@ export const Generator = (props: GeneratorProps) => {
   };
 
   useEffect(() => {
-    if (shapeType === 0 || backgroundType === 0) {
+    if (backgroundType === 0) {
       setShapeBorder(0);
       setDisableBorderType(true);
     } else {
@@ -182,7 +182,6 @@ export const Generator = (props: GeneratorProps) => {
                     setShapeType(event.target.value as number);
                   }}
                 >
-                  <MenuItem value={0}>None</MenuItem>
                   <MenuItem value={1}>Circle</MenuItem>
                   <MenuItem value={2}>Square</MenuItem>
                 </SelectItem>
