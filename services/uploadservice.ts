@@ -27,11 +27,6 @@ const arweaveJWK = {
 };
 
 export class UploadService {
-  imageService: ImageService;
-
-  constructor() {
-    this.imageService = new ImageService();
-  }
 
   async updateMetadata(seedString: String, artConfig: any, tokenId: String) {
     const uploadFile = async (fileName: String) => {
@@ -107,6 +102,6 @@ export class UploadService {
       ]);
     };
 
-    this.imageService.generateArt(seedString, artConfig, uploadFile);
+    ImageService.generateArt(seedString, artConfig, uploadFile);
   }
 }

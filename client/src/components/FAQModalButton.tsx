@@ -37,14 +37,14 @@ export const FAQModalButton = () => {
             <br />
             Minting Process:
             <ol>
-              <li>1. Mint a SolsticeTicket on the home page</li>
-              <li>2. Go to the generator</li>
+              <li>Mint a SolsticeTicket on the home page</li>
+              <li>Go to the generator</li>
               <li>
-                3. Connect your wallet, and if you have a unsued SolsticeTicket,
+                Connect your wallet, and if you have a unsued SolsticeTicket,
                 you can experiment with different generations
               </li>
               <li>
-                4. Once you are satisfied, you can submit your ticket, and it
+                Once you are satisfied, you can submit your ticket, and it
                 will then kick off the process to update your ticket metadata with your ART (will take a few min)
               </li>
             </ol>

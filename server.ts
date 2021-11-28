@@ -15,9 +15,11 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 export const ENVIRONMENT = process.env.ENVIRONMENT || "dev";
-var ddos = new Ddos({burst:10, limit:15})
 
-app.use(ddos.express);
+if (process.env.NODE_ENV !== "test") {
+  app.use(new Ddos({burst:10, limit:15}).express);
+}
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -31,8 +33,8 @@ export const UPDATE_AUTHORITY_KEYPAIR = Keypair.fromSecretKey(
     164, 166, 1, 172, 229, 248, 91, 209, 58, 214, 32, 29, 223, 178,
   ])
 );
-export const IMAGE_FILE_LOCATION = "/tmp";
 
+export const IMAGE_FILE_LOCATION = Factories.getFileLocation();
 const memoryService = Factories.getMemoryService();
 const uploadService = new UploadService();
 
@@ -135,4 +137,8 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+if (process.env.NODE_ENV !== "test") {
+  app.listen(port, () => console.log(`Listening on port ${port}`));
+}
+
+

@@ -308,17 +308,15 @@ export const Generator = (props: GeneratorProps) => {
                   .then((result) => {
                     if (result.data.walletPublicKey === "no valid tickets") {
                       setBanner("no valid tickets found");
+                    } else if (result.data.walletPublicKey.includes("already been used")) {
+                      setBanner("String already has been used");
                     } else {
                       setBanner("Processing request");
                     }
                   }).catch(() => {
                     setBanner("Error processing Request, try again");
                   })
-                  .finally(() => {
-                    //@ts-ignore
-                    DoesWalletHaveUnusuedTicket(wallet.publicKey.toBase58());
-                  });
-                setBanner("sent request");
+                  setBanner("Sent Submission Request, Refresh to recount tickets");
               }}
             >
               SUBMIT TICKET
