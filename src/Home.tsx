@@ -26,8 +26,6 @@ import { SocialsDiv } from "./components/SocialsDiv";
 
 import { PhishingBanner } from "./components/PhishingBanner";
 
-import { AudioButton } from "./components/AudioButton";
-
 import NFTCarousel from "./components/NFTCarousel";
 import { InformationBox } from "./components/InformationBox";
 import { FAQModalButton } from "./components/FAQModalButton";
@@ -190,8 +188,7 @@ const Home = (props: HomeProps) => {
       <ParticleContainer3D />
       <PhishingBanner />
 
-      <AudioButton />
-
+      <br/>
       <SocialsDiv />
 
       <h1 className="centerTitle glitch"> SOLSTICE </h1>

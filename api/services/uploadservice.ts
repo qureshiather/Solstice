@@ -12,8 +12,8 @@ import {
   SOLANA_RPC_HOST,
   UPDATE_AUTHORITY_KEYPAIR,
 } from "../server";
-// @ts-ignore
-import fetch from 'node-fetch';
+
+import fetch from 'cross-fetch';
 
 const arweaveJWK = {
   kty: "RSA",

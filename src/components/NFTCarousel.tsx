@@ -20,16 +20,7 @@ class NFTCarousel extends Component {
           showThumbs={false}
         >
           <div>
-            <img src="assets/0.png" alt="Solstice #0" />
-          </div>
-          <div>
             <img src="assets/1.png" alt="Solstice #1" />
-          </div>
-          <div>
-            <img src="assets/2.png" alt="Solstice #2" />
-          </div>
-          <div>
-            <img src="assets/3.png" alt="Solstice #3" />
           </div>
           <div>
             <img src="assets/4.png" alt="Solstice #4" />

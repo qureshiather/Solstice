@@ -1,9 +1,6 @@
 import express from "express";
-import path from "path";
-
 import { UploadService } from "./services/uploadservice";
 import { fetchNFTsOwnedByWallet } from "./utils/queryUtils";
-import * as anchor from "@project-serum/anchor";
 import { PublicKey, Keypair } from "@solana/web3.js";
 import { getMemoryService, getFileLocation } from "./utils/factories";
 import { Logger  } from "tslog";
@@ -137,15 +134,11 @@ app.post("/api/updateMetadata", (req: any, res: any) => {
     });
 });
 
-if (process.env.NODE_ENV === "production") {
-  // Serve any static files
-  app.use(express.static(path.join(__dirname, "client/build")));
+app.get("/api/hello", (req, res) => {
+  res.status(200).send("Hello World!");
+ });
 
-  // Handle React routing, return all requests to React app
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
-  });
-}
+ module.exports = app;
 
 if (process.env.NODE_ENV !== "test") {
   app.listen(port, () => LOG.info(`Listening on port ${port}`));
