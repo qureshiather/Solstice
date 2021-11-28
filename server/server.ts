@@ -4,6 +4,7 @@ import { fetchNFTsOwnedByWallet } from "./utils/queryUtils";
 import { PublicKey, Keypair } from "@solana/web3.js";
 import { getMemoryService, getFileLocation } from "./utils/factories";
 import { Logger  } from "tslog";
+import path from 'path';
 
 // @ts-ignore
 import Ddos from 'ddos';
@@ -12,6 +13,9 @@ dotenv.config({ path: __dirname+'/.env' });
 
 const app = express();
 const port = process.env.PORT || 5000;
+
+const buildPath = path.join(__dirname, '..', 'build');
+app.use(express.static(buildPath));
 
 export const ENVIRONMENT = process.env.ENVIRONMENT || "dev";
 export const LOG: Logger = new Logger({ name: "Logger" });
@@ -137,8 +141,6 @@ app.post("/api/updateMetadata", (req: any, res: any) => {
 app.get("/api/hello", (req, res) => {
   res.status(200).send("Hello World!");
  });
-
- module.exports = app;
 
 if (process.env.NODE_ENV !== "test") {
   app.listen(port, () => LOG.info(`Listening on port ${port}`));

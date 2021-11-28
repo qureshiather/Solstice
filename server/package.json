@@ -5,8 +5,9 @@
         "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
         "build": "tsc",
         "prestart": "npm run build",
-        "start": "nodemon server.ts",
-        "test": "jest NODE_ENV=test --coverage --detectOpenHandles tests"
+        "start": "node server.ts",
+        "test": "jest NODE_ENV=test --coverage --detectOpenHandles tests",
+        "dev": "nodemon server.ts"
     },
     "dependencies": {
         "@firebase/app": "^0.7.9",
