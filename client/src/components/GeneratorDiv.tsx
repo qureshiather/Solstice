@@ -49,8 +49,8 @@ class GeneratorDiv extends React.Component<{
   b1: number;
   b2: number;
   mult: any;
-  angle_func_a: Function;
-  angle_func_b: Function;
+  angleFunctionA: (angle: any) => void;
+  angleFunctionB: (angle: any) => void;
   SEED_NUMBER: number;
   SEED_STRING: string;
 
@@ -64,8 +64,8 @@ class GeneratorDiv extends React.Component<{
     this.b1 = 0;
     this.b2 = 0;
     this.mult = 0;
-    this.angle_func_a = () => {};
-    this.angle_func_b = () => {};
+    this.angleFunctionA = () => undefined;
+    this.angleFunctionB = () => undefined;
     const seedrandom = require("seedrandom");
     this.SEED_STRING = props.SEED_STRING;
     this.SEED_NUMBER = seedrandom(props.SEED_STRING+'\0').int32();
@@ -92,11 +92,11 @@ class GeneratorDiv extends React.Component<{
       "inverse_tan",
     ];
     const REVERSED_ANGLE_FUNC_OPTIONS = ANGLE_FUNC_OPTIONS.reverse();
-    this.angle_func_a = getAngleFunctionFromString(
+    this.angleFunctionA = getAngleFunctionFromString(
       p5.random(ANGLE_FUNC_OPTIONS),
       p5
     );
-    this.angle_func_b = getAngleFunctionFromString(
+    this.angleFunctionB = getAngleFunctionFromString(
       p5.random(REVERSED_ANGLE_FUNC_OPTIONS),
       p5
     );
@@ -139,13 +139,13 @@ class GeneratorDiv extends React.Component<{
 
       for (let y = 0; y < p5.height; y++) {
         const n = p5.map(y, 0, p5.height, 0, 1);
-        let selected_color = 0;
+        let selectedColor = 0;
         if (y % 2) {
-          selected_color = c2;
+          selectedColor = c2;
         } else {
-          selected_color = c3;
+          selectedColor = c3;
         }
-        const newc = p5.lerpColor(selected_color, c1, n);
+        const newc = p5.lerpColor(selectedColor, c1, n);
         p5.stroke(newc);
         p5.line(0, y, p5.width, y);
       }
@@ -239,7 +239,7 @@ class GeneratorDiv extends React.Component<{
         720
       );
       this.points[i].add(
-        p5.createVector(this.angle_func_a(angle), this.angle_func_b(angle))
+        p5.createVector(this.angleFunctionA(angle), this.angleFunctionB(angle))
       );
 
       if (this.props.SHAPE_TYPE === 0) {
