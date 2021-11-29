@@ -26,21 +26,31 @@ import { createTheme, ThemeProvider } from "@material-ui/core";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Generator } from "./routes/Generator";
 
+const configVar = {
+  "REACT_APP_CANDY_MACHINE_CONFIG": "9vcEDFSNGtjtZoR8pECq8nxYfbouwQc7LuPDwohDaKGZ",
+  "REACT_APP_CANDY_MACHINE_ID": "FEHGAvefEFPSgfvFsABVjc2KMU11CYUQz3sQZ4kJnFmG",
+  "REACT_APP_TREASURY_ADDRESS": "6A4ordc3gBx1UodDNPTqQs8zSYnzYzb7YWFPRnAbKUK3",
+  "REACT_APP_CANDY_START_DATE": "3634614200",
+  "REACT_APP_SOLANA_NETWORK": "devnet",
+  "REACT_APP_SOLANA_RPC_HOST": "https://explorer-api.devnet.solana.com"
+}
+
 const treasury = new anchor.web3.PublicKey(
-  process.env.REACT_APP_TREASURY_ADDRESS!
+  process.env.REACT_APP_TREASURY_ADDRESS || configVar.REACT_APP_TREASURY_ADDRESS
 );
 
 const config = new anchor.web3.PublicKey(
-  process.env.REACT_APP_CANDY_MACHINE_CONFIG!
+  process.env.REACT_APP_CANDY_MACHINE_CONFIG || configVar.REACT_APP_CANDY_MACHINE_CONFIG
 );
 
 const candyMachineId = new anchor.web3.PublicKey(
-  process.env.REACT_APP_CANDY_MACHINE_ID!
+  process.env.REACT_APP_CANDY_MACHINE_ID || configVar.REACT_APP_CANDY_MACHINE_ID
 );
 
-const network = process.env.REACT_APP_SOLANA_NETWORK as WalletAdapterNetwork;
+const network = (process.env.REACT_APP_SOLANA_NETWORK || configVar.REACT_APP_SOLANA_NETWORK) as WalletAdapterNetwork;
 
-const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST!;
+const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST || configVar.REACT_APP_SOLANA_RPC_HOST;
+
 const connection = new anchor.web3.Connection(rpcHost);
 
 const startDateSeed = parseInt(process.env.REACT_APP_CANDY_START_DATE!, 10);
