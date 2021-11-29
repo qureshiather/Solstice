@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "scripts": {
         "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
-        "build": "tsc && cd client && yarn build",
+        "build": "tsc && cd client && yarn install && yarn build",
         "prestart": "npm run build",
         "start": "node dist/server.js",
         "test": "jest NODE_ENV=test --coverage --detectOpenHandles tests",
