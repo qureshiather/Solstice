@@ -145,4 +145,14 @@ app.get("/api/hello", (req, res) => {
   res.status(200).send("Hello World!");
 });
 
+
+// Handles any requests that don't match the ones above
+app.get('*', (req,res) => {
+  if (req.url === "/generator") {
+    res.sendFile(path.join(__dirname, "../client/build/index.html"));
+  } else {
+    res.status(404).send('Page not found');
+  }
+});
+
 app.listen(port, () => LOGGER.info(`Listening on port ${port}`));
