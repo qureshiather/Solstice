@@ -30,7 +30,7 @@ const configVar = {
   "REACT_APP_CANDY_MACHINE_CONFIG": "9vcEDFSNGtjtZoR8pECq8nxYfbouwQc7LuPDwohDaKGZ",
   "REACT_APP_CANDY_MACHINE_ID": "FEHGAvefEFPSgfvFsABVjc2KMU11CYUQz3sQZ4kJnFmG",
   "REACT_APP_TREASURY_ADDRESS": "6A4ordc3gBx1UodDNPTqQs8zSYnzYzb7YWFPRnAbKUK3",
-  "REACT_APP_CANDY_START_DATE": "3634614200",
+  "REACT_APP_CANDY_START_DATE": "1638446400",
   "REACT_APP_SOLANA_NETWORK": "devnet",
   "REACT_APP_SOLANA_RPC_HOST": "https://explorer-api.devnet.solana.com"
 }
@@ -53,7 +53,7 @@ const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST || configVar.REACT_APP_SOL
 
 const connection = new anchor.web3.Connection(rpcHost);
 
-const startDateSeed = parseInt(process.env.REACT_APP_CANDY_START_DATE!, 10);
+const startDateSeed = parseInt(process.env.REACT_APP_CANDY_START_DATE || configVar.REACT_APP_CANDY_START_DATE, 10);
 
 const txTimeout = 30000; // milliseconds (confirm this works for your project)
 
