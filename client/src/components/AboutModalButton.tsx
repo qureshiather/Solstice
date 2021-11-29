@@ -34,24 +34,21 @@ export const AboutModalButton = () => {
             About Solstice
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 1 }}>
-            The artwork samples here are all uniquely generated!
+            The artwork samples here are all uniquely generated based on your seed phrase!
             <ul>
               <li>
                 {" "}
-                There are virtually unlimited combinations of particle patterns,
-                colors, shapes..{" "}
+                Each image will verified to be unique and there will only be 999 of them{" "}
               </li>
-              <li>
-                {" "}
-                Each image will be unique and there will only be 999 of them{" "}
-              </li>
-              <li>The NFT will link to a 1080p version of your seed art</li>
+              <li>The final NFT will link to a 1080p version of your design</li>
             </ul>
             This entire project was made with love by a single dev who hates his
             job and wants to pursue his creative interests full-time
-            <br />
+            <br /> <br />
             Join the discord, talk generative art be it audio or visuals, smart
-            contracts, NFT tools etc. we are the builders!!
+            contracts, NFT tools etc. 
+            <br />
+            We are the builders!!
           </Typography>
         </Box>
       </Modal>

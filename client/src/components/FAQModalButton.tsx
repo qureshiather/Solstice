@@ -37,17 +37,23 @@ export const FAQModalButton = () => {
             <br />
             Minting Process:
             <ol>
-              <li>Mint a SolsticeTicket on the home page</li>
-              <li>Go to the generator</li>
+              <li>Connect your wallet on the home page </li>
+              <li>Mint a SolsticeTicket, make sure you have enough funds</li>
+              <li>Once you have received your ticket, go to the generator on this website </li>
               <li>
-                Connect your wallet, and if you have a unsued SolsticeTicket,
-                you can experiment with different generations
+                Connect your wallet, and if you have a SolsticeTicket,
+                you can experiment with different designs
               </li>
               <li>
                 Once you are satisfied, you can submit your ticket, and it
-                will then kick off the process to update your ticket metadata with your ART (will take a few min)
+                will then kick off the process to update your ticket metadata with your design (will take a few min)
               </li>
             </ol>
+            <ul>
+              <li>
+                Once you submit, you seed phrase will persist and can never be duplicated.
+              </li>
+            </ul>
           </Typography>
         </Box>
       </Modal>
