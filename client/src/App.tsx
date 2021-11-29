@@ -24,7 +24,7 @@ import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Generator } from "./routes/Generator";
+// import { Generator } from "./routes/Generator";
 
 const configVar = {
   "REACT_APP_CANDY_MACHINE_CONFIG": "9vcEDFSNGtjtZoR8pECq8nxYfbouwQc7LuPDwohDaKGZ",
@@ -128,7 +128,7 @@ const App = () => {
                     />
                   }
                 />
-                <Route path="/generator" element={<Generator connection={connection}/>} />
+                {/* <Route path="/generator" element={<Generator/>} /> */}
               </Routes>
             </BrowserRouter>
           </WalletDialogProvider>

@@ -11,7 +11,6 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 
-import * as anchor from "@project-serum/anchor";
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { WalletDialogButton } from "@solana/wallet-adapter-material-ui";
 import { shortenAddress } from "../candy-machine";
@@ -19,11 +18,7 @@ import axios from "axios";
 import { Snackbar } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 
-export interface GeneratorProps {
-  connection: anchor.web3.Connection;
-}
-
-export const Generator = (props: GeneratorProps) => {
+export const Generator = () => {
   // 0 is black, and 1 is gradient
   const [backgroundType, setBackgroundType] = useState(0);
   // 1 is circle, 2 is square
