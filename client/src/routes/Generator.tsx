@@ -55,7 +55,7 @@ export const Generator = (props: GeneratorProps) => {
     }
   };
 
-  const CheckIfStringIsUnique = async (value: String) => {
+  const CheckIfStringIsUnique = async (value: string) => {
     const API_URL = "/api/ValidateStringUnique?";
     if (sinceLastUniqueFetch && Date.now() - sinceLastUniqueFetch < 5000) {
       const timeLeft = (5000 - (Date.now() - sinceLastUniqueFetch))/1000;
@@ -76,7 +76,7 @@ export const Generator = (props: GeneratorProps) => {
     }
   };
 
-  const DoesWalletHaveUnusuedTicket = async (walletPublicKey: String) => {
+  const DoesWalletHaveUnusuedTicket = async (walletPublicKey: string) => {
     const API_URL = "/api/GetUnusedTicketCount?";
     axios.get(
       API_URL + `walletPublicKey=${walletPublicKey}`
@@ -293,8 +293,8 @@ export const Generator = (props: GeneratorProps) => {
               onClick={() => {
                 // create loading overlay!
                 const requestBody = {
-                  seedString: seedString,
-                  //@ts-ignore
+                  seedString,
+                  // @ts-ignore
                   walletPublicKey: wallet.publicKey.toBase58(),
                   artConfig: {
                     BackgroundType: backgroundType,

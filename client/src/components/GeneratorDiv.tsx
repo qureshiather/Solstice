@@ -7,7 +7,7 @@ const CIRCLE_RADIUS = RESOLUTION / 3;
 const CIRCLE_DIAMETER = (RESOLUTION / 3) * 2;
 const SQUARE_SIZE = RESOLUTION / 2;
 
-const get_angle_function_from_string = (value: string, p5: any) => {
+const getAngleFunctionFromString = (value: string, p5: any) => {
   switch (value) {
     case "tan":
       return (angle: any) => p5.tan(angle);
@@ -27,9 +27,9 @@ const get_angle_function_from_string = (value: string, p5: any) => {
 
 // @ts-ignore
 function shuffleArray(array: any[]) {
-  for (var i = array.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var temp = array[i];
+  for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = array[i];
       array[i] = array[j];
       array[j] = temp;
   }
@@ -66,7 +66,7 @@ class GeneratorDiv extends React.Component<{
     this.mult = 0;
     this.angle_func_a = () => {};
     this.angle_func_b = () => {};
-    var seedrandom = require("seedrandom");
+    const seedrandom = require("seedrandom");
     this.SEED_STRING = props.SEED_STRING;
     this.SEED_NUMBER = seedrandom(props.SEED_STRING+'\0').int32();
   }
@@ -92,22 +92,22 @@ class GeneratorDiv extends React.Component<{
       "inverse_tan",
     ];
     const REVERSED_ANGLE_FUNC_OPTIONS = ANGLE_FUNC_OPTIONS.reverse();
-    this.angle_func_a = get_angle_function_from_string(
+    this.angle_func_a = getAngleFunctionFromString(
       p5.random(ANGLE_FUNC_OPTIONS),
       p5
     );
-    this.angle_func_b = get_angle_function_from_string(
+    this.angle_func_b = getAngleFunctionFromString(
       p5.random(REVERSED_ANGLE_FUNC_OPTIONS),
       p5
     );
 
     const DENSITY = p5.random(500, 1500);
-    var space = p5.width / DENSITY;
+    const space = p5.width / DENSITY;
 
     // Initial points in pixel
-    for (var x = 0; x < p5.width; x += space) {
-      for (var y = 0; y < p5.height; y += space) {
-        var p = p5.createVector(x + p5.random(-10, 10), y + p5.random(-10, 10));
+    for (let x = 0; x < p5.width; x += space) {
+      for (let y = 0; y < p5.height; y += space) {
+        const p = p5.createVector(x + p5.random(-10, 10), y + p5.random(-10, 10));
         // @ts-ignore
         this.points.push(p);
       }
@@ -125,27 +125,27 @@ class GeneratorDiv extends React.Component<{
 
     if (this.props.BACKGROUND_TYPE === 1) {
       p5.background(40);
-      var c1 = p5.color(0);
-      var c2 = p5.color(
+      const c1 = p5.color(0);
+      const c2 = p5.color(
         p5.floor(this.r1 - 60),
         p5.floor(this.g1 - 60),
         p5.floor(this.b1 - 60)
       );
-      var c3 = p5.color(
+      const c3 = p5.color(
         p5.floor(this.r1 - 60),
         p5.floor(this.g2 - 60),
         p5.floor(this.b2 - 60)
       );
 
       for (let y = 0; y < p5.height; y++) {
-        var n = p5.map(y, 0, p5.height, 0, 1);
-        var selected_color = 0;
+        const n = p5.map(y, 0, p5.height, 0, 1);
+        let selected_color = 0;
         if (y % 2) {
           selected_color = c2;
         } else {
           selected_color = c3;
         }
-        let newc = p5.lerpColor(selected_color, c1, n);
+        const newc = p5.lerpColor(selected_color, c1, n);
         p5.stroke(newc);
         p5.line(0, y, p5.width, y);
       }
@@ -175,19 +175,19 @@ class GeneratorDiv extends React.Component<{
     }
 
     p5.noStroke();
-    var max = 0;
+    let max = 0;
     if (p5.frameCount * 2 <= this.points.length) {
       max = p5.frameCount * 2;
     } else {
       max = this.points.length;
     }
 
-    for (var i = 0; i < max; i++) {
-      var r = p5.map(this.points[i].x, 0, p5.width, this.r1, this.r2);
-      var g = p5.map(this.points[i].y, 0, p5.height, this.g1, this.g2);
-      var b = p5.map(this.points[i].x, 0, p5.width, this.b1, this.b2);
+    for (let i = 0; i < max; i++) {
+      const r = p5.map(this.points[i].x, 0, p5.width, this.r1, this.r2);
+      const g = p5.map(this.points[i].y, 0, p5.height, this.g1, this.g2);
+      const b = p5.map(this.points[i].x, 0, p5.width, this.b1, this.b2);
 
-      var alpha;
+      let alpha;
       if (this.props.SHAPE_TYPE === 0) {
         alpha = p5.map(
           p5.dist(
@@ -231,7 +231,7 @@ class GeneratorDiv extends React.Component<{
 
       p5.fill(r, g, b, alpha);
 
-      var angle = p5.map(
+      const angle = p5.map(
         p5.noise(this.points[i].x * this.mult, this.points[i].y * this.mult),
         0,
         1,

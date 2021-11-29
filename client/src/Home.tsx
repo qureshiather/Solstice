@@ -160,8 +160,8 @@ const Home = (props: HomeProps) => {
       });
     } finally {
       if (wallet) {
-        const balance = await props.connection.getBalance(wallet.publicKey);
-        setBalance(balance / LAMPORTS_PER_SOL);
+        const tempBalance = await props.connection.getBalance(wallet.publicKey);
+        setBalance(tempBalance / LAMPORTS_PER_SOL);
       }
       setIsMinting(false);
       refreshCandyMachineState();
@@ -171,8 +171,8 @@ const Home = (props: HomeProps) => {
   useEffect(() => {
     (async () => {
       if (wallet) {
-        const balance = await props.connection.getBalance(wallet.publicKey);
-        setBalance(balance / LAMPORTS_PER_SOL);
+        const tempBalance = await props.connection.getBalance(wallet.publicKey);
+        setBalance(tempBalance / LAMPORTS_PER_SOL);
       }
     })();
   }, [wallet, props.connection]);
@@ -261,7 +261,7 @@ const Home = (props: HomeProps) => {
       </MintContainer>
 
       <h5 className="centerParagraph">
-        Each SolsticeNFT will be uniquely generated and signed with the mint number 
+        Each SolsticeNFT will be uniquely generated and signed with the mint number
       </h5>
 
       <InformationBox />

@@ -108,7 +108,7 @@ export const awaitTransactionSignatureConfirmation = async (
     }
   });
 
-  //@ts-ignore
+  // @ts-ignore
   if (connection._signatureSubscriptions[subId]) {
     connection.removeSignatureListener(subId);
   }
@@ -253,7 +253,7 @@ export const mintOneToken = async (
     accounts: {
       config,
       candyMachine: candyMachine.id,
-      payer: payer,
+      payer,
       wallet: treasury,
       mint: mint.publicKey,
       metadata,

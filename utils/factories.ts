@@ -1,4 +1,4 @@
-import { ENVIRONMENT, LOG } from "../server";
+import { ENVIRONMENT, LOGGER } from "../server";
 import {
   MapMemoryService,
   FirestoreMemoryService,
@@ -19,21 +19,21 @@ const firebaseConfig = {
 
 export const getMemoryService = ():MemoryService => {
   if (ENVIRONMENT === "prod") {
-    LOG.info("Using Firebase as storage Service")
+    LOGGER.info("Using Firebase as storage Service")
     const firebaseApp = initializeApp(firebaseConfig);
     return new FirestoreMemoryService(firebaseApp);
   } else {
-    LOG.info("Using in-memory map as storage Service")
+    LOGGER.info("Using in-memory map as storage Service")
     return new MapMemoryService();
   }
 };
 
 export const getFileLocation = ():string => {
   if (ENVIRONMENT === "prod") {
-    LOG.info("Storing images temporary in /tmp")
+    LOGGER.info("Storing images temporary in /tmp")
     return "/tmp";
   } else {
-    LOG.info("Storing images in root directory")
+    LOGGER.info("Storing images in root directory")
     return ".";
   }
 };

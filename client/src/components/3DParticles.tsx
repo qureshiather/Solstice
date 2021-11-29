@@ -49,9 +49,9 @@ export const ParticleContainer3D = () => {
   };
 
   return (
-    <div style={{ 
-      height: "100vh", 
-      width: "100%", 
+    <div style={{
+      height: "100vh",
+      width: "100%",
       position: "absolute",
       zIndex: -1
       }}>

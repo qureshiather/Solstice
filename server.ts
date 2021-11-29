@@ -1,27 +1,31 @@
 import express from "express";
+import cors from "cors";
+import path from "path";
+
+import { Logger } from "tslog";
+// @ts-ignore
+import Ddos from "ddos";
+import * as dotenv from "dotenv";
+
 import { UploadService } from "./services/uploadservice";
 import { fetchNFTsOwnedByWallet } from "./utils/queryUtils";
 import { PublicKey, Keypair } from "@solana/web3.js";
 import { getMemoryService, getFileLocation } from "./utils/factories";
-import { Logger  } from "tslog";
-import path from 'path';
 
-// @ts-ignore
-import Ddos from 'ddos';
-import * as dotenv from "dotenv";
-dotenv.config({ path: __dirname+'/.env' });
+dotenv.config({ path: __dirname + "/.env" });
 
 const app = express();
 const port = process.env.PORT || 5000;
+export const LOGGER: Logger = new Logger({ name: "Logger" });
+export const ENVIRONMENT: string = process.env.ENVIRONMENT || "dev";
 
-const buildPath = path.join(__dirname, '..', 'build');
-app.use(express.static(buildPath));
-
-export const ENVIRONMENT = process.env.ENVIRONMENT || "dev";
-export const LOG: Logger = new Logger({ name: "Logger" });
+app.use(cors());
+const frontEndBuildPath = path.join(__dirname, "../client/build")
+LOGGER.info(`Serving front end assets from: ${frontEndBuildPath}`);
+app.use(express.static(path.join(__dirname, "../client/build")));
 
 if (process.env.NODE_ENV !== "test") {
-  app.use(new Ddos({burst:10, limit:15}).express);
+  app.use(new Ddos({ burst: 10, limit: 15 }).express);
 }
 
 app.use(express.json());
@@ -42,7 +46,6 @@ export const IMAGE_FILE_LOCATION = getFileLocation();
 const memoryService = getMemoryService();
 const uploadService = new UploadService();
 
-
 app.get("/api/GetUnusedTicketCount", (req: any, res) => {
   const walletPublicKey = req.query.walletPublicKey;
   let amountOfUnsuedTickets = 0;
@@ -52,7 +55,7 @@ app.get("/api/GetUnusedTicketCount", (req: any, res) => {
       for (const result of results) {
         const tokenId = result.mint;
         const name = result.data.name;
-        if (name.includes('Solstice Ticket')) {
+        if (name.includes("Solstice Ticket")) {
           promises.push(memoryService.IsTokenUnused(tokenId));
         }
       }
@@ -112,7 +115,7 @@ app.post("/api/updateMetadata", (req: any, res: any) => {
             for (const result of results) {
               const tokenId = result.mint;
               const name = result.data.name;
-              if (name.includes('Solstice Ticket')) {
+              if (name.includes("Solstice Ticket")) {
                 promises.push(memoryService.IsTokenUnused(tokenId));
               }
             }
@@ -140,10 +143,6 @@ app.post("/api/updateMetadata", (req: any, res: any) => {
 
 app.get("/api/hello", (req, res) => {
   res.status(200).send("Hello World!");
- });
+});
 
-if (process.env.NODE_ENV !== "test") {
-  app.listen(port, () => LOG.info(`Listening on port ${port}`));
-}
-
-
+app.listen(port, () => LOGGER.info(`Listening on port ${port}`));
