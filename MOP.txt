@@ -1,0 +1,37 @@
+Go to Solana NFT Tools
+
+solana network: 
+mainnet-beta
+
+mainnet rpc endpoint:
+https://ssc-dao.genesysgo.net
+
+Calculate Arweave costs:
+999 supply, so make sure you buy enough, calculate average image cost
+https://ardrive.io/pricing/
+
+Make sure Candy machine wallet has enough funds
+(create a wallet, and then send money to it using coinbase)
+
+
+1. Create Candy Machine on mainnet-beta
+
+RECORD THIS INFORMATION!
+
+const configVar = {
+  "REACT_APP_CANDY_MACHINE_CONFIG": "9vcEDFSNGtjtZoR8pECq8nxYfbouwQc7LuPDwohDaKGZ",
+  "REACT_APP_CANDY_MACHINE_ID": "FEHGAvefEFPSgfvFsABVjc2KMU11CYUQz3sQZ4kJnFmG",
+  "REACT_APP_TREASURY_ADDRESS": "6A4ordc3gBx1UodDNPTqQs8zSYnzYzb7YWFPRnAbKUK3",
+  "REACT_APP_CANDY_START_DATE": "1638446400",
+  "REACT_APP_SOLANA_NETWORK": "devnet",
+  "REACT_APP_SOLANA_RPC_HOST": "https://explorer-api.devnet.solana.com"
+}
+
+2. Once candy machine is deployed on mainnet-beta
+
+(Front end does not have the environmental variables)
+Copy the config to client/src/App.tsx
+
+3. Set up variables in utils/config/index.ts 
+(The Solana ones)
+set ENVIRONMENT to prod
