@@ -19,7 +19,7 @@ export const UPDATE_AUTHORITY_KEYPAIR = Keypair.fromSecretKey(
   ])
 );
 
-//Arweave
+// Arweave
 export const arweaveJWK = {
   kty: "RSA",
   n: "0FOfCBV63rlv6Ves-I04FWarIfWhtG4xoxkAPzvSrDu-MuYPMqYa3daWGdsKhQKImjRfG-mCiMHIEdJfsPY_e4Y4XxqPGiJuE5UzZiXW8OMYZNmTbuyHaEgKRspXkN1rFMIxk8vs7ZbFRrSgzETg37FPFCFSLhXWA09IDAAHyYlvEn2QgmVFvQdVfAhBOMS5f7IB3bI2aNWNQQzcZEj7_DWUFZzKEMYTWMa1-PI2Szm_1AuP5h0mxjYz7ZnANkQ8BR46FQOsTmiv5ty4Qp-vvTb7IkjfOkOUKNEuvpr5LmsPrJMfnqMrlZhKlnSd6x0ryckLXKDW9vc5opibRvwx0EGaDa5iioh-Zk-5KdcuXSslnXIC6WsiLwILJB-SCh67IWaSzrHXRrmFboZ7aRBAi2TZe9Jo2vOa62ejeJmLOCrUSpnNzU5dmCpRKfizN_yP_WCiQ9YNqGsr_Elung3C6cGb36sajYvdKp7xeJi8gK9AzVe6u_9T8sQFsk0qvxhCZyC3zLAzngH_zcdSnbEhoe2BkjqEr98LBLdNOs6if9lYN_vvV1YwQqs7lcW2njEpQb-vAQ1ZS1wMX4uY54u1kgfJ4FNmV4Twd8qiqkzceEtNUpojhxd60gjgfkTrE_7nEmujIyGEHjd1C8dRIXqc4AMc6gcszAxi3JgZwAjvboU",
@@ -33,7 +33,7 @@ export const arweaveJWK = {
 };
 
 
-//firebase
+// firebase
 export const firebaseConfig = {
   apiKey: "AIzaSyBbPnG1_ZkqAPqW1v_uZj_2fvtKr0KFB8c",
   authDomain: "solstice-be65f.firebaseapp.com",
