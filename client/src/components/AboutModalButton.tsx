@@ -46,7 +46,7 @@ export const AboutModalButton = () => {
             job and wants to pursue his creative interests full-time
             <br /> <br />
             Join the discord, talk generative art be it audio or visuals, smart
-            contracts, NFT tools etc. 
+            contracts, NFT tools etc.
             <br />
             We are the builders!!
           </Typography>

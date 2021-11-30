@@ -2,7 +2,8 @@
 import { programs } from "@metaplex/js";
 import { PublicKey, Connection } from "@solana/web3.js";
 import { web3 } from "@project-serum/anchor";
-import { SOLANA_RPC_HOST, UPDATE_AUTHORITY } from "../server";
+import { SOLANA_RPC_HOST, UPDATE_AUTHORITY } from "./config";
+
 const {
   metadata: { MetadataData },
   TokenAccount,
