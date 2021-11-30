@@ -24,6 +24,7 @@ import { WalletDialogProvider } from "@solana/wallet-adapter-material-ui";
 import { createTheme, ThemeProvider } from "@material-ui/core";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Generator } from "./routes/Generator";
 // import { Generator } from "./routes/Generator";
 
 const configVar = {
@@ -128,7 +129,7 @@ const App = () => {
                     />
                   }
                 />
-                {/* <Route path="/generator" element={<Generator/>} /> */}
+                <Route path="/generator" element={<Generator/>} />
               </Routes>
             </BrowserRouter>
           </WalletDialogProvider>

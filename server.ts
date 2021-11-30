@@ -2,22 +2,20 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 
-import { Logger } from "tslog";
 // @ts-ignore
 import Ddos from "ddos";
 import * as dotenv from "dotenv";
 
 import { UploadService } from "./services/uploadservice";
 import { fetchNFTsOwnedByWallet } from "./utils/queryUtils";
-import { PublicKey, Keypair } from "@solana/web3.js";
-import { getMemoryService, getFileLocation } from "./utils/factories";
+import { PublicKey } from "@solana/web3.js";
+import { getMemoryService } from "./utils/factories";
+import { LOGGER } from "./utils/config";
 
 dotenv.config({ path: __dirname + "/.env" });
 
 const app = express();
 const port = process.env.PORT || 5000;
-export const LOGGER: Logger = new Logger({ name: "Logger" });
-export const ENVIRONMENT: string = process.env.ENVIRONMENT || "dev";
 
 app.use(cors());
 const frontEndBuildPath = path.join(__dirname, "../client/build")
@@ -31,18 +29,6 @@ if (process.env.NODE_ENV !== "test") {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-export const SOLANA_RPC_HOST = "https://explorer-api.devnet.solana.com";
-export const UPDATE_AUTHORITY = "6A4ordc3gBx1UodDNPTqQs8zSYnzYzb7YWFPRnAbKUK3";
-export const UPDATE_AUTHORITY_KEYPAIR = Keypair.fromSecretKey(
-  Uint8Array.from([
-    32, 219, 242, 155, 200, 41, 117, 93, 171, 185, 95, 71, 115, 136, 230, 249,
-    7, 138, 206, 79, 105, 5, 198, 137, 233, 14, 34, 251, 69, 166, 255, 172, 76,
-    156, 247, 172, 48, 18, 241, 9, 20, 241, 172, 157, 137, 24, 53, 245, 174, 97,
-    164, 166, 1, 172, 229, 248, 91, 209, 58, 214, 32, 29, 223, 178,
-  ])
-);
-
-export const IMAGE_FILE_LOCATION = getFileLocation();
 const memoryService = getMemoryService();
 const uploadService = new UploadService();
 

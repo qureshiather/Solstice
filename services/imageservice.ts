@@ -1,9 +1,8 @@
-import { IMAGE_FILE_LOCATION } from "../server";
-
 // @ts-ignore
 import p5Import from "node-p5";
 // @ts-ignore
 import seedrandom from "seedrandom";
+import { IMAGE_FILE_LOCATION } from "../utils/config";
 
 export const generateArt = (
   seedString: string,
