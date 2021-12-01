@@ -10,10 +10,10 @@ test('adding positive numbers is not zero', () => {
 
 test('image service generates images', () => {
   const test = generateArt(
-    "test1",
+    "Solana",
     {
       BackgroundType: 1,
-      ShapeType: 2,
+      ShapeType: 1,
       borderType: 1,
     }
     ,
