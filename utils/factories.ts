@@ -18,12 +18,7 @@ export const getMemoryService = ():MemoryService => {
 };
 
 export const getFileLocation = ():string => {
-  if (ENVIRONMENT === "prod") {
-    LOGGER.info("Storing images temporary in /tmp")
-    return "/tmp";
-  } else {
     LOGGER.info("Storing images in root directory")
     return ".";
-  }
 };
 

@@ -3,20 +3,17 @@ import { getFileLocation } from "../factories";
 import { Logger } from "tslog";
 
 export const LOGGER: Logger = new Logger({ name: "Logger" });
-export const ENVIRONMENT: string = process.env.ENVIRONMENT || "dev";
+
+// set to "prod" to use firebase, "dev" otherwise
+export const ENVIRONMENT: string = "prod";
 
 export const IMAGE_FILE_LOCATION = getFileLocation();
 
 // Solana
-export const SOLANA_RPC_HOST = "https://explorer-api.devnet.solana.com";
-export const UPDATE_AUTHORITY = "6A4ordc3gBx1UodDNPTqQs8zSYnzYzb7YWFPRnAbKUK3";
+export const SOLANA_RPC_HOST = "https://ssc-dao.genesysgo.net";
+export const UPDATE_AUTHORITY = "6bj4Wykh6nN49NyLfra12k8xSMronoSXrPVZd5ntcHG";
 export const UPDATE_AUTHORITY_KEYPAIR = Keypair.fromSecretKey(
-  Uint8Array.from([
-    32, 219, 242, 155, 200, 41, 117, 93, 171, 185, 95, 71, 115, 136, 230, 249,
-    7, 138, 206, 79, 105, 5, 198, 137, 233, 14, 34, 251, 69, 166, 255, 172, 76,
-    156, 247, 172, 48, 18, 241, 9, 20, 241, 172, 157, 137, 24, 53, 245, 174, 97,
-    164, 166, 1, 172, 229, 248, 91, 209, 58, 214, 32, 29, 223, 178,
-  ])
+  Uint8Array.from([130,62,30,145,13,96,157,181,205,153,134,160,138,62,38,229,201,53,235,139,191,220,49,18,82,124,165,233,20,212,46,32,1,111,42,253,208,87,85,24,17,54,34,136,117,180,13,114,177,123,22,174,55,226,143,2,69,9,137,78,137,5,84,227])
 );
 
 // Arweave

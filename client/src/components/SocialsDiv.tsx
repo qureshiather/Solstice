@@ -1,5 +1,5 @@
 import React from "react"; // we need this to make JSX compile
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const SocialsDiv = () => {
   return (
@@ -30,7 +30,7 @@ export const SocialsDiv = () => {
       >
         <p>TWITTER</p>
       </a>
-      {/* <Link
+      <Link
           to={{
             pathname: "/generator",
           }}
@@ -38,7 +38,7 @@ export const SocialsDiv = () => {
           className="topButtons glitch isInteractive"
       >
         <p>GENERATOR</p>
-      </Link> */}
+      </Link>
     </div>
   );
 };

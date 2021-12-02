@@ -10,12 +10,13 @@ export class FirestoreMemoryService implements MemoryService {
       this.db = getFirestore(firebase);
     }
 
-    async MarkSeedStringAsTaken(seedString: string, TokenPubKey: string): Promise<void> {
+    async MarkSeedStringAsTaken(seedString: string, TokenPubKey: string, artConfig: any): Promise<void> {
       await setDoc(doc(this.db, "seedStrings", seedString), {
         "tokenPubKey":  TokenPubKey
       });
       await setDoc(doc(this.db, "tokensUsed", TokenPubKey), {
-        "seedString":  seedString
+        "seedString":  seedString,
+        "artConfig": artConfig
       });
     }
 

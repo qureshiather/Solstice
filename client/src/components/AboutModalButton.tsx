@@ -40,7 +40,7 @@ export const AboutModalButton = () => {
                 {" "}
                 Each image will verified to be unique and there will only be 999 of them{" "}
               </li>
-              <li>The final NFT will link to a 1080p version of your design</li>
+              <li>The final NFT will link to a 1440 pixel version of your design</li>
             </ul>
             This entire project was made with love by a single dev who hates his
             job and wants to pursue his creative interests full-time

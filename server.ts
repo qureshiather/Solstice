@@ -114,7 +114,7 @@ app.post("/api/updateMetadata", (req: any, res: any) => {
             if (tokenToUse === null) {
               res.send({ walletPublicKey: "no valid tickets" });
             } else {
-              memoryService.MarkSeedStringAsTaken(seedString, tokenToUse);
+              memoryService.MarkSeedStringAsTaken(seedString, tokenToUse, params.artConfig);
               uploadService.updateMetadata(
                 seedString,
                 params.artConfig,

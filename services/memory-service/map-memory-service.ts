@@ -9,9 +9,10 @@ export class MapMemoryService implements MemoryService {
         this.store.set("SEED_SOLANA", "19203i20913iflkes");
     }
 
-    async MarkSeedStringAsTaken(seedString: string, TokenPubkey: string): Promise<void> {
+    async MarkSeedStringAsTaken(seedString: string, TokenPubkey: string, artConfig: any): Promise<void> {
       await this.store.set(`SEED_${seedString}`, TokenPubkey);
       await this.store.set(`TOKEN_${TokenPubkey}`, seedString);
+      await this.store.set(`TOKEN_${TokenPubkey}_ARTCONFIG`, artConfig);
       return
     }
 

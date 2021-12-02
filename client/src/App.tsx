@@ -28,12 +28,12 @@ import { Generator } from "./routes/Generator";
 // import { Generator } from "./routes/Generator";
 
 const configVar = {
-  "REACT_APP_CANDY_MACHINE_CONFIG": "9vcEDFSNGtjtZoR8pECq8nxYfbouwQc7LuPDwohDaKGZ",
-  "REACT_APP_CANDY_MACHINE_ID": "FEHGAvefEFPSgfvFsABVjc2KMU11CYUQz3sQZ4kJnFmG",
-  "REACT_APP_TREASURY_ADDRESS": "6A4ordc3gBx1UodDNPTqQs8zSYnzYzb7YWFPRnAbKUK3",
-  "REACT_APP_CANDY_START_DATE": "1638446400",
-  "REACT_APP_SOLANA_NETWORK": "devnet",
-  "REACT_APP_SOLANA_RPC_HOST": "https://explorer-api.devnet.solana.com"
+  "REACT_APP_CANDY_MACHINE_CONFIG": "8oeoekuw22jspvXARtvTKAKJ4xJgu7y7jioEwd1797xd",
+  "REACT_APP_CANDY_MACHINE_ID": "3EYXvga3NMahHv43CLMfSedhat5uRhJWmQFdgXnc7Y7e",
+  "REACT_APP_TREASURY_ADDRESS": "6bj4Wykh6nN49NyLfra12k8xSMronoSXrPVZd5ntcHG",
+  "REACT_APP_CANDY_START_DATE": "1638489600",
+  "REACT_APP_SOLANA_NETWORK": "mainnet-beta",
+  "REACT_APP_SOLANA_RPC_HOST": "https://ssc-dao.genesysgo.net"
 }
 
 const treasury = new anchor.web3.PublicKey(
