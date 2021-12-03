@@ -1,5 +1,7 @@
 import { generateArt } from "./imageservice";
 import { programs } from "@metaplex/js";
+import retry from 'async-await-retry';
+
 import Arweave from "arweave";
 
 import fs from "fs";
@@ -10,12 +12,13 @@ import {
 } from "@solana/web3.js";
 
 import fetch from 'cross-fetch';
-import { arweaveJWK, SOLANA_RPC_HOST, UPDATE_AUTHORITY_KEYPAIR } from "../utils/config";
+import { arweaveJWK, LOGGER, SOLANA_RPC_HOST, UPDATE_AUTHORITY_KEYPAIR } from "../utils/config";
 
 export class UploadService {
 
   async updateMetadata(seedString: string, artConfig: any, tokenId: string) {
     const uploadFile = async (fileName: string) => {
+      LOGGER.info(`Updating Metadata for token: ${tokenId}, seedString: ${seedString}, with artConfig: ${JSON.stringify(artConfig)}`);
       const arweave = Arweave.init({
         host: "arweave.net",
         port: 443,
@@ -29,6 +32,7 @@ export class UploadService {
         key
       );
       transaction.addTag("Content-Type", "image/png");
+      LOGGER.info(`Uploading image to arweave: token ${tokenId}`);
       await arweave.transactions.sign(transaction, key);
       await arweave.transactions.post(transaction);
       fs.unlinkSync(fileName); // deletes file
@@ -56,7 +60,7 @@ export class UploadService {
       newJSONData.properties.files[0].uri = permURLToImage;
       newJSONData.properties.files[0].type = "image/png";
       newJSONData.attributes[0] = {"trait_type": "type", "value": "art"}
-
+      LOGGER.info(`Uploading Metadata to Arweave: ${JSON.stringify(newJSONData)}, token ${tokenId}`);
       const jsonTransaction = await arweave.createTransaction({
         data: JSON.stringify(newJSONData)
       }, key);
@@ -82,9 +86,22 @@ export class UploadService {
           primarySaleHappened: metadat.data.primarySaleHappened,
         }
       );
-      await sendAndConfirmTransaction(connection, updateTx, [
+      LOGGER.info(`Updating Metadata in Solana BlockChain: ${updateTx}, token ${tokenId}`);
+      const confirmationFunc = () => sendAndConfirmTransaction(connection, updateTx, [
         UPDATE_AUTHORITY_KEYPAIR,
       ]);
+      // await sendAndConfirmTransaction(connection, updateTx, [
+      //   UPDATE_AUTHORITY_KEYPAIR,
+      // ]);
+      try {
+        const result = await retry(confirmationFunc, null, {
+          retriesMax: 3, interval: 100, exponential: true, factor: 2, jitter: 100
+        })
+        LOGGER.info(`Updating Solana metadata had response: ${result}`);
+      } catch (err) {
+        LOGGER.error(`Unable to Update metadata for ${tokenId}, seedString: ${seedString}, with artConfig: ${JSON.stringify(artConfig)}`)
+      }
+
     };
     generateArt(seedString, artConfig, uploadFile)
   }
