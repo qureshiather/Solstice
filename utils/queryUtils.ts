@@ -2,7 +2,7 @@
 import { programs } from "@metaplex/js";
 import { PublicKey, Connection } from "@solana/web3.js";
 import { web3 } from "@project-serum/anchor";
-import { SOLANA_RPC_HOST, UPDATE_AUTHORITY } from "./config";
+import { LOGGER, SOLANA_RPC_HOST, UPDATE_AUTHORITY } from "./config";
 
 const {
   metadata: { MetadataData },
@@ -17,7 +17,19 @@ export const fetchNFTsOwnedByWallet = async (userWallet: web3.PublicKey) => {
   );
   const accountsWithAmount = accounts
     .map(({ data }) => data)
-    .filter(({ amount }) => amount?.toNumber() > 0);
+    .filter(({ amount }) => {
+      let numberOfTickets = 0;
+      try {
+        numberOfTickets = amount?.toNumber()
+      } catch (err) {
+        LOGGER.warn(`Was unable to count ticket count for a token in ${userWallet.toBase58()}`);
+        return false;
+      }
+      if (numberOfTickets > 0) {
+        return true;
+      }
+    }
+  );
 
   const nftMintAddresses = accountsWithAmount.map(({ mint }) => mint);
 
