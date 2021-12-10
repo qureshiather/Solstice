@@ -9,3 +9,10 @@ export interface ArtConfig {
     ShapeType: number;
     borderType: number;
 }
+
+export interface TokenInfo {
+    artConfig: ArtConfig;
+    processed: boolean;
+    seedString: string;
+    tokenPubKey: string;  
+}

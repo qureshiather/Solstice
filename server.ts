@@ -30,7 +30,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const memoryService = getMemoryService();
-const uploadService = new UploadService();
 
 app.get("/api/GetUnusedTicketCount", (req: any, res) => {
   const walletPublicKey = req.query.walletPublicKey;
@@ -115,11 +114,6 @@ app.post("/api/updateMetadata", (req: any, res: any) => {
               res.send({ walletPublicKey: "no valid tickets" });
             } else {
               memoryService.MarkSeedStringAsTaken(seedString, tokenToUse, params.artConfig);
-              uploadService.updateMetadata(
-                seedString,
-                params.artConfig,
-                tokenToUse
-              );
               res.send({ walletPublicKey: "Processing request!" });
             }
           });

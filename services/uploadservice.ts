@@ -90,9 +90,6 @@ export class UploadService {
       const confirmationFunc = () => sendAndConfirmTransaction(connection, updateTx, [
         UPDATE_AUTHORITY_KEYPAIR,
       ]);
-      // await sendAndConfirmTransaction(connection, updateTx, [
-      //   UPDATE_AUTHORITY_KEYPAIR,
-      // ]);
       try {
         const result = await retry(confirmationFunc, null, {
           retriesMax: 3, interval: 100, exponential: true, factor: 2, jitter: 100
@@ -103,6 +100,7 @@ export class UploadService {
       }
 
     };
+    LOGGER.info(`Generating art for seed: ${seedString} and token: ${tokenId}`);
     generateArt(seedString, artConfig, uploadFile)
   }
 }

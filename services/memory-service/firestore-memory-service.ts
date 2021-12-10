@@ -1,5 +1,6 @@
 import { FirebaseApp } from '@firebase/app';
-import { getFirestore, Firestore, doc, getDoc, setDoc } from 'firebase/firestore/lite';
+import { getFirestore, Firestore, doc, getDoc, setDoc, collection, query, where, limit, getDocs } from 'firebase/firestore/lite';
+import { TokenInfo } from 'type';
 import { MemoryService } from './interfaces/memory-service-interface';
 
 export class FirestoreMemoryService implements MemoryService {
@@ -16,7 +17,9 @@ export class FirestoreMemoryService implements MemoryService {
       });
       await setDoc(doc(this.db, "tokensUsed", TokenPubKey), {
         "seedString":  seedString,
-        "artConfig": artConfig
+        "artConfig": artConfig,
+        "processed": false,
+        "tokenPubKey": TokenPubKey
       });
     }
 
@@ -38,5 +41,28 @@ export class FirestoreMemoryService implements MemoryService {
       } else {
         return true;
       }
+    }
+
+    async grabNextUnprocessedTicket(): Promise<TokenInfo|null> {
+      const tokenCollectionRef = collection(this.db, "tokensUsed");
+      const q = query(tokenCollectionRef, where("processed", "==", false), limit(1))
+      const qSnapshot = await getDocs(q)
+      let tokenInfoData = null;
+      qSnapshot.forEach((doc) => {
+        tokenInfoData = doc.data() as TokenInfo
+      })
+      return tokenInfoData;
+    }
+
+    async setTokenAsProcessed(tokenId: string): Promise<void> {
+      const docRef = doc(this.db, "tokensUsed", tokenId);
+      const docSnap = await getDoc(docRef);
+      const obj = docSnap.data() as TokenInfo
+      await setDoc(doc(this.db, "tokensUsed", tokenId), {
+        "seedString":  obj.seedString,
+        "artConfig": obj.artConfig,
+        "processed": true,
+        "tokenPubKey": obj.tokenPubKey
+      });
     }
   }
