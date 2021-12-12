@@ -30,6 +30,15 @@ export const SocialsDiv = () => {
       >
         <p>TWITTER</p>
       </a>
+      <a
+        href="https://www.instagram.com/projectsolsticenft/"
+        target="_blank"
+        rel="noreferrer"
+        className="topButtons glitch isInteractive"
+        style={{ zIndex: 1 }}
+      >
+        <p>INSTAGRAM</p>
+      </a>
       <Link
           to={{
             pathname: "/generator",
