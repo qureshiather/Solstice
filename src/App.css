@@ -1,0 +1,171 @@
+@import url("https://fonts.googleapis.com/css2?family=Changa&display=swap");
+
+.App {
+  text-align: center;
+}
+
+.rotatingBanner {
+  font-family: "Orbitron";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    60deg,
+    #4834d4,
+    #5073b8,
+    #1098ad,
+    #5073b8,
+    #4834d4
+  );
+}
+
+h3 {
+  font-family: "Orbitron";
+}
+
+h3.centerTitle {
+  text-align: center;
+}
+
+h1.centerTitle {
+  font-family: "Orbitron";
+  text-align: center;
+  font-size: 80px;
+  font-weight: bold;
+  color: rgba(150, 248, 252, 1);
+  margin-top: 5%;
+  margin-bottom: 7%;
+  height: 50px;
+}
+
+h5.blackText {
+  color: black;
+}
+
+h6.centerParagraph {
+  font-family: "Orbitron";
+  text-align: center;
+}
+
+h5 {
+  font-family: "Orbitron";
+  text-align: center;
+}
+
+h4 {
+  font-family: "Orbitron";
+  text-align: center;
+  color: black;
+}
+
+p* {
+  font-family: "Orbitron";
+}
+
+#Carouselbox {
+  margin: auto;
+  width: 450px;
+  height: 450px;
+  color: white;
+}
+
+#carouselDiv {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  margin: auto;
+  border: 10px solid black;
+}
+
+#FAQButton {
+  margin: auto;
+  text-align: center;
+  padding: 0.5%;
+}
+
+.transparentBlackBackground {
+  background: rgba(0, 0, 0, 0.78);
+}
+
+.gradient-border {
+  --borderWidth: 3px;
+  background: black;
+  position: relative;
+  border-radius: var(--borderWidth);
+}
+.gradient-border:after {
+  content: "";
+  position: absolute;
+  top: calc(-1 * var(--borderWidth));
+  left: calc(-1 * var(--borderWidth));
+  height: calc(100% + var(--borderWidth) * 2);
+  width: calc(100% + var(--borderWidth) * 2);
+  background: linear-gradient(
+    60deg,
+    #4834d4,
+    #a166ab,
+    #5073b8,
+    #1098ad,
+    #07b39b,
+    #6fba82
+  );
+  border-radius: calc(2 * var(--borderWidth));
+  z-index: -1;
+  animation: animatedgradient 3s ease alternate infinite;
+  background-size: 300% 300%;
+}
+
+@keyframes animatedgradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+#dataHolder {
+  display: inherit;
+  margin: auto;
+  text-align: center;
+  width: 400px;
+}
+
+#box {
+  display: flex;
+}
+
+.box:first-child > span {
+  margin-right: auto;
+}
+
+.box:last-child > span {
+  margin-left: auto;
+}
+
+.subHolder {
+  flex: 1;
+  display: grid;
+  justify-content: center;
+}
+
+.dataName {
+  float: none;
+  color: #0fd4c2;
+  align-items: center;
+  margin-bottom: 0px;
+}
+
+.data {
+  float: none;
+  color: white;
+  align-items: center;
+}

@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: black;
+  color: #ffffff;
+}
+
+.topButtons {
+  text-decoration: none;
+  margin: 15px;
+  font-size: 20px;
+}
+
+#topButtonsHolder {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 30px;
+}
+
+.isInteractive {
+  cursor: pointer;
+  pointer-events: all !important;
+  transition-duration: 200ms;
+}
+.isInteractive:hover {
+  transform: scale(1.04);
+}
+.isInteractive:active {
+  transform: scale(0.98);
+  transition-duration: 20ms;
+}
+.glitch {
+  text-shadow:
+    2px -2px #4834d4,
+    -0.5px 0.5px #02fcff;
+}
