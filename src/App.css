@@ -82,12 +82,6 @@ p* {
   border: 10px solid black;
 }
 
-#FAQButton {
-  margin: auto;
-  text-align: center;
-  padding: 0.5%;
-}
-
 .transparentBlackBackground {
   background: rgba(0, 0, 0, 0.78);
 }
