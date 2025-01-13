@@ -39,8 +39,8 @@ export const Generate = () => {
         <Grid container size={6}>
           <Item>
             <p>
-              Wait until the image is finished rendering (1500 frames), and then
-              click download
+              Wait until the image has finished rendering (1500 frames), and
+              then click download
             </p>
           </Item>
         </Grid>
