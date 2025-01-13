@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import ArtCarousel from "./components/ArtCarousel";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import BoltIcon from "@mui/icons-material/Bolt";
+import Footer from "./components/Footer";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -8,22 +12,25 @@ const Home = () => {
   return (
     <>
       <main>
-        <h1 className="centerTitle glitch"> React P5 Art Generator </h1>
-
-        <ArtCarousel />
-
-        <h5 className="centerParagraph">
-          Generate Art Pieces in your browser (with Math)
-        </h5>
-        <div id="FAQButton">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => navigate("/generator")}
-          >
-            GENERATOR
-          </Button>
-        </div>
+        <Box sx={{ width: "100%" }}>
+          <Stack spacing={4} alignItems="center">
+            <h1 style={{ marginBottom: "32px", marginTop: "32px" }}>
+              P5.js Generator
+            </h1>
+            <ArtCarousel />
+            <p>Generate Art Pieces in your browser</p>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              onClick={() => navigate("/generator")}
+              startIcon={<BoltIcon />}
+            >
+              Generator
+            </Button>
+            <Footer />
+          </Stack>
+        </Box>
       </main>
     </>
   );

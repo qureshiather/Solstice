@@ -8,11 +8,14 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
-
-import { Snackbar } from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
+import Grid from "@mui/material/Grid2";
+import GeneratorDiv from "../components/GeneratorDiv";
+import FormHelperText from "@mui/material/FormHelperText";
+import Snackbar from "@mui/material/Snackbar";
 
 export const Generator = () => {
+  const [refreshKey, setRefreshKey] = useState(0); // State to force a remount
+
   // 0 is black, and 1 is gradient
   const [backgroundType, setBackgroundType] = useState(0);
   // 1 is circle, 2 is square
@@ -23,11 +26,13 @@ export const Generator = () => {
   const [resolution, setResolution] = useState<number>(0);
 
   // You can not have black background, or no shape -> then have border
-  const [seedString, setSeedString] = useState("MEWTWO");
+  const [seedString, setSeedString] = useState("REACT");
   const [seedStringError, setSeedStringError] = useState<string | undefined>();
 
+  const [snackBarText, setSnackBarText] = useState<string>("");
+  const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
+
   const [disableBorderType, setDisableBorderType] = useState<boolean>(false);
-  const [banner, setBanner] = useState<string>("");
 
   const validateSeedString = (value: string) => {
     if (value.length > 12) {
@@ -50,138 +55,174 @@ export const Generator = () => {
   }, [shapeType, backgroundType]);
 
   const SelectItem = styled(Select)(({ theme }) => ({
-    padding: 2,
     textAlign: "center",
-    fontFamily: "Orbitron",
   }));
 
   return (
     <main>
-      <h1 className="centerTitle glitch"> GENERATOR </h1>
-
-      <>
-        <br></br>
-        <Box
-          component="form"
-          autoComplete="off"
-          noValidate
-          sx={{
-            width: 600,
-            bgcolor: "#4834d4",
-            "& .MuiTextField-root": { m: 1, width: "25ch" },
-            margin: "0 auto",
-            opacity: "0.8",
-            border: "20px solid black",
-            padding: 3,
-            borderRadius: 1,
-            boxShadow: 1,
-          }}
-        >
-          <Stack spacing={3}>
-            <FormControl>
-              <InputLabel id="demo-simple-select-label">Background</InputLabel>
-              <SelectItem
-                variant="filled"
-                autoWidth
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={backgroundType}
-                label="Background"
-                onChange={(event) => {
-                  setBackgroundType(event.target.value as number);
-                }}
-              >
-                <MenuItem value={0}>Black</MenuItem>
-                <MenuItem value={1}>Gradient</MenuItem>
-              </SelectItem>
-            </FormControl>
-            <FormControl>
-              <InputLabel id="demo-simple-select-label">Shape Type</InputLabel>
-              <SelectItem
-                variant="filled"
-                autoWidth
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={shapeType}
-                label="Shape Type"
-                onChange={(event) => {
-                  setShapeType(event.target.value as number);
-                }}
-              >
-                <MenuItem value={1}>Circle</MenuItem>
-                <MenuItem value={2}>Square</MenuItem>
-              </SelectItem>
-            </FormControl>
-            <FormControl>
-              <InputLabel id="demo-simple-select-label">
-                Shape Border
-              </InputLabel>
-              <SelectItem
-                variant="filled"
-                autoWidth
-                disabled={disableBorderType}
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={shapeBorder}
-                label="Shape Border"
-                onChange={(event) => {
-                  setShapeBorder(event.target.value as number);
-                }}
-              >
-                <MenuItem value={0}>No Border</MenuItem>
-                <MenuItem value={1}>Border</MenuItem>
-              </SelectItem>
-            </FormControl>
-            <FormControl>
-              <InputLabel id="demo-simple-select-label">Resolution</InputLabel>
-              <SelectItem
-                variant="filled"
-                autoWidth
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={resolution}
-                label="Resolution"
-                onChange={(event) => {
-                  setResolution(event.target.value as number);
-                }}
-              >
-                <MenuItem value={0}>1080</MenuItem>
-                <MenuItem value={1}>2k</MenuItem>
-                <MenuItem value={2}>4K</MenuItem>
-              </SelectItem>
-            </FormControl>
-            <FormControl>
-              <TextField
-                sx={{
-                  textAlign: "center",
-                  padding: 2,
-                  fontFamily: "Orbitron",
-                }}
-                label="Seed String"
-                variant="outlined"
-                error={seedStringError !== undefined}
-                helperText={seedStringError}
-                id="outlined-multiline-flexible"
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                value={seedString}
-                onChange={(event) => {
-                  validateSeedString(event.target.value);
-                }}
-              />
-            </FormControl>
-          </Stack>
-        </Box>
-        <Stack
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-          sx={{ padding: "20px" }}
-        >
+      <Snackbar
+        open={openSnackBar}
+        autoHideDuration={5000}
+        message={snackBarText}
+        onClose={() => {
+          setOpenSnackBar(false);
+          setSnackBarText("");
+        }}
+      />
+      <Grid container spacing={2} justifyContent="center" alignItems="center">
+        <Grid container size={12} justifyContent="center">
+          <h1> Generator </h1>
+        </Grid>
+        <Grid container size={6} justifyContent="center" alignItems="center">
+          <Box
+            component="form"
+            autoComplete="off"
+            noValidate
+            sx={{
+              bgcolor: "#363a4f",
+              border: "3px solid #181926",
+              borderRadius: "4px",
+              padding: 2,
+              height: "500px",
+              width: "500px",
+            }}
+          >
+            <Stack spacing={3}>
+              <FormControl>
+                <InputLabel>Background</InputLabel>
+                <SelectItem
+                  value={backgroundType}
+                  label="Background"
+                  onChange={(event) => {
+                    setBackgroundType(event.target.value as number);
+                  }}
+                >
+                  <MenuItem value={0}>Black</MenuItem>
+                  <MenuItem value={1}>Gradient</MenuItem>
+                </SelectItem>
+                <FormHelperText>
+                  Background for the Image, either black or gradiant
+                </FormHelperText>
+              </FormControl>
+              <FormControl>
+                <InputLabel>Shape Type</InputLabel>
+                <SelectItem
+                  value={shapeType}
+                  label="Shape Type"
+                  onChange={(event) => {
+                    setShapeType(event.target.value as number);
+                  }}
+                >
+                  <MenuItem value={1}>Circle</MenuItem>
+                  <MenuItem value={2}>Square</MenuItem>
+                </SelectItem>
+                <FormHelperText>
+                  The pattern can be drawn in either a circle or square
+                </FormHelperText>
+              </FormControl>
+              <FormControl>
+                <InputLabel>Shape Border</InputLabel>
+                <SelectItem
+                  value={shapeBorder}
+                  label="Shape Border"
+                  onChange={(event) => {
+                    if (disableBorderType) {
+                      setSnackBarText(
+                        "Unable to set border when background is black",
+                      );
+                      setOpenSnackBar(true);
+                    } else {
+                      setShapeBorder(event.target.value as number);
+                    }
+                  }}
+                >
+                  <MenuItem value={0}>No Border</MenuItem>
+                  <MenuItem value={1}>Border</MenuItem>
+                </SelectItem>
+                <FormHelperText>
+                  Border can be used to make the pattern more visible over the
+                  background
+                </FormHelperText>
+              </FormControl>
+              <FormControl>
+                <InputLabel>Resolution</InputLabel>
+                <SelectItem
+                  value={resolution}
+                  label="Resolution"
+                  onChange={(event) => {
+                    setResolution(event.target.value as number);
+                  }}
+                >
+                  <MenuItem value={0}>1080</MenuItem>
+                  <MenuItem value={1}>2k</MenuItem>
+                  <MenuItem value={2}>4K</MenuItem>
+                </SelectItem>
+                <FormHelperText>
+                  Resolution of which to download the image in
+                </FormHelperText>
+              </FormControl>
+              <FormControl>
+                <TextField
+                  label="Seed String"
+                  variant="outlined"
+                  error={seedStringError !== undefined}
+                  helperText={seedStringError}
+                  value={seedString}
+                  onChange={(event) => {
+                    validateSeedString(event.target.value);
+                  }}
+                />
+                <FormHelperText>
+                  The unique seed string used to generate your pattern
+                </FormHelperText>
+              </FormControl>
+            </Stack>
+          </Box>
+        </Grid>
+        <Grid container size={6} justifyContent="center" alignItems="center">
+          <Box
+            component="form"
+            autoComplete="off"
+            noValidate
+            sx={{
+              bgcolor: "#363a4f",
+              border: "3px solid #181926",
+              borderRadius: "4px",
+              padding: 2,
+            }}
+          >
+            <GeneratorDiv
+              key={refreshKey} // Use refreshKey to force remount
+              BACKGROUND_TYPE={backgroundType}
+              SHAPE_TYPE={shapeType}
+              SHAPE_BORDER={shapeBorder}
+              SEED_STRING={seedString}
+              RESOLUTION={{
+                heightPx: "500",
+                widthPx: "500",
+                label: "500",
+              }}
+              showDownload={false}
+            />
+          </Box>
+        </Grid>
+        <Grid container justifyContent="center" size={6}>
           <Button
-            sx={{ margin: "0 auto" }}
-            variant="outlined"
+            variant="contained"
+            size="large"
+            onClick={() => {
+              setSnackBarText("Generating new Preview...");
+              setOpenSnackBar(true);
+              setRefreshKey((prevKey) => prevKey + 1);
+            }}
+          >
+            Preview
+          </Button>
+        </Grid>
+        <Grid container justifyContent="center" size={6}>
+          <Button
+            sx={{ margin: "auto" }}
+            variant="contained"
             size="large"
             onClick={() => {
               window.open(
@@ -191,19 +232,10 @@ export const Generator = () => {
               );
             }}
           >
-            GENERATE
+            Download
           </Button>
-        </Stack>
-      </>
-
-      <Snackbar
-        open={banner !== ""}
-        autoHideDuration={6000}
-        onClose={() => setBanner("")}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      >
-        <Alert onClose={() => setBanner("")}>{banner}</Alert>
-      </Snackbar>
+        </Grid>
+      </Grid>
     </main>
   );
 };

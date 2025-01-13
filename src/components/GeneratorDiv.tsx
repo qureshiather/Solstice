@@ -1,6 +1,6 @@
 import React from "react";
 import Sketch from "react-p5";
-import { Button } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 
 const getAngleFunctionFromString = (value: string, p5: any) => {
   switch (value) {
@@ -36,6 +36,7 @@ class GeneratorDiv extends React.Component<{
   SHAPE_BORDER: number;
   SEED_STRING: string;
   RESOLUTION: { heightPx: string; widthPx: string; label: string };
+  showDownload: boolean;
 }> {
   points: any[];
   r1: number;
@@ -284,21 +285,18 @@ class GeneratorDiv extends React.Component<{
   };
 
   render() {
-    return (
-      <>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={this.saveCanvas}
-          style={{ display: "block", margin: "20px auto" }}
-        >
-          Download
-        </Button>
-        <br />
-
-        <Sketch setup={this.setup} draw={this.draw} />
-      </>
-    );
+    if (this.props.showDownload) {
+      return (
+        <Stack>
+          <Button variant="contained" color="primary" onClick={this.saveCanvas}>
+            Download
+          </Button>
+          <Sketch setup={this.setup} draw={this.draw} />
+        </Stack>
+      );
+    } else {
+      return <Sketch setup={this.setup} draw={this.draw} />;
+    }
   }
 }
 

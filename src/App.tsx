@@ -1,51 +1,54 @@
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+
 import "./App.css";
-
 import Home from "./Home";
-
-import { createTheme, ThemeProvider } from "@material-ui/core";
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Generator } from "./routes/Generator";
 import { Generate } from "./routes/Generate";
-
-const theme = createTheme({
-  palette: {
-    type: "dark",
-    primary: {
-      main: "#1CE2E6",
-    },
-    secondary: {
-      main: "#e709e7",
-    },
-    text: {
-      primary: "#000000",
-    },
-  },
-  typography: {
-    fontFamily: "Orbitron",
-  },
-  overrides: {
-    MuiButtonBase: {
-      root: {
-        justifyContent: "flex-start",
-      },
-    },
-    MuiButton: {
-      root: {
-        textTransform: undefined,
-        padding: "12px 16px",
-      },
-      startIcon: {
-        marginRight: 8,
-      },
-      endIcon: {
-        marginLeft: 8,
-      },
-    },
-  },
-});
+import { createTheme, ThemeProvider } from "@mui/material";
 
 const App = () => {
+  const theme = createTheme({
+    typography: {
+      fontFamily: "Roboto",
+    },
+    palette: {
+      mode: "dark",
+      primary: {
+        main: "#8aadf4", // Sky
+        contrastText: "#24273a", // Base
+      },
+      secondary: {
+        main: "#f5bde6", // Pink
+        contrastText: "#24273a", // Base
+      },
+      background: {
+        default: "#24273a", // Base
+        paper: "#1e2030", // Mantle
+      },
+      text: {
+        primary: "#cad3f5", // Text
+        secondary: "#a5adcb", // Subtext1
+      },
+      error: {
+        main: "#ed8796", // Red
+      },
+      warning: {
+        main: "#f5a97f", // Peach
+      },
+      info: {
+        main: "#8bd5ca", // Teal
+      },
+      success: {
+        main: "#a6da95", // Green
+      },
+      divider: "#494d64", // Overlay1
+    },
+  });
+
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
