@@ -24,10 +24,16 @@ export const ArtCarousel = () => {
         showThumbs={false}
       >
         <div>
-          <img src="assets/1.png" alt="Solstice #1" />
+          <img src="assets/1.png" alt="#1" />
         </div>
         <div>
-          <img src="assets/4.png" alt="Solstice #4" />
+          <img src="assets/2.png" alt="#2" />
+        </div>
+        <div>
+          <img src="assets/3.png" alt="#2" />
+        </div>
+        <div>
+          <img src="assets/4.png" alt="#4" />
         </div>
       </Carousel>
     </div>
