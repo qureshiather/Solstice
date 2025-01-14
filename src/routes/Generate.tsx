@@ -4,6 +4,7 @@ import GeneratorDiv from "../components/GeneratorDiv";
 import Paper from "@mui/material/Paper";
 import { MAPPINGS } from "../utils/config-mappings";
 import { styled } from "@mui/material/styles";
+import { Typography } from "@mui/material";
 
 type ParamTypes = {
   seedString: string;
@@ -25,23 +26,23 @@ export const Generate = () => {
   if (seedString && shapeType && shapeBorder && resolution && backgroundType) {
     return (
       <Grid container spacing={2} justifyContent="center" alignItems="center">
-        <Grid container size={6} justifyContent="center">
+        <Grid container size={12} justifyContent="center">
           <Item>
-            <p>
+            <Typography variant="body1">
               Shape: {MAPPINGS.shapeType[shapeType]} <br />
               Border: {MAPPINGS.borderType[shapeBorder]} <br />
               Background: {MAPPINGS.backgroundType[backgroundType]} <br />
               Resolution: {MAPPINGS.resolution[resolution].label} <br />
               Seed: {seedString}
-            </p>
+            </Typography>
           </Item>
         </Grid>
-        <Grid container size={6}>
+        <Grid container size={6} justifyContent="center">
           <Item>
-            <p>
+            <Typography variant="body1">
               Wait until the image has finished rendering (1500 frames), and
               then click download
-            </p>
+            </Typography>
           </Item>
         </Grid>
         <Grid container size={12} justifyContent="center">

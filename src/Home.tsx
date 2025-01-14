@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import BoltIcon from "@mui/icons-material/Bolt";
 import Footer from "./components/Footer";
+import Typography from "@mui/material/Typography";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -14,11 +15,14 @@ const Home = () => {
       <main>
         <Box sx={{ width: "100%" }}>
           <Stack spacing={4} alignItems="center">
-            <h1 style={{ marginBottom: "32px", marginTop: "32px" }}>
-              P5.js Generator
-            </h1>
+            <Typography
+              variant="h1"
+              component="h2"
+              style={{ marginBottom: "32px", marginTop: "32px" }}
+            >
+              P5 Generator
+            </Typography>
             <ArtCarousel />
-            <p>Generate Art Pieces in your browser</p>
             <Button
               variant="contained"
               color="primary"

@@ -12,6 +12,7 @@ import Grid from "@mui/material/Grid2";
 import GeneratorDiv from "../components/GeneratorDiv";
 import FormHelperText from "@mui/material/FormHelperText";
 import Snackbar from "@mui/material/Snackbar";
+import Typography from "@mui/material/Typography";
 
 export const Generator = () => {
   const [refreshKey, setRefreshKey] = useState(0); // State to force a remount
@@ -71,7 +72,9 @@ export const Generator = () => {
       />
       <Grid container spacing={2} justifyContent="center" alignItems="center">
         <Grid container size={12} justifyContent="center">
-          <h1> Generator </h1>
+          <Typography variant="h2" component="h2">
+            Generator
+          </Typography>
         </Grid>
         <Grid container size={6} justifyContent="center" alignItems="center">
           <Box
