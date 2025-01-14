@@ -62,6 +62,7 @@ export const Generator = () => {
   return (
     <main>
       <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
         open={openSnackBar}
         autoHideDuration={5000}
         message={snackBarText}
@@ -70,7 +71,13 @@ export const Generator = () => {
           setSnackBarText("");
         }}
       />
-      <Grid container spacing={2} justifyContent="center" alignItems="center">
+      <Grid
+        container
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 4, sm: 8, md: 12 }}
+        justifyContent="center"
+        alignItems="center"
+      >
         <Grid container size={12} justifyContent="center">
           <Typography variant="h2" component="h2">
             Generator
