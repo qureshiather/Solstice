@@ -189,7 +189,7 @@ export const Generator = () => {
             </Stack>
           </Box>
         </Grid>
-        <Grid container size={6} justifyContent="center" alignItems="center">
+        <Grid container size={6} justifyContent="center">
           <Box
             component="form"
             autoComplete="off"
@@ -199,6 +199,7 @@ export const Generator = () => {
               border: "3px solid #181926",
               borderRadius: "4px",
               padding: 2,
+              paddingBottom: 1.5, // I have no idea why I need this, but it is now even
             }}
           >
             <GeneratorDiv
