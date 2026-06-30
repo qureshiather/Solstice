@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, Download } from "lucide-react";
 import GeneratorDiv from "components/GeneratorDiv";
+import { RenderStatus } from "components/RenderStatus";
 import { MAPPINGS } from "utils/config-mappings";
 import { Button } from "components/ui/button";
 import {
@@ -29,6 +30,7 @@ const MetaItem = ({ label, value }: { label: string; value: string }) => (
 
 export const Generate = () => {
   const [isRendering, setIsRendering] = useState(true);
+  const [progress, setProgress] = useState(0);
   const saveRef = useRef<(() => void) | null>(null);
   const { seedString, shapeType, shapeBorder, resolution, backgroundType } =
     useParams<ParamTypes>();
@@ -44,13 +46,15 @@ export const Generate = () => {
           >
             <ArrowLeft className="h-4 w-4" />
           </Link>
-          <div>
+          <div className="min-w-0 flex-1">
             <h1 className="text-2xl font-semibold tracking-tight">Export</h1>
-            <p className="text-sm text-muted-foreground">
-              {isRendering
-                ? "Rendering at full resolution…"
-                : "Render complete — download when ready."}
-            </p>
+            <RenderStatus
+              isRendering={isRendering}
+              progress={progress}
+              readyText="Render complete — download when ready."
+              renderingLabel="Rendering at full resolution"
+              className="mt-1 max-w-md"
+            />
           </div>
         </div>
 
@@ -61,7 +65,7 @@ export const Generate = () => {
               Full-resolution export from seed &ldquo;{seedString}&rdquo;
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-5">
             <dl className="grid grid-cols-2 gap-2 sm:grid-cols-5">
               <MetaItem
                 label="Shape"
@@ -82,19 +86,20 @@ export const Generate = () => {
               <MetaItem label="Seed" value={seedString} />
             </dl>
 
-            <div className="flex justify-center rounded-lg border border-border/40 bg-black/30 p-3">
+            <div className="mx-auto w-full max-w-[428px] rounded-lg border border-border/40 bg-black/30 p-1">
               <GeneratorDiv
-                frameClassName="canvas-frame--export"
-                onRenderComplete={() => setIsRendering(false)}
-                onSaveReady={(save) => {
-                  saveRef.current = save;
-                }}
-                showDownload={false}
-                BACKGROUND_TYPE={parseInt(backgroundType)}
-                SHAPE_TYPE={parseInt(shapeType)}
-                SHAPE_BORDER={parseInt(shapeBorder)}
-                SEED_STRING={seedString}
-                RESOLUTION={MAPPINGS.resolution[resolution]}
+                  frameClassName="canvas-frame--export"
+                  onProgress={setProgress}
+                  onRenderComplete={() => setIsRendering(false)}
+                  onSaveReady={(save) => {
+                    saveRef.current = save;
+                  }}
+                  showDownload={false}
+                  BACKGROUND_TYPE={parseInt(backgroundType)}
+                  SHAPE_TYPE={parseInt(shapeType)}
+                  SHAPE_BORDER={parseInt(shapeBorder)}
+                  SEED_STRING={seedString}
+                  RESOLUTION={MAPPINGS.resolution[resolution]}
               />
             </div>
 

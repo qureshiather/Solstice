@@ -56,7 +56,13 @@
 }
 
 .canvas-frame--export {
-  max-width: min(420px, 100%);
+  width: 100%;
+  max-width: 420px;
+  margin-inline: auto;
+}
+
+.canvas-frame--export > div {
+  width: 100%;
 }
 
 .canvas-frame canvas {
@@ -70,6 +76,6 @@
 }
 
 .canvas-frame--export canvas {
-  max-width: 100%;
+  width: 100% !important;
   height: auto !important;
 }

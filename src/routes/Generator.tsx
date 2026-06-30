@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, Download, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import GeneratorDiv from "components/GeneratorDiv";
+import { RenderStatus } from "components/RenderStatus";
 import { Button } from "components/ui/button";
 import {
   Card,
@@ -36,6 +37,7 @@ const SettingField = ({
 export const Generator = () => {
   const [refreshKey, setRefreshKey] = useState(0);
   const [isRendering, setIsRendering] = useState(true);
+  const [progress, setProgress] = useState(0);
 
   const [backgroundType, setBackgroundType] = useState("0");
   const [shapeType, setShapeType] = useState("1");
@@ -74,6 +76,7 @@ export const Generator = () => {
   };
 
   const handlePreview = () => {
+    setProgress(0);
     setIsRendering(true);
     setRefreshKey((prevKey) => prevKey + 1);
   };
@@ -184,19 +187,21 @@ export const Generator = () => {
           </div>
 
           <div className="flex flex-col p-6">
-            <CardHeader className="p-0 pb-6 text-center lg:text-left">
+            <CardHeader className="p-0 pb-4 text-center lg:text-left">
               <CardTitle>Preview</CardTitle>
-              <CardDescription>
-                {isRendering
-                  ? "Rendering your pattern…"
-                  : "Ready — regenerate or download."}
-              </CardDescription>
+              <RenderStatus
+                isRendering={isRendering}
+                progress={progress}
+                readyText="Ready — regenerate or download."
+                renderingLabel="Rendering your pattern"
+              />
             </CardHeader>
-            <CardContent className="flex flex-col items-center gap-5 p-0">
+            <CardContent className="flex flex-col items-center gap-4 p-0">
               <div className="w-fit rounded-lg border border-border/40 bg-black/30 p-1">
                 <GeneratorDiv
                   key={refreshKey}
                   frameClassName="canvas-frame--preview"
+                  onProgress={setProgress}
                   onRenderComplete={() => setIsRendering(false)}
                   BACKGROUND_TYPE={parseInt(backgroundType)}
                   SHAPE_TYPE={parseInt(shapeType)}
@@ -210,7 +215,7 @@ export const Generator = () => {
                   showDownload={false}
                 />
               </div>
-              <div className="flex w-full max-w-xs gap-3">
+              <div className="flex w-[288px] gap-3">
                 <Button
                   variant="secondary"
                   className="flex-1"

@@ -2,7 +2,6 @@ import React from "react";
 import Sketch from "react-p5";
 import { Download } from "lucide-react";
 import { Button } from "components/ui/button";
-import { CanvasLoader } from "components/CanvasLoader";
 import { cn } from "lib/utils";
 
 const TOTAL_FRAMES = 1500;
@@ -45,6 +44,7 @@ class GeneratorDiv extends React.Component<{
   frameClassName?: string;
   onRenderComplete?: () => void;
   onSaveReady?: (save: () => void) => void;
+  onProgress?: (progress: number) => void;
 }> {
   points: any[];
   r1: number;
@@ -204,6 +204,7 @@ class GeneratorDiv extends React.Component<{
 
     if (progress !== this.state.progress) {
       this.setState({ progress });
+      this.props.onProgress?.(progress);
     }
 
     if (p5.frameCount >= TOTAL_FRAMES && this.state.isRendering) {
@@ -310,24 +311,18 @@ class GeneratorDiv extends React.Component<{
   };
 
   render() {
-    const frameClass = cn(
-      "canvas-frame",
-      this.props.frameClassName,
-      this.state.isRendering && "canvas-frame--loading",
-    );
+    const frameClass = cn("canvas-frame", this.props.frameClassName);
 
     const canvas = (
       <div className={frameClass}>
         <Sketch setup={this.setup} draw={this.draw} />
-        {this.state.isRendering && (
-          <CanvasLoader progress={this.state.progress} />
-        )}
       </div>
     );
 
     if (this.props.showDownload) {
       return (
         <div className="flex w-full flex-col items-center gap-4">
+          {canvas}
           <Button
             onClick={this.saveCanvas}
             disabled={this.state.isRendering}
@@ -335,7 +330,6 @@ class GeneratorDiv extends React.Component<{
             <Download className="h-4 w-4" />
             {this.state.isRendering ? "Rendering…" : "Download PNG"}
           </Button>
-          {canvas}
         </div>
       );
     }
