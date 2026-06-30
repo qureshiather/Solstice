@@ -5,6 +5,8 @@ import { Button } from "components/ui/button";
 import { cn } from "lib/utils";
 
 const TOTAL_FRAMES = 1500;
+const BASE_RESOLUTION = 500;
+const POINTS_PER_FRAME_BASE = 2;
 
 const getAngleFunctionFromString = (value: string, p5: any) => {
   switch (value) {
@@ -25,9 +27,9 @@ const getAngleFunctionFromString = (value: string, p5: any) => {
 };
 
 // @ts-ignore
-function shuffleArray(array: any[]) {
+function shuffleSeeded(array: any[], p5: any) {
   for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(p5.random(i + 1));
     const temp = array[i];
     array[i] = array[j];
     array[j] = temp;
@@ -100,8 +102,11 @@ class GeneratorDiv extends React.Component<{
     p5.noiseSeed(this.SEED_NUMBER);
 
     const NOISE_FACTORS = [0.5, 1, 1.5, 2, 2.5, 3];
-    const REVERSED_NOISE_FACTORS = NOISE_FACTORS.reverse();
-    p5.noiseDetail(p5.random(NOISE_FACTORS), p5.random(REVERSED_NOISE_FACTORS));
+    const REVERSED_NOISE_FACTORS = [...NOISE_FACTORS].reverse();
+    p5.noiseDetail(
+      p5.random(NOISE_FACTORS),
+      p5.random(REVERSED_NOISE_FACTORS),
+    );
     const ANGLE_FUNC_OPTIONS = [
       "sin",
       "cos",
@@ -110,7 +115,7 @@ class GeneratorDiv extends React.Component<{
       "inverse_cos",
       "inverse_tan",
     ];
-    const REVERSED_ANGLE_FUNC_OPTIONS = ANGLE_FUNC_OPTIONS.reverse();
+    const REVERSED_ANGLE_FUNC_OPTIONS = [...ANGLE_FUNC_OPTIONS].reverse();
     this.angleFunctionA = getAngleFunctionFromString(
       p5.random(ANGLE_FUNC_OPTIONS),
       p5,
@@ -135,8 +140,7 @@ class GeneratorDiv extends React.Component<{
       }
     }
 
-    // p5.shuffle(this.points, true);
-    shuffleArray(this.points);
+    shuffleSeeded(this.points, p5);
     this.r1 = p5.random(255);
     this.r2 = p5.random(255);
     this.g1 = p5.random(255);
@@ -217,9 +221,11 @@ class GeneratorDiv extends React.Component<{
     }
 
     p5.noStroke();
+    const pointsPerFrame =
+      POINTS_PER_FRAME_BASE * (this.RESOLUTION / BASE_RESOLUTION);
     let max = 0;
-    if (p5.frameCount * 2 <= this.points.length) {
-      max = p5.frameCount * 2;
+    if (p5.frameCount * pointsPerFrame <= this.points.length) {
+      max = Math.floor(p5.frameCount * pointsPerFrame);
     } else {
       max = this.points.length;
     }

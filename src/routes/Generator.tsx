@@ -4,6 +4,7 @@ import { ArrowLeft, Download, RefreshCw } from "lucide-react";
 import { toast } from "sonner";
 import GeneratorDiv from "components/GeneratorDiv";
 import { RenderStatus } from "components/RenderStatus";
+import { MAPPINGS } from "utils/config-mappings";
 import { Button } from "components/ui/button";
 import {
   Card,
@@ -207,11 +208,11 @@ export const Generator = () => {
                   SHAPE_TYPE={parseInt(shapeType)}
                   SHAPE_BORDER={parseInt(shapeBorder)}
                   SEED_STRING={seedString}
-                  RESOLUTION={{
-                    heightPx: "500",
-                    widthPx: "500",
-                    label: "500",
-                  }}
+                  RESOLUTION={
+                    MAPPINGS.resolution[
+                      resolution as keyof typeof MAPPINGS.resolution
+                    ]
+                  }
                   showDownload={false}
                 />
               </div>
