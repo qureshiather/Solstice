@@ -1,6 +1,11 @@
 import React from "react";
 import Sketch from "react-p5";
-import { Button, Stack } from "@mui/material";
+import { Download } from "lucide-react";
+import { Button } from "components/ui/button";
+import { CanvasLoader } from "components/CanvasLoader";
+import { cn } from "lib/utils";
+
+const TOTAL_FRAMES = 1500;
 
 const getAngleFunctionFromString = (value: string, p5: any) => {
   switch (value) {
@@ -37,6 +42,9 @@ class GeneratorDiv extends React.Component<{
   SEED_STRING: string;
   RESOLUTION: { heightPx: string; widthPx: string; label: string };
   showDownload: boolean;
+  frameClassName?: string;
+  onRenderComplete?: () => void;
+  onSaveReady?: (save: () => void) => void;
 }> {
   points: any[];
   r1: number;
@@ -55,9 +63,11 @@ class GeneratorDiv extends React.Component<{
   CIRCLE_RADIUS: number;
   CIRCLE_DIAMETER: number;
   SQUARE_SIZE: number;
+  state: { isRendering: boolean; progress: number };
 
   constructor(props: any) {
     super(props);
+    this.state = { isRendering: true, progress: 0 };
     this.points = [];
     this.r1 = 0;
     this.r2 = 0;
@@ -81,6 +91,7 @@ class GeneratorDiv extends React.Component<{
   // @ts-ignore
   setup = (p5, canvasParentRef) => {
     this.p5Instance = p5; // Store the p5 instance
+    this.props.onSaveReady?.(this.saveCanvas);
     p5.createCanvas(this.RESOLUTION, this.RESOLUTION).parent(canvasParentRef);
     p5.smooth();
     p5.angleMode(p5.DEGREES);
@@ -186,7 +197,21 @@ class GeneratorDiv extends React.Component<{
 
   // @ts-ignore
   draw = (p5) => {
-    if (p5.frameCount > 1500) {
+    const progress = Math.min(
+      100,
+      Math.round((p5.frameCount / TOTAL_FRAMES) * 100),
+    );
+
+    if (progress !== this.state.progress) {
+      this.setState({ progress });
+    }
+
+    if (p5.frameCount >= TOTAL_FRAMES && this.state.isRendering) {
+      this.setState({ isRendering: false });
+      this.props.onRenderComplete?.();
+    }
+
+    if (p5.frameCount > TOTAL_FRAMES) {
       p5.noLoop();
     }
 
@@ -285,18 +310,37 @@ class GeneratorDiv extends React.Component<{
   };
 
   render() {
+    const frameClass = cn(
+      "canvas-frame",
+      this.props.frameClassName,
+      this.state.isRendering && "canvas-frame--loading",
+    );
+
+    const canvas = (
+      <div className={frameClass}>
+        <Sketch setup={this.setup} draw={this.draw} />
+        {this.state.isRendering && (
+          <CanvasLoader progress={this.state.progress} />
+        )}
+      </div>
+    );
+
     if (this.props.showDownload) {
       return (
-        <Stack>
-          <Button variant="contained" color="primary" onClick={this.saveCanvas}>
-            Download
+        <div className="flex w-full flex-col items-center gap-4">
+          <Button
+            onClick={this.saveCanvas}
+            disabled={this.state.isRendering}
+          >
+            <Download className="h-4 w-4" />
+            {this.state.isRendering ? "Rendering…" : "Download PNG"}
           </Button>
-          <Sketch setup={this.setup} draw={this.draw} />
-        </Stack>
+          {canvas}
+        </div>
       );
-    } else {
-      return <Sketch setup={this.setup} draw={this.draw} />;
     }
+
+    return canvas;
   }
 }
 

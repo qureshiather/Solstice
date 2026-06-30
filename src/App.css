@@ -1,5 +1,75 @@
 #Carouselbox {
-  margin: auto;
-  width: 450px;
-  height: 450px;
+  margin: 0 auto;
+  width: min(300px, 85vw);
+  line-height: 0;
+}
+
+#Carouselbox .carousel,
+#Carouselbox .slider,
+#Carouselbox .slider-wrapper,
+#Carouselbox ul.slider {
+  margin: 0 !important;
+  height: auto !important;
+}
+
+#Carouselbox .carousel .slide {
+  background: transparent;
+}
+
+#Carouselbox .carousel .slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.carousel .control-arrow {
+  opacity: 0.6;
+  background: transparent !important;
+}
+
+.carousel .control-arrow:hover {
+  opacity: 1;
+}
+
+.carousel .control-prev.control-arrow:before {
+  border-right-color: hsl(227 68% 88%);
+}
+
+.carousel .control-next.control-arrow:before {
+  border-left-color: hsl(227 68% 88%);
+}
+
+.canvas-frame {
+  position: relative;
+  display: block;
+  line-height: 0;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.canvas-frame > div {
+  line-height: 0;
+}
+
+.canvas-frame--preview {
+  width: 280px;
+}
+
+.canvas-frame--export {
+  max-width: min(420px, 100%);
+}
+
+.canvas-frame canvas {
+  display: block;
+  vertical-align: top;
+}
+
+.canvas-frame--preview canvas {
+  width: 280px !important;
+  height: 280px !important;
+}
+
+.canvas-frame--export canvas {
+  max-width: 100%;
+  height: auto !important;
 }

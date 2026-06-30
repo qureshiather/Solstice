@@ -1,6 +1,61 @@
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #24273a;
-  color: #b8c0e0;
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 232 23% 18%;
+    --foreground: 227 68% 88%;
+    --card: 231 19% 22%;
+    --card-foreground: 227 68% 88%;
+    --popover: 231 19% 22%;
+    --popover-foreground: 227 68% 88%;
+    --primary: 220 74% 74%;
+    --primary-foreground: 232 23% 18%;
+    --secondary: 316 73% 85%;
+    --secondary-foreground: 232 23% 18%;
+    --muted: 231 15% 28%;
+    --muted-foreground: 227 20% 72%;
+    --accent: 231 15% 32%;
+    --accent-foreground: 227 68% 88%;
+    --destructive: 351 74% 73%;
+    --destructive-foreground: 232 23% 18%;
+    --border: 230 13% 34%;
+    --input: 230 13% 34%;
+    --ring: 220 74% 74%;
+    --radius: 0.625rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply min-h-screen bg-background font-sans text-foreground antialiased;
+    background-image:
+      radial-gradient(
+        ellipse 80% 50% at 50% -20%,
+        hsl(220 74% 74% / 0.12),
+        transparent
+      ),
+      radial-gradient(
+        ellipse 60% 40% at 100% 100%,
+        hsl(316 73% 85% / 0.08),
+        transparent
+      );
+  }
+}
+
+@layer utilities {
+  .animate-delay-100 {
+    animation-delay: 100ms;
+  }
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+  .animate-delay-300 {
+    animation-delay: 300ms;
+  }
 }

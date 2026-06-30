@@ -1,42 +1,32 @@
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+
+const slides = [
+  { src: "assets/1.png", alt: "Sample art 1" },
+  { src: "assets/2.png", alt: "Sample art 2" },
+  { src: "assets/3.png", alt: "Sample art 3" },
+  { src: "assets/4.png", alt: "Sample art 4" },
+  { src: "assets/5.png", alt: "Sample art 5" },
+];
 
 export const ArtCarousel = () => {
   return (
-    <div
-      id="Carouselbox"
-      style={{
-        border: "3px solid #939ab7", // Sky color
-        borderRadius: "4px", // Rounded corners
-      }}
-    >
+    <div id="Carouselbox">
       <Carousel
         autoPlay
         showArrows
-        centerMode
         infiniteLoop
         interval={4000}
-        centerSlidePercentage={100}
         showIndicators={false}
         emulateTouch
         showStatus={false}
         showThumbs={false}
       >
-        <div>
-          <img src="assets/1.png" alt="#1" />
-        </div>
-        <div>
-          <img src="assets/2.png" alt="#2" />
-        </div>
-        <div>
-          <img src="assets/3.png" alt="#3" />
-        </div>
-        <div>
-          <img src="assets/4.png" alt="#4" />
-        </div>
-        <div>
-          <img src="assets/5.png" alt="#5" />
-        </div>
+        {slides.map((slide) => (
+          <div key={slide.src}>
+            <img src={slide.src} alt={slide.alt} />
+          </div>
+        ))}
       </Carousel>
     </div>
   );

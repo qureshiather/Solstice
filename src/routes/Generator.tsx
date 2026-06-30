@@ -1,45 +1,55 @@
 import React, { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
-import Grid from "@mui/material/Grid2";
-import GeneratorDiv from "../components/GeneratorDiv";
-import FormHelperText from "@mui/material/FormHelperText";
-import Snackbar from "@mui/material/Snackbar";
-import Typography from "@mui/material/Typography";
+import { Link } from "react-router-dom";
+import { ArrowLeft, Download, RefreshCw } from "lucide-react";
+import { toast } from "sonner";
+import GeneratorDiv from "components/GeneratorDiv";
+import { Button } from "components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "components/ui/card";
+import { Input } from "components/ui/input";
+import { Label } from "components/ui/label";
+import { Select } from "components/ui/select";
+
+const SettingField = ({
+  id,
+  label,
+  hint,
+  children,
+}: {
+  id: string;
+  label: string;
+  hint: string;
+  children: React.ReactNode;
+}) => (
+  <div className="space-y-2">
+    <Label htmlFor={id}>{label}</Label>
+    {children}
+    <p className="text-xs text-muted-foreground">{hint}</p>
+  </div>
+);
 
 export const Generator = () => {
-  const [refreshKey, setRefreshKey] = useState(0); // State to force a remount
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [isRendering, setIsRendering] = useState(true);
 
-  // 0 is black, and 1 is gradient
-  const [backgroundType, setBackgroundType] = useState(0);
-  // 1 is circle, 2 is square
-  const [shapeType, setShapeType] = useState(1);
-  // 0 is no border, 1 is border
-  const [shapeBorder, setShapeBorder] = useState(0);
+  const [backgroundType, setBackgroundType] = useState("0");
+  const [shapeType, setShapeType] = useState("1");
+  const [shapeBorder, setShapeBorder] = useState("0");
+  const [resolution, setResolution] = useState("0");
 
-  const [resolution, setResolution] = useState<number>(0);
-
-  // You can not have black background, or no shape -> then have border
   const [seedString, setSeedString] = useState("REACT");
   const [seedStringError, setSeedStringError] = useState<string | undefined>();
 
-  const [snackBarText, setSnackBarText] = useState<string>("");
-  const [openSnackBar, setOpenSnackBar] = useState<boolean>(false);
-
-  const [disableBorderType, setDisableBorderType] = useState<boolean>(false);
+  const [disableBorderType, setDisableBorderType] = useState(false);
 
   const validateSeedString = (value: string) => {
     if (value.length > 12) {
-      setSeedStringError(
-        "Seed String must equal 12 characters or less characters",
-      );
+      setSeedStringError("Seed must be 12 characters or fewer");
     } else {
       setSeedString(value);
       setSeedStringError(undefined);
@@ -47,206 +57,190 @@ export const Generator = () => {
   };
 
   useEffect(() => {
-    if (backgroundType === 0) {
-      setShapeBorder(0);
+    if (backgroundType === "0") {
+      setShapeBorder("0");
       setDisableBorderType(true);
     } else {
       setDisableBorderType(false);
     }
   }, [shapeType, backgroundType]);
 
-  const SelectItem = styled(Select)(({ theme }) => ({
-    textAlign: "center",
-  }));
+  const handleBorderChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    if (disableBorderType) {
+      toast("Border unavailable with a black background", { duration: 3000 });
+      return;
+    }
+    setShapeBorder(event.target.value);
+  };
+
+  const handlePreview = () => {
+    setIsRendering(true);
+    setRefreshKey((prevKey) => prevKey + 1);
+  };
 
   return (
-    <main>
-      <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        open={openSnackBar}
-        autoHideDuration={5000}
-        message={snackBarText}
-        onClose={() => {
-          setOpenSnackBar(false);
-          setSnackBarText("");
-        }}
-      />
-      <Grid
-        container
-        spacing={{ xs: 2, md: 3 }}
-        columns={{ xs: 4, sm: 8, md: 12 }}
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Grid container size={12} justifyContent="center">
-          <Typography variant="h2" component="h2">
-            Generator
-          </Typography>
-        </Grid>
-        <Grid container size={6} justifyContent="center" alignItems="center">
-          <Box
-            component="form"
-            autoComplete="off"
-            noValidate
-            sx={{
-              bgcolor: "#363a4f",
-              border: "3px solid #181926",
-              borderRadius: "4px",
-              padding: 2,
-              height: "500px",
-              width: "500px",
-            }}
-          >
-            <Stack spacing={3}>
-              <FormControl>
-                <InputLabel>Background</InputLabel>
-                <SelectItem
+    <main className="mx-auto flex min-h-screen max-w-4xl flex-col px-4 py-10 sm:px-6">
+      <div className="mb-8 flex items-center gap-4">
+        <Link
+          to="/"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+          aria-label="Back to home"
+        >
+          <ArrowLeft className="h-4 w-4" />
+        </Link>
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">Generator</h1>
+          <p className="text-sm text-muted-foreground">
+            Tune the settings, preview live, then download.
+          </p>
+        </div>
+      </div>
+
+      <Card className="overflow-hidden">
+        <div className="grid lg:grid-cols-2">
+          <div className="border-b border-border/60 p-6 lg:border-b-0 lg:border-r">
+            <CardHeader className="p-0 pb-6">
+              <CardTitle>Settings</CardTitle>
+              <CardDescription>
+                Each option shapes how your pattern is drawn.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="grid gap-5 p-0 sm:grid-cols-2">
+              <SettingField
+                id="background"
+                label="Background"
+                hint="Solid black or gradient."
+              >
+                <Select
+                  id="background"
                   value={backgroundType}
-                  label="Background"
-                  onChange={(event) => {
-                    setBackgroundType(event.target.value as number);
-                  }}
+                  onChange={(event) => setBackgroundType(event.target.value)}
                 >
-                  <MenuItem value={0}>Black</MenuItem>
-                  <MenuItem value={1}>Gradient</MenuItem>
-                </SelectItem>
-                <FormHelperText>
-                  Background for the Image, either black or gradiant
-                </FormHelperText>
-              </FormControl>
-              <FormControl>
-                <InputLabel>Shape Type</InputLabel>
-                <SelectItem
+                  <option value="0">Black</option>
+                  <option value="1">Gradient</option>
+                </Select>
+              </SettingField>
+
+              <SettingField id="shape" label="Shape" hint="Circle or square.">
+                <Select
+                  id="shape"
                   value={shapeType}
-                  label="Shape Type"
-                  onChange={(event) => {
-                    setShapeType(event.target.value as number);
-                  }}
+                  onChange={(event) => setShapeType(event.target.value)}
                 >
-                  <MenuItem value={1}>Circle</MenuItem>
-                  <MenuItem value={2}>Square</MenuItem>
-                </SelectItem>
-                <FormHelperText>
-                  The pattern can be drawn in either a circle or square
-                </FormHelperText>
-              </FormControl>
-              <FormControl>
-                <InputLabel>Shape Border</InputLabel>
-                <SelectItem
+                  <option value="1">Circle</option>
+                  <option value="2">Square</option>
+                </Select>
+              </SettingField>
+
+              <SettingField
+                id="border"
+                label="Border"
+                hint="Outline for contrast."
+              >
+                <Select
+                  id="border"
                   value={shapeBorder}
-                  label="Shape Border"
-                  onChange={(event) => {
-                    if (disableBorderType) {
-                      setSnackBarText(
-                        "Unable to set border when background is black",
-                      );
-                      setOpenSnackBar(true);
-                    } else {
-                      setShapeBorder(event.target.value as number);
-                    }
-                  }}
+                  onChange={handleBorderChange}
+                  disabled={disableBorderType}
                 >
-                  <MenuItem value={0}>No Border</MenuItem>
-                  <MenuItem value={1}>Border</MenuItem>
-                </SelectItem>
-                <FormHelperText>
-                  Border can be used to make the pattern more visible over the
-                  background
-                </FormHelperText>
-              </FormControl>
-              <FormControl>
-                <InputLabel>Resolution</InputLabel>
-                <SelectItem
+                  <option value="0">None</option>
+                  <option value="1">Border</option>
+                </Select>
+              </SettingField>
+
+              <SettingField
+                id="resolution"
+                label="Resolution"
+                hint="Export size."
+              >
+                <Select
+                  id="resolution"
                   value={resolution}
-                  label="Resolution"
-                  onChange={(event) => {
-                    setResolution(event.target.value as number);
+                  onChange={(event) => setResolution(event.target.value)}
+                >
+                  <option value="0">1080p</option>
+                  <option value="1">2K</option>
+                  <option value="2">4K</option>
+                </Select>
+              </SettingField>
+
+              <div className="space-y-2 sm:col-span-2">
+                <Label htmlFor="seed">Seed string</Label>
+                <Input
+                  id="seed"
+                  value={seedString}
+                  aria-invalid={seedStringError !== undefined}
+                  onChange={(event) => validateSeedString(event.target.value)}
+                />
+                {seedStringError ? (
+                  <p className="text-xs text-destructive">{seedStringError}</p>
+                ) : (
+                  <p className="text-xs text-muted-foreground">
+                    Same seed, same art.
+                  </p>
+                )}
+              </div>
+            </CardContent>
+          </div>
+
+          <div className="flex flex-col p-6">
+            <CardHeader className="p-0 pb-6 text-center lg:text-left">
+              <CardTitle>Preview</CardTitle>
+              <CardDescription>
+                {isRendering
+                  ? "Rendering your pattern…"
+                  : "Ready — regenerate or download."}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col items-center gap-5 p-0">
+              <div className="w-fit rounded-lg border border-border/40 bg-black/30 p-1">
+                <GeneratorDiv
+                  key={refreshKey}
+                  frameClassName="canvas-frame--preview"
+                  onRenderComplete={() => setIsRendering(false)}
+                  BACKGROUND_TYPE={parseInt(backgroundType)}
+                  SHAPE_TYPE={parseInt(shapeType)}
+                  SHAPE_BORDER={parseInt(shapeBorder)}
+                  SEED_STRING={seedString}
+                  RESOLUTION={{
+                    heightPx: "500",
+                    widthPx: "500",
+                    label: "500",
+                  }}
+                  showDownload={false}
+                />
+              </div>
+              <div className="flex w-full max-w-xs gap-3">
+                <Button
+                  variant="secondary"
+                  className="flex-1"
+                  onClick={handlePreview}
+                  disabled={isRendering}
+                >
+                  <RefreshCw
+                    className={`h-4 w-4 ${isRendering ? "animate-spin" : ""}`}
+                  />
+                  Preview
+                </Button>
+                <Button
+                  className="flex-1"
+                  disabled={isRendering}
+                  onClick={() => {
+                    window.open(
+                      `/generate/${seedString}/${backgroundType}/${shapeType}/${shapeBorder}/${resolution}`,
+                      "_blank",
+                      "noopener,noreferrer",
+                    );
                   }}
                 >
-                  <MenuItem value={0}>1080</MenuItem>
-                  <MenuItem value={1}>2k</MenuItem>
-                  <MenuItem value={2}>4K</MenuItem>
-                </SelectItem>
-                <FormHelperText>
-                  Resolution of which to download the image in
-                </FormHelperText>
-              </FormControl>
-              <FormControl>
-                <TextField
-                  label="Seed String"
-                  variant="outlined"
-                  error={seedStringError !== undefined}
-                  helperText={seedStringError}
-                  value={seedString}
-                  onChange={(event) => {
-                    validateSeedString(event.target.value);
-                  }}
-                />
-                <FormHelperText>
-                  The unique seed string used to generate your pattern
-                </FormHelperText>
-              </FormControl>
-            </Stack>
-          </Box>
-        </Grid>
-        <Grid container size={6} justifyContent="center">
-          <Box
-            component="form"
-            autoComplete="off"
-            noValidate
-            sx={{
-              bgcolor: "#363a4f",
-              border: "3px solid #181926",
-              borderRadius: "4px",
-              padding: 2,
-              paddingBottom: 1.5, // I have no idea why I need this, but it is now even
-            }}
-          >
-            <GeneratorDiv
-              key={refreshKey} // Use refreshKey to force remount
-              BACKGROUND_TYPE={backgroundType}
-              SHAPE_TYPE={shapeType}
-              SHAPE_BORDER={shapeBorder}
-              SEED_STRING={seedString}
-              RESOLUTION={{
-                heightPx: "500",
-                widthPx: "500",
-                label: "500",
-              }}
-              showDownload={false}
-            />
-          </Box>
-        </Grid>
-        <Grid container justifyContent="center" size={6}>
-          <Button
-            variant="contained"
-            size="large"
-            onClick={() => {
-              setSnackBarText("Generating new Preview...");
-              setOpenSnackBar(true);
-              setRefreshKey((prevKey) => prevKey + 1);
-            }}
-          >
-            Preview
-          </Button>
-        </Grid>
-        <Grid container justifyContent="center" size={6}>
-          <Button
-            sx={{ margin: "auto" }}
-            variant="contained"
-            size="large"
-            onClick={() => {
-              window.open(
-                `/generate/${seedString}/${backgroundType}/${shapeType}/${shapeBorder}/${resolution}`,
-                "_blank",
-                "noopener,noreferrer",
-              );
-            }}
-          >
-            Download
-          </Button>
-        </Grid>
-      </Grid>
+                  <Download className="h-4 w-4" />
+                  Download
+                </Button>
+              </div>
+            </CardContent>
+          </div>
+        </div>
+      </Card>
     </main>
   );
 };
