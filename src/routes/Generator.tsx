@@ -36,7 +36,7 @@ const SettingField = ({
 );
 
 export const Generator = () => {
-  const [refreshKey, setRefreshKey] = useState(0);
+  const [previewKey, setPreviewKey] = useState(0);
   const [isRendering, setIsRendering] = useState(true);
   const [progress, setProgress] = useState(0);
 
@@ -79,7 +79,7 @@ export const Generator = () => {
   const handlePreview = () => {
     setProgress(0);
     setIsRendering(true);
-    setRefreshKey((prevKey) => prevKey + 1);
+    setPreviewKey((key) => key + 1);
   };
 
   return (
@@ -95,7 +95,7 @@ export const Generator = () => {
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Generator</h1>
           <p className="text-sm text-muted-foreground">
-            Tune the settings, preview live, then download.
+            Tune the settings, hit Preview, then download.
           </p>
         </div>
       </div>
@@ -193,14 +193,14 @@ export const Generator = () => {
               <RenderStatus
                 isRendering={isRendering}
                 progress={progress}
-                readyText="Ready — regenerate or download."
+                readyText="Ready — hit Preview or download."
                 renderingLabel="Rendering your pattern"
               />
             </CardHeader>
             <CardContent className="flex flex-col items-center gap-4 p-0">
               <div className="w-fit rounded-lg border border-border/40 bg-black/30 p-1">
                 <GeneratorDiv
-                  key={refreshKey}
+                  key={previewKey}
                   frameClassName="canvas-frame--preview"
                   onProgress={setProgress}
                   onRenderComplete={() => setIsRendering(false)}
@@ -220,8 +220,8 @@ export const Generator = () => {
                 <Button
                   variant="secondary"
                   className="flex-1"
+                  disabled={seedStringError !== undefined}
                   onClick={handlePreview}
-                  disabled={isRendering}
                 >
                   <RefreshCw
                     className={`h-4 w-4 ${isRendering ? "animate-spin" : ""}`}
@@ -230,7 +230,7 @@ export const Generator = () => {
                 </Button>
                 <Button
                   className="flex-1"
-                  disabled={isRendering}
+                  disabled={isRendering || seedStringError !== undefined}
                   onClick={() => {
                     window.open(
                       `/generate/${seedString}/${backgroundType}/${shapeType}/${shapeBorder}/${resolution}`,
